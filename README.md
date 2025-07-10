@@ -19,6 +19,7 @@ Some notes:
 
 * If you boot the CDTV from a floppy with a CD in the CDROM drive, the CDTV will reboot if you eject the CD. However, if you boot from floppy without the CD and wait until the Workbench screen is shown, you can insert and eject the CD without any reboots.
 * The larger the partition on the SD card is, the more memory will be taken up after mounting it. This is not specific for the SDBOX, but for any large drive. Remember that 4GB is HUGE for an Amiga. The first drive for the Amiga 500 was 'only' 20MB. If you want to save memory, just create a partition of 100MB-200MB on the SD card. It's probably more than enough. If you do need large storage, then you'll have to get a memory expansion.
+* If you use an SDBOX, make sure to use it with a quality power supply. Using a low quality power supply is reason #1 of experiencing SD card corruption.
 
 How to go about creating a boot disk? There is a chicken and egg issue here, you can only create a boot disk from the Amiga itself, but how do you get the SDBOX drivers on the Amiga?
 
