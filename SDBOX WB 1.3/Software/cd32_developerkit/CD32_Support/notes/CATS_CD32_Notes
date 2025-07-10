@@ -1,0 +1,993 @@
+
+Additional CD32 information and tips from CATS
+==============================================
+
+$VER: CATS_CD32_Notes 40.1 (15.10.93)
+
+   ************************************************************************
+   *									  *
+   *				COPYRIGHTS				  *
+   *									  *
+   *       Copyright (c) 1993-1999 Amiga, Inc.  All Rights Reserved       *
+   *									  *
+   ************************************************************************
+
+
+   ************************************************************************
+   *									  *
+   *	    		CONFIDENTIAL DEVELOPER MATERIALS		  *
+   *									  *
+   ************************************************************************
+
+   THIS SOFTWARE AND INFORMATION IS PRELIMINARY AND/OR CONFIDENTIAL, AND
+   IS PROVIDED ONLY FOR INHOUSE TESTING AND/OR USE BY REGISTERED DEVELOPERS.
+
+   THIS SOFTWARE AND INFORMATION MAY NOT BE DISTRIBUTED, DISCLOSED,
+   OR DUPLICATED, IN WHOLE OR IN PART, IN ANY MANNER OTHER THAN AS
+   SPECIFIED IN A SIGNED NONDISCLOSURE AGREEMENT WITH COMMODORE.
+ 
+   THIS SOFTWARE AND INFORMATION MAY NOT BE RETRANSMITTED ELECTRONICALLY,
+   AND MAY NOT BE STORED ON MULTI-USER SYSTEMS.
+
+   
+   ************************************************************************
+   *									  *
+   *				DISCLAIMER				  *
+   *									  *
+   *   THIS SOFTWARE AND INFORMATION IS PROVIDED "AS IS".		  *
+   *   NO REPRESENTATIONS OR WARRANTIES ARE MADE WITH RESPECT TO THE	  *
+   *   ACCURACY, RELIABILITY, PERFORMANCE, CURRENTNESS, OR OPERATION	  *
+   *   OF THIS SOFTWARE AND INFORMATION, AND ALL USE IS AT YOUR OWN RISK. *
+   *   NEITHER AMIGA NOR THE AUTHORS ASSUME ANY RESPONSIBILITY		  *
+   *   OR LIABILITY WHATSOEVER WITH RESPECT TO YOUR USE OF THIS SOFTWARE  *
+   *   AND INFORMATION.							  *
+   *									  *
+   ************************************************************************
+
+FIRST - Read the Other Docs
+===========================
+Read the AppDeveloper.spec and the Periph_Compat documents, and
+any other written or electronic docs we have provided.
+
+These notes are intended to be an addendum to the other docs!
+
+
+SECOND - Regarding Sample Scripts
+=================================
+Some of the sample CD startup scripts provided here have not been
+tested as-is.  But they are similar to parts of scripts we have
+used on our demo, bundle, and test CDs.
+
+
+Notes on Debug (aka. Developer) Boards
+======================================
+A limited number of CD32 "Debug" boards should be available for sale
+to registered developers.  This board, when attached to the back of a
+CD32, provides floppy, parallel, serial, and RGB ports.  There is also
+an IDE port which is functional if you have a special CD32 developer
+ROM containing the IDE driver.  These boards are VERY useful for
+debugging CD's and testing new executables with CD Data.
+
+But - be sure to also test your product on a CD32 with no debug
+board attached!!!  We have seen cases where a title worked if there
+was a debug board attached but crashed somewhere on a standard
+CD32 with no debug board.  Some possible causes for crashing with
+no debug board would be  1. memory layout differences and  2. code
+dependence on the existance of a DF0: (there was always a DF0: in
+the doslist on a CDTV).
+
+
+Notes on CD-Audio and CDXL
+==========================
+
+1. You can't do CD-Audio, CDXL, and other CD accesses at the same time
+
+While playing CD audio or CDXL with CD32 cd.device you must not
+make any other filesystem or track-level accesses of the CD or it
+will hang at least until the CD audio or CDXL completes.  This
+could be a long time.  Note that the CDTV cdtv.device behaved
+differently and would automatically abort CD audio if a filesystem
+or track-level access occurred.
+
+Keep this in mind while writing your code - for example, you can not
+start CD audio playing and THEN try to load an ILBM....
+
+
+2. BUGS and Workarounds
+
+a. Various cd.device and nonvolatile bugs
+
+   You MUST USE the latest V40 SetPatch on your titles!  As of this
+   writing SetPatch 40.12 is the latest SetPatch.  It is part of
+   the Workbench 40.35 beta, and either this version or a newer SetPatch
+   should be available in closed CD32 listings areas.
+
+   SetPatch 40.12+ fixes some CD32 device/library problems including:
+
+   - crash if application accessed nonvolatile if the Amiga CD32
+     NonVolatile prefs screen was used before closing door on title.
+
+   - a CD_SEEK problem
+
+   - possible hang of cd.device on certain length commands when
+     sent to certain drive firmware revisions
+ 
+   See the SetPatch notes below on the use of SetPatch.
+
+
+b. CD prefetch can cause CD_CONFIG speed setting to be ignored
+
+   It is possible for a cd.device CD_CONFIG speed setting command
+   to be ignored if the data you try to read at the new speed
+   setting resides on the disc directly after the last data
+   data that was read.  This is because if the second read's
+   data is currently being prefetched when you tell cd.device
+   to read that data, the reinitialization of the cd.device to
+   the new speed settings will not occur until either an error
+   or a read from elsewhere on the disc occurs.
+
+   A simple but not necessarily upward compatible workaround
+   is to Delay(14) or equivalent non-busy-wait for about 1/4
+   second before starting the read of the data which you wish
+   to read at the new speed.  But if a future cd.device has a
+   longer/bigger prefetch, this Delay may not be enough.
+   A better workaround is to READ (not SEEK) a few bytes at
+   a position 2 sectors before your data, before reading your
+   data.
+
+   We ran into this problem in the CDGSXL player which can do a
+   filesystem load of an ILBM, then set double speed for CDXL, 
+   then start playing the double speed CDXL.  The ILBM resided
+   right before the CDXL stream on the disc, and the double-speed
+   setting was sometimes ignored.
+
+
+c. Taking over INT2 is BAD BAD BAD and can Hang System !!!!
+
+   If your title takes over the INT2 interrupt, two very bad
+   problems can occur!!!!
+
+   o Your title can hang on some drives or firmware if you happen to
+     take over INT2 while the cd.device is still prefetching data after
+     the last read which occured!  That last read might have been the
+     read that loaded the code of your game, or a read that you performed
+     to load your title screen or music.  This type of hang genrally
+     does not show up until you cut a disk because only then are all
+     files being loaded from the CD.  And since it is a race condition,
+     it may only occur sometimes or only on some systems.
+
+   o If you have taken over INT2, and the user jostles the CD32 hard
+     enough to cause the drive to spin down, the drive tries to send
+     an error to cd.device, an interrupt occurs which cd.device must
+     handle, and cd.device cannot handle it because you knocked
+     cd.device out of the INT2 chain by taking over INT2.
+     Result - Your Game Will Hang.
+
+     Proper Workaround: Do NOT TAKE OVER INT2.  On CDTV and CD32,
+     the cd driver is ON THE INT2 CHAIN and requires proper
+     servicing of its interrupts.  This is not an A1200.
+     Read the 2.0 RKM Devices Manual cia resource chapter.
+     Use the OS to properly allocate a timer for yourself if
+     you need your own timer.  Or, if you want INT2, see the
+     Libraries manual Exec Interrupts chapter, and add yourself to
+     server chain for INT2, and properly return with the processor
+     Z flag set so that the other INT2 servers will be called.
+
+     Kludge workaround: If you are taking over INT2 be sure to Delay()
+     or WaitTOF() for at least 1/4 second after any CD reads have occured
+     and before taking over INT2.  That should take care of possible
+     hanging during game startup on current systems and firmware.
+     But tell your users that your game can totally hang if they
+     jostle the CD32 too hard.
+
+
+3. CD_PAUSE and CD_SEARCH are global and sticky
+
+If the CD_PAUSE command is used to pause CD audio, pause mode
+will remain in effect even if a CD_PLAYTRACK is aborted and/or the
+cd.device is closed.  If your title can exit, and has paused CD
+audio, please unpause it before you exit.
+
+Similarly, CD_SEARCH settings are global and sticky.  If CD_SEARCH
+is used to change the CD audio PLAY mode settings, please set them back
+to a reasonable default.  If your title does not need to be booted from
+
+If your title can be started in a peripheral or multitasking environment,
+or can be exited and reentered, you may wish to use the CD_INFO command
+to check if CD audio is paused or if CD audio Search mode has been set to
+anything other than normal forward speed.  Then, if necessary, use the
+CD_PAUSE and/or CD_SEARCH commands to reset to unpause and normal forward
+speed before attempting to start your own CD audio.  This way, if some
+previous code accidently left the drive in a paused or unusual state,
+you will still be able to play CD audio.
+
+
+4. cd.device/CD_INFO
+
+This command can tell you if CD audio is playing.  But DON'T use it
+to determine whether you have queued a request to play CD audio.
+CD_INFO will only report that CD audio is playing if the audio has
+actually been started.  If you want to check if you have an outstanding
+CD audio request, use CheckIO() instead.
+
+
+5. Aborting CD audio or CDXL
+
+The only way to do this with cd.device is AbortIO().  The CDTV
+cdtv.device had some additional commands for stopping things,
+but cd.device does not.  Normal procedure is:
+
+WARNING - first edit the clib/exec_protos.h file to correct the CheckIO
+prototype to return struct IORequest *, not BOOL!  This is a bug in the
+prototype which is being fixed!!!!
+
+if(!(CheckIO(iorequest)))	/* if not completed yet */
+   {
+   AbortIO(iorequest);
+   }
+WaitIO(iorequest);
+
+
+
+
+Notes on Lowlevel 
+=================
+
+1. First ReadJoyPort - not from an interrupt
+
+The first call to ReadJoyPort() must be made from a task or process,
+not an interrupt (because of setups and allocations which are
+performed by the first call).  After the first call, you may call
+the function from an interrupt.
+
+
+2. First ReadJoyPort - may miss special buttons
+
+In our experience, the first calls to ReadJoyPort() after opening
+lowlevel.library may miss special game controller buttons.  If you
+are checking for special controller button presses right away, you may
+need to first call ReadJoyPort() a couple of times with a Delay(10)
+in between, then call it again to read the actual state initial state
+of the controller.  Once you are past this initial startup problem,
+ReadJoyPort() can be used normally with no Delay()'s needed.
+
+
+3. What if you require mouse-like movement of the Intuition pointer ?
+
+For most CD titles controlled by a game controller, this is a very
+bad user interface.  If possible, you should have highlighted
+boxes or pictures or text, and you should let the user move the
+highlight, and let the user select the highlighted item by pressing
+the select (red, A) button.
+
+However, if your title absolutely requires smooth mouse-like travel
+of the Intuition pointer via game-controller (like a kid's paint
+package), then contact CATS US for a special "joymouse" startup-sequence
+program which uses lowlevel.library to generate mouse events and
+can also pass the special controller buttons as raw key codes.
+Do Not Use the old CDTV playerprefs.library function InstallJoyMouse
+when running on a CD32.  It makes the correct lowlevel.library
+controller-reading function unusable, and we don't intend to continue
+to provide playerprefs.library and other pre-CD32 CD modules.
+
+
+4. SCON_TakeOverSys
+
+If you use the lowlevel.library SystemControlA() function tag
+SCON_TakeOverSys to "take over" the system, you may not be able to
+then use system features which require their own multitasking.
+For example, if you wish to take over the system AND play CD audio,
+you will probably need to start the CD audio, delay until the
+CD audio has started playing, then take over the system.
+
+Or, just don't use SCON_TakeOverSys.  Here is one CD32 developer's
+point of view:
+
+   "Having problems getting CD-Audio to work? Does the CD seek to your
+   track, drive light go on, but no audio appears? If so then you're
+   probably using the SystemControl() tag SCON_TakeOverSys. This is
+   _bad_. If basically does a Forbid(), which knocks the cd.device stuff
+   on the head. The way I got round it was to remove the tag... I also
+   run my task at default task priority (0)... I don't want to hear this
+   rubbish like 'my program won't run fast enough if I don't do a
+   SetTaskPri() to 127 and use SCON_TakeOverSys (or Forbid()).. it's
+   complete bol*ocks. I have an input.device handler that swallows all
+   input, default task priority, no Forbid(), no SCON_TakeOverSys and my
+   code still runs at 50fps for 98% of the time.. It _sometimes_ misses
+   a frame when you put a Floppy disk in the drive, but mostly it's
+   transparent... you also get the added bonus of CD audio running quite
+   happily."
+
+		  Dean Ashton, Millennium Interactive, Ltd.
+		
+	
+
+Notes on Nonvolatile
+====================
+
+1. Only processes may call nonvolatile
+
+Because nonvolatile.library accesses dos.library, only processes may
+use nonvolatile.library 
+
+2. BUGS and Workarounds
+
+SetPatch v40.12 and higher contain at least one patch for a
+nonvolatile problem.  If the user accesses the Nonvolatile prefs
+screen (brought up by pressing Red button while CD32 has no
+disc to load and startup animation is up), and then, without
+rebooting, they put a disc in the drive and close the door,
+then later that title accesses nonvolatile.library, the system
+can hang.
+
+You must use the SetPatch on your title to avoid this problem.
+
+
+3. Try the disk stuff !
+
+If a filesystem device (floppy, harddisk, etc) is present containing
+an environment variable Prefs/Env-Archive/sys/nv_location, and that
+environment variable contains the path to a directory which
+nonvolatile can lock (for example MyHighScores:nonvolatile), then
+nonvolatile.library may get and store nonvolatile information
+to and from that directory on the filesystem device.  If you use
+nonvolatile.library, PLEASE test your title with such a disk inserted
+and make sure your high score (or whatever) loading and saving works
+fine to a disk.  We have tested this from nice processes and it appears
+to work very well.  But if you have taken over or disabled the system
+in some way, it is possible that when you access nonvolatile.library
+on a system with a with a score-saving disk or harddisk directory,
+you will crash, hang, or trash a disk.  So please test this.
+
+One caveat however: the current behavior of CD32 nonvolatile.library
+is that if a saved item with the same name exists already in
+the internal nonvolatile memory, nonvolatile will overwrite that
+memory entry rather than go to a disk set up for nonvolatile storage.
+
+You can easily make a nonvolatile score-saving floppy:
+
+Floppy Disk named ZZZ containing:
+---------------------------------
+     Prefs (dir)
+          Env-Archive (dir)
+               sys (dir)
+                 nv_location <-this file contains the text: ZZZ:nonvolatile
+     nonvolatile (dir)       <-here's where nv_location says to store stuff
+
+
+
+
+Notes on Freeanim.library
+=========================
+
+1. CD32 titles must freeanim
+
+CD32 trademark disks must OpenLibrary and CloseLibrary "freeanim.library"
+to take down the CD32 system startup animation.  You should do this
+in your code, right before you are ready to put up your own display
+(so the user doesn't have to stare at a black screen).  If you don't
+free the startup animation, it will remain and mess up your own display.
+
+For CDTV-trademark titles, the old CDTV RMTM command will also
+bring down the CD32 startup animation.  Note that if you boot from
+a floppy or harddrive, the startup animation is removed for you,
+so you might not notice you are missing your Open/CloseLibrary
+of freeanim.library until you cut a disk!
+
+
+2. Two startup animations, two startup environments
+
+There are two CD32 different startup animations - the one with cycling
+color aurora and shimmering CD disk, and the second one that just has
+Amiga CD32 in the top part of the screen.  If the user turns on or
+reboots the CD32 with a CD in the drive and the door closed, the fancy
+aurora startup display will not be displayed, and the system will go
+directly to the simpler top of screen Amiga CD 32 display.  If the
+user turns on or reboots the CD32 with the door open or no disk in
+the drive, the fancier aurora startup will be displayed.
+Depending on whther or not the aurora display has appeared, there
+may be less memory immediately available to your title, and the
+positions and maximum sizes of available memory may be different.
+Test booting your title both ways.  And as always, don't count on
+allocating giant blocks of memory like 900K ! - use separate allocations
+if possible.
+
+
+3. Keeping Workbench Closed
+
+The Amiga OS will force the Workbench screen open if the last screen
+in the system is closed.  Shutting down of the startup animation will
+not cause this to happen.  You can shut down the startup animation, and
+then open your display.  BUT, if you ever close the only screen that's
+open, the Workbench screen will be forced open.  You don't want that to
+happen.  To make sure this does not happen, take note of the following tips.
+If you use the CDGSXL program to display a CDXL in your startup, either
+use its VIEW option so that it will use a view instead of a screen, or
+use its new PATCHOPENWB option which tells CDGSXL to temporarily patch
+OpenWorkbench() so Workbench screen won't open when CDGSXL closes its
+screen.  If you need to use some other program which will open and
+close a screen, one workaround is to first open a very short one-bitplane
+blank screen and leave it open while doing your other screen opening
+and closing stuff.
+
+Note that one other thing that will cause Workbench to pop open is any
+stdio to the shell process you are started from or to any child shell
+processes (RUN's) which have inherited the file handle of the parent
+shell.  Therefore be sure to redirect everything to NIL: unless you are
+debugging.  Example:  RUN >NIL: whatever
+
+
+Notes on CDFileSystem
+=====================
+
+1. CD32 CDFileSystem capabilities
+
+The version of CDFileSystem in the CD32 does not support new V37+
+packets.  This means that some V37+ dos.library functions such
+as ExamineFH() can not be used on CD0: because they rely on V37+
+filesystem packets.  The 3.1 Workbench l:CDFileSystem for mounting
+external CD-ROM drives does support V37+ packets.
+
+
+2. Mounting an ISO image file with Commodore's CDFileSystem
+
+Using our V40 CDFileSystem and Matt Dillon's fmsdisk.device from
+Fish Disk 294 it is possible to mount an ISO image file which is sitting
+on a harddisk and view it as a filesystem (i.e. you can access the ISO
+image as a volume with plain Amiga functions and C: commands, execute
+programs on it, etc.).  Should also work with ISO images on a network.
+
+This can be very handy for checking ISO image files you have built
+using Commodore's ISO tools (provided to licensed CD Developers).
+You may even be able to test your title code on the ISO image if you
+only access CD0: as a filesystem (and do not access cd.device directly).
+
+Setup for FMS:  (requires the V40 Mount command)
+
+- Have an ISO image file such as created by ISOCD
+
+- Put fmsdisk.device (from Fish Disk 294) in DEVS:
+
+- Make a mountlist just like 3.1 storage/dosdrivers/CD0 but change
+scsi.device to fmsdisk.device.  If you plan use this mountlist via the
+icon, Workbench-rename the file&icon to the device name you desire for
+the ISO image (example: ISO2). If you plan to perform the mount from a
+shell or a script, then you must add the device name with a ":"
+(like ISO2:) to the beginning of the mountlist, and add a "#" as the
+last line of the mountlist. (icon-started mountlists don't need those)
+	      
+- Rename your ISO image file to "Unitn" where n is the Unit number
+specified in the mountlist (for example: Unit2).  This is required
+by fmsdisk.device so it can find the file for that unit.
+
+- Assign FMS: where the ISO image file "Unitn" resides.  This is also
+required by fmsdisk.device so it can find the file.
+		    
+- Mount CD0:
+
+
+
+Notes on Locale
+===============
+
+CD32 has a language selection screen which can be accessed by pressing
+the Blue button while the aurora CD32 attract screen is displayed.
+Lowlevel.library GetLanguageSelection() can return the user's
+selected language preference.
+
+V40 locale.library can query lowlevel.library for a user's preferred
+language (in the absence of a locale.prefs file).  Therefore, you
+can localize your titles using locale.library.  Or, you could
+call lowlevel's GetLanguageSelection() yourself to decide which
+language to use.
+
+But... If you support different languages, MAKE SURE you test
+your code with the CD32 set to different languages, including
+ones you do not support.  We have seen code crash because of
+an unexpected or untested language setting on a CD32.
+
+
+
+Notes on Workbench files and command
+====================================
+
+1. SetPatch
+
+Under V40 (CD32) use the latest V40 SetPatch QUIET in the beginning of
+your startup-sequence.  Even if you are a CD32 trademark CD that doesn't
+need the turn-on-AA feature of V40 SetPatch (AA is already turned on for
+CD32 trademark disks), you will benefit from using it because it will
+turn on the CPU data cache if one is present, giving your title a
+performance boost.  In addition, v40.11 SetPatch and higher contain
+patches for some CD32-specific bugs.
+
+The best SetPatch to use on CDTV trademark titles, when booted on
+on a 1.3 CDTV, is the one from Workbench 1.3.3.  If your title is
+compatible with V40 graphics.library and AA bandwidth on a CD32,
+use V40 SetPatch QUIET when booted under V40+.  Even if you don't
+take advantage of AA, the extra bandwidth of AA can give your title
+a performance boost.
+ 
+
+Use the VERSION command to check what version system you are running on.
+As long as you have the failat set to 21, you can use the V40 VERSION
+command even on a 1.3 system.  VERSION itself It will fail because it
+requires at least 2.04 Kickstart, so you'll still get warned.
+Alternately, you could use the 1.3 version command.  But don't
+try to check both version and revision with that one (that didn't
+work proeprly until V39).
+
+failat 21
+version >NIL: graphics.library 40
+if not warn
+    ; V40 or higher system
+else
+    ; less than V40
+endif
+
+
+2. devs/system-configuration
+
+You really shouldn't have one on a CD32 title.  It can cause the
+CD32 startup animation to jump left and lose a sprite.  Similarly,
+your CD should contain no Prefs/Env-Archive/sys/#? files.
+
+
+Making a Title Boot Faster
+==========================
+
+1. Use Full Paths
+
+If you use full paths to all disk-loaded startup-sequence commands
+that are not in the current directory, they will load faster.  Without
+a full path, the system must first search the current directory, then
+any paths, then C:.
+
+NOTE:  There are MANY "Internal" shell commands under V39/40.
+These should be referenced _without_ a path.  (C:command will work
+for these BUT the shell would have to check C: first before using the
+Internal command)
+
+ALSO NOTE:  If you are trying to make a CD that will work on both
+CDTV and CD32 remember that many shell commands that are now internal
+are disk-loaded under 1.3 Kickstart (like C:CD, etc.)
+
+ALSO: There may be some 1.3 commands that don't work if a full
+path is specified (C:ELSE ? others ?)
+
+
+Making a Title Bootable on both CDTV and CD32
+=============================================
+
+First:
+We have not tested this, and we don't think it's a particularly good
+idea. We can not predict what future CD32 systems or emulations will
+do (or not do) for compatibility when booting a CDTV trademark
+disk.
+
+Second:
+Be sure to read the AppDeveloper.spec!  It contains important
+information about the CDTV-compatibility modules including the
+fact that new titles should NOT USE the old CDTV modules.
+The CDTV-compatibility modules (for example debox, playerprefs,
+bookmark.device, cdtv.device) may have only partial functionality
+on CD32 (or no functionality in the case of bookmark.device),
+and we do not intend to carry these modules over to new systems
+or peripheral emulations of CD32.
+
+If your title software is 1.3 and 3.0 compatible, or contains two
+different versions of your title (CDTV and CD32) you may wish to
+be bootable on either machine AND may wish to have full AA features
+available to you when booted on CD32.
+
+If you use the CDTV.tm trademark, your CD will be bootable on either
+CDTV or CD32.  But on CD32 the system will boot into a ECS-compatible
+non-AA-capable mode.  If you wish to enable AA features after
+booting into a CDTV-trademarked CD on a CD32, you may do this
+by using V40 Setpatch >NIL: or calling the V39+ graphics.library
+SetChipRev() function, BUT you must do this before any display is
+opened (other than the built-in CD32 startup animation).
+Once a display has been opened, it is not possible to reinitialize
+graphics via SetPatch or SetChipRev().
+
+Remember that most V40 Workbench commands will not work under earlier
+kickstarts, so you may need be careful in your startup-sequence,
+or may need to place either the V40 or the 1.3 sommands in separate 
+directories.  Also remember that many INTERNAL V40 shell commands
+require actual C: commands under V34 (for example c:IF and C:RUN).
+There are also differences in the way some 1.3 and 3.0 commands
+behave (i.e. additional options or capabilities under 3.0, etc.)
+
+NOTE: Conceptually, we would prefer if your root directory
+contained pure CD32/V40 stuff, and your older 1.3 stuff was
+in a subdirectory.  But this would make your startup-sequence
+much more complicated because V40 commands don't work under 1.3.
+
+
+Simple game startup sequence for CDTV V34 and CD32 V40+AA
+---------------------------------------------------------
+failat 21
+version >NIL: graphics.library 40
+if not warn
+  ; we are on a V40 machine - do V40 patches, turn on AA graphics
+  c:SetpatchV40  QUIET	;(V40 SetPatch renamed to avoid any conflicts)
+  ; here place any assignments need only for your V40 CD32 program
+  MyProgram	; or MyProgram.CD32 (which will freeanim)
+else
+  ; maybe put a 1.3.3 SetPatch >NIL: here
+  ; here place any assignments need only for your V34 CDTV program
+  ; here maybe CDTV bookit command for CDTV prefs
+  rmtm		; take down CDTV trademark
+  MyProgram	; or MyProgram.CDTV
+endif
+endcli >NIL:		; if case you run or detach your program
+
+
+More complex startup sequence for CDTV/CD32 disk with V34 root level
+directories and V40 Workbench in a separate V40/ subdirectory
+--------------------------------------------------------------------
+failat 21
+c:version >NIL: graphics.library 40
+if not warn
+  ; we are on a V40 machine
+  V40/c/Setpatch >NIL:
+  resident c:assign pure	; for speed
+  assign SYS:  	V40
+  ; only assign the dirs below that you actually have in your V40/ dir
+  assign c:	SYS:c
+  assign libs:  SYS:libs
+  assign devs:  SYS:devs
+  assign s:	SYS:s
+  assign l:	SYS:l
+  assign fonts: SYS:fonts
+  cd SYS:
+  ; here place any other V40 startup-sequence stuff you need
+  ; here place any other assignments need only for your V40 CD32 program
+  MyDisk:MyProgram	; or MyProgram.CD32 (which will freeanim)
+else
+  ; maybe put a 1.3.3 SetPatch >NIL: here
+  ; here place any other 1.3 startup-sequence stuff you need
+  ; here place any other assignments need only for your V34 CDTV program
+  ; here maybe CDTV bookit command for CDTV prefs
+  rmtm			; take down CDTV trademark
+  MyDisk:MyProgram	; or MyProgram.CDTV
+endif
+endcli >NIL:		; if case you run or detach your program
+
+
+General Startup-Sequence Tips
+=============================
+
+1. Don't reference DF0: (etc.)
+
+Standard Amiga startup-sequence includes an ADDBUFFERS DF0: command.
+This will cause a requester to insert DF0 on a base CD32 unit.
+
+2. Don't forget to freeanim (for CD32) or rmtm (for CDTV) !
+
+Don't forget to Open/CloseLibrary("freeanim.library",0) inside your
+CD32 title code (or rmtm in your CDTV title startup-sequence).
+If you have been testing your title by booting off a floppy or harddisk,
+the system startup animation never comes up, so you wouldn't notice if
+you were neglecting to take it down! (until you cut your CD!)
+
+3. If you execute other scripts
+
+Assign t: to ram: if not already assigned elsewhere.  If you don't,
+the execute command may try to make a tmp file in :T on the CD and
+will fail (CD is unwriteable)
+
+For command line redirection (or 1.3 IconX) to work properly, you must
+start the script you plan to execute with the following lines:
+.key none ;(or whatever args you are passing)
+.bra {
+.ket }
+
+4. failat
+
+During development, you should put a failat 21 command early in your
+CD startup-sequence so that if you make a small mistake (like referencing
+a noncritical file or command that you forgot to put on the CD), your
+CD will still continue its startup-sequence past the error.
+
+
+
+For PAL and NTSC Compatibility
+==============================
+
+1. Let system choose PAL or NTSC
+
+If your graphics are suitable for PAL (256/512 lines) or NTSC (200/400
+lines) and you want your title to work on PAL or NTSC, make sure you
+don't explicitly open PAL or NTSC displays.  Be careful with ILBM's
+because many graphics packages will place an explicit monitor ID
+(PAL or NTSC) in the ILBM when you create or edit the ILBM.  This is
+generally good because it allows the ILBM to be redisplayed in the
+exact video mode it was designed for.  But it can be bad for you if
+this causes your title to force PAL or NTSC displays.  You can mask
+out the monitor ID of a ILBM CAMG or modeid before use by ANDing it
+with the XOR of MONITOR_ID_MASK (i.e. ~0xFFFF1000).  This way your
+display will be either PAL or NTSC, whichever is the default on that
+system.  WARNING: Don't use this technique to remove the monitor id's
+of more complex multiscan modes - the remaining modeid may not be the
+resolution you require.
+
+2. Or use different code and/or graphics for PAL and NTSC
+
+A simple startup command like the "warnifnotpal" example can
+allow you to branch in your startup depending on whether you are
+booted under PAL or NTSC:
+
+
+	warnifnotpal
+	if warn ; not a PAL system
+	  ; maybe start NTSC version or change some assignments
+	else	; is a PAL system
+	  ; maybe start PAL version or change some assignments
+	endif
+
+
+
+Hardware Notes
+==============
+
+1. The keyboard/auxiliary port
+
+Early diagrams we recieved were backwards.  This should be the correct
+diagram for the CD32 keyboard/auxiliary port:
+
+
+                Serial Read   6 || 5   KB Clock
+                   VCC +5v   4      3   Signal Ground 
+                Serial Tran   2    1   KB Data
+
+Warning - you can damage a CD32 by accidently shorting some of these
+pin sockets against each other.  I know.  I did it. :-(
+
+Note that the Serial read and transmit lines are TTL signals (0-5v)
+and are connected pretty directly to a chip.  When/if a debug board or
+other "real" serial hardware is attached to the expansion bus, these
+Keyboard port serial signals become unusable.
+
+
+2. The MPEG module
+
+The Commodore CD32 MPEG module is autoconfig, but currently
+its ROM contains code which must reside at $200000.
+
+This means that if you are designing expansion bus hardware
+which is intended to work with the CD32 MPEG module, you
+must insure that the MPEG module is autoconfigged before any other
+autoconfig devices. 
+
+The MPEG module currently allocates one meg of address space.
+
+
+
+Debugging Tips
+==============
+
+1. Use assigns to replace startup, override files/programs, or debug
+
+Once you cut a first disk, it is useful to be able to boot from
+the disk but replace executables or scripts with new ones for testing.
+This allows you to boot from the CD with normal startup animation, etc.
+
+One way is to insert lines that will let you grab control of
+the CD startup-sequence midstream so that you can start debugging
+tools or replace the rest of the startup-sequence.
+
+An additional technique is to reference your executables, scripts, or files
+relative to an assigned name which can be overridden.  This way you
+can even replace files referenced from within your CD executables.
+And you can make multiple assignments to the floppy if necessary.
+
+This is very useful because it
+
+- Allows you to recover much testing value in the event that you
+  botch the CD startup-sequence after the test-for-transfer to floppy
+- Allows you to boot the title normally by not inserting the floppy.
+- Allows correction/tuning of startup-sequence without cutting a new
+  disc.
+- Allows addition of debug commands (eg. SegTracker, DoSAD.nn,
+  set echo on) even once your CD startup-sequence is perfected.
+- Because floppy is non-bootable (thus you actually do boot off the CD),
+  the CD startup anim and other aspects are exactly like a normal boot
+  off CD.
+
+Use distinctive assign and volume names that won't conflict with your
+CD volume name, nor with other common assignments or volume names.
+
+Note - if your special startup does any output, it will cause a CON
+window and the Workbench screen to open.  This may be good for debugging
+but does change your title's startup environment and the amount of
+memory free.
+
+; Here's way to get into or override your CD startup-sequence
+; If placed early in your CD startup-sequence (after SetPatch), this
+; would allow you to start some debugging tools, set echo on, etc,
+; or replace the whole startup-sequence
+c:assign >NIL: XYZBin: exists
+if not warn  ; XYZBin floppy IS mounted so XYZBin: is the floppy
+   c:assign t: ram:
+   c:execute XYZBin:startup ; replace the CD startup-sequence
+endif
+          
+; Alternately - a scheme for just replacing your executables
+; If you referenced all of your executables off XYZBin:, 
+; this startup would allow you to insert a floppy named XYZBin so
+; you could test different executables when booting your title
+c:assign >NIL: XYZBin: exists
+if not warn  ; XYZBin floppy IS mounted so XYZBin: is the floppy
+   c:assign t: ram:
+   c:execute XYZBin:setup	; any special assignments, debug tools, etc.
+   XYZBin:MyProgram
+else  ; XYZBin override disk not mounted, use CD setup, executables
+   c:assign XYZBin: "" ; for current dir on CD
+   ; any normal setup or assignments here
+   XYZBin:MyProgram
+endif
+
+
+
+2. Booting from a floppy to the CD
+
+Even without special assign tricks, you can boot from a floppy
+(to start debug tools etc.) then transfer control to the CD.  It
+will be similar to booting from the CD but you won't get the
+system startup animation.  If your CD startup sequence is failing,
+it can be helpful to use this procedure even to just SET ECHO ON
+so you can see every startup-sequence command being executed.
+If you'd like a remote (serial terminal) view of the progress of your
+startup-sequnce, try the TSTAT line show below which will watch
+CLI 1.
+
+Note - if your special startup does any output, it will cause a CON
+window and the Workbench screen to open.  This may be good for debugging
+but does change your title's startup environment and the amount of
+memory free.
+
+---------------------- debug boot floppy startup ----8< cut here
+c:SetPatch QUIET   ; V40 SetPatch to turn on AA if testing CD32 title
+failat 21
+
+; NOTE - we do not RESIDENT any commands in this startup because
+; we want to catch CD startup errors such as a CD referencing
+; a Workbench command which is not available
+ 
+; SOME EXAMPLE DEBUGGING TOOLS HERE
+; set echo on
+; TNT serial
+; c:SegTracker
+; run >NIL: c:tstat 1 SHOWHUNK SHOWHUNKCODE REMOTE -10
+
+c:assign >NIL: CD0: exists
+if not warn
+   ; since we will "execute" the CD's startup, we need to
+   ; join it to these lines so any redirection in it will work
+   echo  >ram:startup-prefix ".key dummy"
+   echo >>ram:startup-prefix ".bra {"
+   echo >>ram:startup-prefix ".ket }"
+   c:join ram:startup-prefix CD0:s/startup-sequence as ram:cd-startup-sequence
+
+   c:assign t: ram:
+
+   ; Some CDTV modules (like bookmark.device) are only available if you
+   ; boot directly from a CDTV trademark disk.  So if you plan to boot
+   ; from floppy to a CDTV disk which calls CDTVPrefs, you must nullify
+   ; the CDTVPrefs command and possibly the bookit command because they
+   ; may fail and break the CD startup-sequence.  Here we do this by writing
+   ; a small ASM command which just does MOVEQ #0,d0, RTS, putting it on our
+   ; floppy as c:nothing, and residenting it as "CDTVPrefs"
+   ; If you have a similar problem with any other CDTV-specific
+   ; commands in a CDTV title startup-sequence, nullify them too.
+   ;
+   ; (uncomment next line and supply a c:nothing command if you need it)
+   ; resident CDTVPrefs c:nothing pure
+
+
+   ; MOVE ALL SYSTEM ASSIGNMENTS TO ANY CD DIRECTORIES THAT EXIST
+   c:assign OLDSYS:  SYS:
+   c:assign SYS:	CD0:
+
+   if exists CD0:LIBS
+      c:assign LIBS:	CD0:LIBS
+   endif
+   if exists CD0:DEVS
+      c:assign DEVS:	CD0:DEVS
+   endif
+   if exists CD0:fonts
+      c:assign FONTS:	CD0:fonts
+   endif
+   if exists CD0:L
+      c:assign L:	CD0:L
+   endif
+   if exists CD0:s
+      c:assign S:	CD0:S
+   endif
+   if exists CD0:C
+      c:assign C:	CD0:C
+   endif
+
+   cd CD0:
+
+;   newshell
+
+   ; Now call the CD's own startup sequence
+   OLDSYS:c/execute ram:cd-startup-sequence
+else
+   echo "CD0: not found"
+endif
+
+
+3. Branching on a button press
+
+The example "warnifpressed" can be used in a startup-sequence
+to allow branching based on whether certain game controller or
+mouse buttons are held down:
+
+	Usage: warnifpressed button [button button...] [PORT0]
+
+	Acceptable button names:
+	RED(LMB) BLUE(RMB) GREEN YELLOW FORWARD(R_EAR) REVERSE(L_EAR) PLAY
+
+        Example:
+
+	warnifpressed RED GREEN
+	if warn	; user is holding both RED and GREEN gamecontroller buttons
+	  ; do something here
+	else
+	  ; do something else
+	endif
+
+
+
+Licensing
+=========
+
+To be bootable, CDTV and CD32 titles must have the CDTV.tm (bootable on
+CDTV or CD32) or CD32.tm (bootable on CD32) trademark file installed
+during the ISO build procedure.  These files may only be used on titles
+for which an AmigaCD license has been signed.
+
+If you wish to place any files and programs from Amiga Workbench disks
+on your CD, you must execute the appropriate Workbench License.
+Workbench Licenses are currently available for 1.3, 2.0, 2.1, and 3.0.
+
+Contact your developer support manager for copies of the any of these
+licenses.  Or contact CATS - Licenses, 1200 Wilson Drive, West Chester,
+PA, USA, 19380.
+
+Please note that having a license does not make you a member of our
+registered developer support programs, nor are you required to be a
+registered developer to execute a license.  Anyone can execute a license.
+
+
+
+Developer Support Program
+=========================
+
+Members of Commodore's Certified or Commercial developer support
+programs are "registered" developers.  If you plan to develop for CD32,
+you should also become a registered developer if you are not already one.
+
+The latest OS software, tools, and examples are often made available to
+our registered developers via the listings areas of our closed developer
+conferences on BIX (US), ADSP (Europe), and CIX (UK).  
+
+Beta and pre-release OS or development file disk sets, when such exist,
+are also only made available to registered developers.
+
+Phone support is available for developers registered in our upper
+level "Commercial" program.
+
+Developing for CD32 requires not only CD32-specific includes and docs,
+but also the latest V40 system software for your development machine,
+and V40 development files.  These V40 files are available to our
+registered developers in our closed BIX/ADSP/CIX listings areas.
+
+If you would like an application to join our developer support
+program, please request an application from your local Commodore
+developer support department.  In the US, this is CATS - Administration,
+1200 Wilson Drive, West Chester, PA. 19380.
+

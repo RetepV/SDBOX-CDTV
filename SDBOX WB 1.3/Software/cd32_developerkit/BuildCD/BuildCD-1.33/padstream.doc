@@ -1,0 +1,49 @@
+Padstream
+
+Tool to pad and align the sectors of a raw MPEG stream before cutting.
+Use the VideoCD keyword if you have the Phillips spec and are trying to
+make a real VideoCD that matches their VideoCD spec.  The VideoCD keyword
+adds two seconds of blank video to the beginning of the MPEG.
+
+Usage: Padstream Source/A,Dest/A,VideoCD/S
+
+
+Notes on MPEG (see also BuildCD .doc for list of MPEG encoding services):
+
+
+To include a properly encoded and interleaved SIF format MPEG track on a
+CD32 disc...
+
+1 - Be sure that the MPEG file is properly encoded and interleaved to comply
+    with the VideoCD standard.  Things to check for...
+
+    a - Encoded at the proper VideoCD bit-rates for audio and video.
+
+    b - Audio and Video properly interleaved for VideoCD
+
+    c - Ready to be written as Mode 2 Form 2 data (properly padded for
+        Mode 2 Form 2 sector size.)
+
+    d - Two seconds of blank sectors at head of data.  (only strictly
+        necessary for files that will be played by the ROM player
+        interface.)
+
+    If either "c" or "d" above are either not true or unsure, run the
+    "padstream" program on the MPEG data file.
+
+    Command format:
+        PadStream Source/A,Dest/A,VideoCD/S
+        Where source is the name of the file in question, Dest is the
+        file that will be written, and VideoCD is a command line switch
+        that should be used if the file will be part of a VideoCD
+        compliant disc that is intended to be played by the ROM VideoCD
+        player program.
+
+2 - Use ISOCD to build your data file as normal.
+
+3 - Use BuildCD 1.31 or greater to cut track 1 as data (with your ISOCD
+    generated ISO image as the data file), and tracks 2-99 as either
+    audio and/or MPEG tracks.  Be sure to specify MPEG for MPEG tracks
+    and Audio for Audio tracks.
+
+

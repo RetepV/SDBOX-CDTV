@@ -1,0 +1,36 @@
+.c.o:
+	sc $(CFLAGS) $<
+
+.asm.o:
+	asm $(AFLAGS) $<
+
+CFLAGS = OPT OptInL OptInLocal nostkchk noversion mccons
+LFLAGS = sc sd stripdebug
+
+LIBS = lib:sc.lib lib:amiga.lib lib:debug.lib
+
+all: DeleteNV GetCopyNV GetNVInfo GetNVList SetNVProtection StoreNV WipeNV StuffNV
+
+DeleteNV: DeleteNV.o DeleteNV_rev.o
+	slink lib:c.o DeleteNV.o DeleteNV_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+GetCopyNV: GetCopyNV.o GetCopyNV_rev.o
+	slink lib:c.o GetCopyNV.o GetCopyNV_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+GetNVInfo: GetNVInfo.o GetNVInfo_rev.o
+	slink lib:c.o GetNVInfo.o GetNVInfo_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+GetNVList: GetNVList.o GetNVList_rev.o
+	slink lib:c.o GetNVList.o GetNVList_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+SetNVProtection: SetNVProtection.o XStrToULong.o SetNVProtection_rev.o
+	slink lib:c.o SetNVProtection.o XStrToULong.o SetNVProtection_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+StoreNV: StoreNV.o StoreNV_rev.o
+	slink lib:c.o StoreNV.o StoreNV_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+WipeNV: WipeNV.o WipeNV_rev.o
+	slink lib:c.o WipeNV.o WipeNV_rev.o to $@ lib $(LIBS) $(LFLAGS)
+
+StuffNV: StuffNV.o bsprintf.o StuffNV_rev.o
+	slink lib:c.o StuffNV.o bsprintf.o StuffNV_rev.o to $@ lib $(LIBS) $(LFLAGS)

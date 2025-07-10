@@ -1,0 +1,297 @@
+
+Notes about BuildCD
+===================
+(c) Copyright 1993-1999 Amiga, Inc.  All Rights Reserved
+Confidential.
+
+
+The BuildCD software allows you to cut "gold disc" CD-ROMs using an
+Amiga and a Phillips CDD-521 write-once CD-ROM cutter from data files
+which have been prepared for CD-ROM such as an ISO-9660 image file,
+MPEG tracks, and CD Audio tracks.
+
+BuildCD features:
+
+o Easy-to-use gadtools interface
+o Cuts 0 or 1 Data tracks first, and any number of Audio or MPEG tracks
+  in any order
+o Displays CD space and time used for all tracks
+o Loads and saves track sheets for frequestly cut titles
+
+
+Required Hardware
+=================
+
+You will need an Amiga with very fast SCSI, fast SCSI harddisks
+with lots of storage space, a Philips CDD 521 Compact Disk Recorder
+(which can cost up to $5000), plus blank gold disks.
+
+
+The following Amiga configurations haved been tested:
+
+1. 25MHz A3000
+2. A4000 [25MHz MC68040, 8Mb FAST RAM] with the A4091 or FastLane
+   SCSI-2 host adapters.
+
+We have not tested with an A2000/A2091.
+
+The Philips drive requires a steady uninterrupted 300K/second sustained
+transfer rate.  We do not know if this is possible with the any hardware
+other than what we have tested.
+
+Hard Disk Drives
+================
+
+For harddisk space, you will need approximately 3x the amount of space
+your source data takes up, with 1/3 of that on a partition which can be
+reformatted often and which can hold all of your final data for your CD.
+
+We have successfully cut disks with samples of the following drives:
+
+o Seagate/Imprimis/CDC Wren IV,VI,VII
+o Seagate ST11200
+o Maxtor "Magic" 540, 1240
+
+Reselect
+========
+
+Important!!!  The Philips drive can not deal with other drives that have
+Reselect On.  If a drive with Reselect On is on the bus when cutting
+disks, you will get errors and will cut a bad disk.  You must be sure
+that all SCSI devices on the bus have Reselect OFF.  For harddisks, this
+can generally be accomplished with the ReselectOff script and icon
+(ignore the error output for unit numbers you don't have).  For some
+drives and other SCSI devices, you may have to consult the documentation
+which came with the device to see if there is a jumper for reselection.
+The Fish Disk tool "RDBInfo" (Disk 779) may be used to check the reslection
+state of individual SCSI units.
+
+
+Other Required Software/Hardware
+================================
+You need to create the data for your disk and get it into a standard
+CD-ROM format before you can use BuildCD to place the data on the disk.
+
+Suggested tools for getting your data in CD-ROM formats:
+
+- ISO Image (data track)
+  For the Amiga, use the Amiga ISOCD program which AmigaCD licensees
+  receive without charge.  Only the Amiga ISOCD program can create
+  a bootable disk for CDTV or CD32.  Only licensees may have and use
+  this program.  Commodore subsidiaries and other licensees may not
+  build title disks for a developer unless the developer or publisher
+  has signed an AmigaCD license and amendment for that title.
+
+  For other systems (Mac and PC), there are commercial software
+  packages available for building ISO image files.  These packages
+  can not build a bootable Amiga CD32 disk.
+
+- Audio tracks
+  Digitize with the Studio-16 sampler, and then use the tool called
+  "Conversion" by Jim Hawkins to place the sound sample bytes
+  in the correct order for a CD track.
+
+- MPEG tracks
+  We have these made by providing our video to a company that converts
+  our video to MPEG.  See the list of some MPEG services at the end of
+  this document.  Before cutting the MPEG binary you receive from the
+  MPEG service, you may need to align and pad it properly by making
+  a copy of the stream with the tool called "Padstream".  
+
+
+CCOPY
+=====
+
+CCopy must be used to copy your CD-ready data (ISO image, audio tracks,
+mpeg tracks) to a clean FastFileSystem partition (we'll call this the
+"build" partition).  You then use BuildCD to cut the CD from the data
+on your build partition.
+
+CCopy is a special version of COPY which attempts to place files
+in a manner optimal for sustained reads when transferring to the Philips
+drive.  For CCopy to work properly, it must be used to copy data to an
+Amiga FastFileSystem partition which is either freshly formatted,
+OR has never had files deleted from it.  (i.e. you can CCopy multiple
+ISO images, audio tracks, MPEG tracks, etc. to a fresh FFS partition
+as long as you don't delete any files from the partition.  Deleting files
+would leave a fragmented disk structure and subsequent CCopy'ed
+files would not be laid down contiguously, possibly making it
+impossible to sustain the transfer rate needed to cut a CD).
+
+If possible, use the V40 Amiga filesystem on this partition and use
+V40 HDToolbox to set the block size for the partition to 2048 instead
+of 512.  Do this before formatting the partition.  Note - to make sure
+the partition is actually using the 2048 blocksize, use the CLI "Info"
+command after formatting and multiply the number of free blocks shown
+by 2048 and make sure the result is close to the size of the partition
+in bytes.  Use of 2048-size blocks will allow BuildCD to read the data
+more quickly from your drive when cutting the CD.
+
+MPEG
+====
+
+To include a properly encoded and interleaved SIF format MPEG track on a
+CD32 disc...
+
+1 - Be sure that the MPEG file is properly encoded and interleaved to comply
+    with the VideoCD standard.  Things to check for...
+
+    a - Encoded at the proper VideoCD bit-rates for audio and video.
+
+    b - Audio and Video properly interleaved for VideoCD
+
+    c - Ready to be written as Mode 2 Form 2 data (properly padded for
+        Mode 2 Form 2 sector size.)
+
+    d - Two seconds of blank sectors at head of data.  (only strictly
+        necessary for files that will be played by the ROM player
+        interface.)
+
+    If either "c" or "d" above are either not true or unsure, run the
+    "padstream" program on the MPEG data file.
+
+    Command format:
+        PadStream Source/A,Dest/A,VideoCD/S
+        Where source is the name of the file in question, Dest is the
+        file that will be written, and VideoCD is a command line switch
+        that should be used if the file will be part of a VideoCD
+        compliant disc that is intended to be played by the ROM VideoCD
+        player program.
+
+2 - Use ISOCD to build your data file as normal.
+
+3 - Use BuildCD 1.31 or greater to cut track 1 as data (with your ISOCD
+    generated ISO image as the data file), and tracks 2-99 as either
+    audio and/or MPEG tracks.  Be sure to specify MPEG for MPEG tracks
+    and Audio for Audio tracks.
+
+
+MPEG ENCODING
+=============
+o What is the cost for MPEG encoding ?
+
+Costs vary from between $60/min (Laser Pacific, if you tell them you're
+a CD-I developer) and $170/min (Philips if you tell them you're a CD32
+developer.)
+
+o Are their any Micro based MPEG encoding solutions?
+
+None yet that have the quality of a professional encoding job.  There
+is a software based solution from a company called Helfrich in Germany.
+It works using their Piccollo graphics card.  The software does a pretty
+good job, but you obviously have to be willing to let it sit a long time
+with each frame if you want decent quality.
+
+We've heard that there are some PC solutions in the works, but haven't
+actually seen anything available yet.
+
+
+o Some MPEG Service Bureaus
+
+Ms. Jane Sinclair
+President
+Advanced Multimedia
+26600 Telegraph Road
+Suite 181
+Southfield, MI 48075 USA
+P: 1 313 3502130
+F: 1 313 3503618
+
+Mr. Heinz Kroger
+AVM AG
+CH 4106 Therwil
+Basel, Switzerland
+P: 41 61 7218621
+F: 41 61 7218070
+
+Hiromi Aoyagi
+Denshi Media Services
+Taito 1 Chome
+Tokyo, Taito-KU Japan
+P: 81 3 32768071
+F: 81 3 32750951
+
+Mr. Tia Chou
+Digital Video Systems, Inc.
+536 Weddell Drive
+Suite 9
+Sunnyvale, CA 94089 USA
+P: 1 408 7344238
+F: 1 408 7348660
+
+Mr. James E. Brathwaite
+Epic Interactive Media Co., Ltd.
+VPS House
+52 Old Steine
+Brighton
+E. Sussex BN2 1NH
+United Kingdom
+P: 44 273 728600
+
+Dennis Garlington
+GTE Interactive Media
+Suite 200A
+Carlsbad, CA 92009 USA
+P: 1 619 4318801
+F: 1 619 4318755
+
+Jeanette Depatie
+Heuris Logic
+1758 Muegge
+St. Charles, MO 63303 USA
+P: 1 314 9490415
+
+Mr. Bruno Rahir
+International Creative Digital Image SA
+Boulevard Tirou 130/4th Floor
+Carleroi, 6000
+Belgium
+P: 32 071 300910
+F: 32 071 331229
+
+Mr. Leon Silverman
+Vice President of Marketing
+Laser-Pacific Media Corp.
+809 N. Cahuenga Blvd.
+Los Angeles, CA 90038 USA
+P: (213) 462-6266
+
+Adrian Farmer - Deputy Chairman
+Crack Downes  - Technical 
+Nimbus Information Systems
+Raglan, Llantarnam Park, Cwmbran
+Gwent NP44 3AB
+P: (0633) 867777
+F: (0633) 867799
+
+Mr. Stephan Maris
+N.V. Philips Industrial Activities
+Kampische Steenweg 293
+Hasselt, 3500
+Belgium
+P: 32 011 242167
+F: 32 011 242168
+
+Mr. Bentley Nelson
+Pacific Video Resources
+2339 Third Street M-4
+San Francisco, CA 94107 USA
+P: 1 415 8645679
+F: 1 415 8642059
+
+Paddy Roache
+Philips Interactive Media Systems
+City House
+420-430 London Road
+Croydon CR8 3QR
+United Kingdom
+P: 44 81 6894444
+F: 44 81 6893395
+
+
+
+
+
+
+
+

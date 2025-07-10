@@ -1,0 +1,23 @@
+.c.o:
+	sc $(CFLAGS) $<
+
+.asm.o:
+	asm $(AFLAGS) $<
+
+CFLAGS = nostackcheck structureequivalence ignore=73
+LIBS = lib:sc.lib lib:amiga.lib
+LFLAGS = smalldata smallcode nodebug noicons
+
+all: JoyCheck MaxSpeed WarnIfNotPal WarnIfPressed
+
+JoyCheck: JoyCheck.o
+	slink lib:c.o JoyCheck.o to $@ lib $(LIBS) $(LFLAGS)
+
+MaxSpeed: MaxSpeed.o
+	slink lib:c.o MaxSpeed.o to $@ lib $(LIBS) $(LFLAGS)
+
+WarnIfNotPal: WarnIfNotPal.o
+	slink WarnIfNotPal.o to $@ lib $(LIBS) $(LFLAGS)
+
+WarnIfPressed: WarnIfPressed.o
+	slink lib:c.o WarnIfPressed.o to $@ lib $(LIBS) $(LFLAGS)

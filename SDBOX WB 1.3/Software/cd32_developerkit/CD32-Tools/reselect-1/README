@@ -1,0 +1,3 @@
+This drawer contains clickable icons for turning off Reselect on all
+SCSI units.  The output is not redirected to NIL:, so you will see
+it look for units you don't have, etc.

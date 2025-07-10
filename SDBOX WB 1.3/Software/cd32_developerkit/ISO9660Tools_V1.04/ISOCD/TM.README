@@ -1,0 +1,23 @@
+When building a bootable CDTV or CD32 disk, a trademark (.tm) file
+must be selected within ISOCD.  Two trademark files are provided:
+
+
+CD32.TM - For disks bootable on CD32 only (a CDTV will not boot disks
+          containing the CD32 trademark).  Booting with this trademark
+	  on CD32 enables AA features.
+
+
+CDTV.TM - For disks bootable on CDTV or CD32.
+          If booted on a CD32, the CD32 system will boot into an
+          ECS-compatibility mode with AA features disabled.
+          It should be possible to enable AA features conditionally
+          with a V40 SetPatch program or the graphics function
+          SetChipRev() prior to the first display being opened.
+
+
+NOTE - Use of these trademark files requires an AmigaCD license with
+Commodore for each product produced.  Only licensed developers should
+have these tools and trademark files.  Contact your developer support
+manager, or CATS Administration at 215-431-9180 (FAX 215 429 0643) to
+request AmigaCD license forms.
+

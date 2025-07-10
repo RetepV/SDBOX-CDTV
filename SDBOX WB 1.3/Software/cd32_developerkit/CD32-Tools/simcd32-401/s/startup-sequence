@@ -1,0 +1,46 @@
+; This is a sample floppy startup-sequence which will boot your system into
+; an envirnoment similiar to the one found on the AmigaCD32. There are six
+; steps involved:
+;
+; 1> Run the SimCD32Env program.
+; 2> Run the SimCD32 program.
+; 3> Mount cd0:.
+; 4> Turn off fast memory.
+; 5> Assign everything over to cd0:.
+; 6> execute the cd0:s/startup-sequence
+
+
+.bra {
+.key }
+
+sys:SimCD32Env/SimCD32Env   ; Fire up the Simulated CD32 envirnoment for SimCD32.
+                            ; Preloads libraries, sets ChipRev, and opens up a 
+                            ; simulated startup animation. You could add the
+                            ; CDTV.TM keyword to boot up without AA enabled
+                            ; (to simulate booting a CDTV trademarked disk).
+                            ; This requires the presence of the simulated
+                            ; freeanim.library in the library search path.
+
+; Point SimCD32 to your ISOimage
+run >nil: <nil: sys:SimCD32/SimCD32 work:ISOImage
+
+Mount cd0: FROM Devs:SimCD32_Mountlist
+
+run >Nil: <Nil: c:NoFastMem ; The CD32 has NO fast memory.
+c:Wait 1	            ; Wait to let NoFastMem take effect.
+
+assign sys: cd0:            ; Assign everything over to CD0:
+assign s: sys:s
+assign c: sys:c
+assign devs: sys:devs
+assign l: sys:l
+assign libs: sys:libs ADD   ; The libs on this floppy contain lowlevel.library
+                            ; and nonvolatile.library. So use the ADD keyword
+                            ; so these libraries can be found, while adding
+                            ; the sys:libs to the search path.
+
+assign t: ram:
+
+execute s:startup-sequence  ; execute the ISO's startup-sequence
+
+endcli >nil:

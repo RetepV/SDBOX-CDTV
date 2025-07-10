@@ -1,0 +1,6 @@
+CFLAGS = nostackcheck noicons
+
+all: xlmsg
+
+xlmsg: xlmsg.c xlm.h
+	sc $(CFLAGS) link xlmsg.c

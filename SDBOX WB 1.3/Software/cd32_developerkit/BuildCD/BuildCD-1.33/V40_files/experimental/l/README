@@ -1,0 +1,25 @@
+FastFileSystem 40.4 (c) 1986-1999 Amiga, Inc. All Rights Reserved
+
+This is a new version of the FastFileSystem for beta testing.  There have
+been some significant changes made, so do not test this filesystem without
+first backing up your data.  The changes are:
+
+as of 40.4:
+
+ - Should fix the longstanding lost bug where attempting to write
+   data to a seek offset other than 0 to a write-protected disk,
+   the data could be mistakenly written to the beginning of the file
+   if the disk is un-writeprotected and reinserted.
+
+as of 40.3:
+
+ - Should remove the 8K and higher blocksize limit.  This should be
+   beneficial for prepping and formatting of partitions which are used
+   for streaming audio and video data capture and playback.  (Requires
+   V40 HDToolbox to set higher block sizes before formatting)
+
+ - Should solve the spurious checksum error problem with busy directories
+   (those where deletes, exnexts, and writes all occuring all at once).
+.
+FastFileSystem 40.4 beta FFS SCSI block
+.

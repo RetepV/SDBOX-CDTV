@@ -1,0 +1,192 @@
+                         CDXL(TM) LOADER AND SAVER
+                                FOR ASDG'S
+                      ART DEPARTMENT PROFESSIONAL(TM)
+
+THE ART DEPARTMENT PROFESSIONAL MODULES DESCRIBED IN THIS DOCUMENT (AS WELL
+AS  THIS  DOCUMENT ITSELF) ARE PROPRIETARY AND ARE SUBJECT TO PROVISIONS OF
+THE  (1) Amiga CD DEVELOPER LICENSE AND (2) THE ART DEPARTMENT PROFESSIONAL
+END-USER SOFTWARE LICENSE AGREEMENT.
+
+---------------------------------------------------------------------------
+
+         NOTE: USE OF THESE MODULES REQUIRES ADPRO 2.1.X OR LATER.
+
+---------------------------------------------------------------------------
+                                The Loader
+
+ THE LOADER REQUIRES "adpro.library" TO BE LOADED IN THE LIBS: DIRECTORY.
+                 THIS IS PERFORMED BY THE INSTALL PROGRAM
+
+The ADPRO CDXL loader can load most of the image types that the CDXL format
+supports.  Specifically it supports 1-8 bit rendered data, HAM and EHB.  It
+also supports 8 bit gray and 24 bit color chunky image data.  It allows you
+to  load  (preserve)  audio  and  pad  data  from existing CDXL files which
+include such information.
+
+The  CDXL  loader is special in that it stays resident after its first use.
+And,  when used from ARexx, it can also keep open the last file used.  This
+allows the loader to process animations extremely quickly.
+
+The  CDXL  Loader  main  window  gives you the number of frames in the CDXL
+file,  and  the number of bytes per frame of audio and pad data.  It allows
+you  to  select which frame to load.
+
+Along  the bottom of the window, "Accept" loads the selected frame.  "Quit"
+,  closes  the  file  and quits the loader (meaning that the loader will be
+removed  from  memory).  Finally, "Cancel", cancels the load but leaves the
+loader resident and the last used CDXL file open.
+
+If the pre-existing CDXL file contains pad and/or audio data, you can choose
+to  load  that data or not.  If loaded, this information will be saved with
+the frame during the next CDXL save provided that the CDXL file being saved
+has  made  provisions for audio and pad data of the same size as the source
+CDXL file.
+
+From AREXX, you interface to the CDXL loader in the following way:
+
+	The general format of the CDXL loader ARexx interface
+	is as follows:
+	LOAD "filename" "framenum" n [CMD] [standard ADPRO C_OPTS]
+
+	where CMD is 0 or more of the following:
+
+		SKIPPAD		do not load pad data
+
+		SKIPAUDIO	do not load audio data
+
+		SKIPVIDEO	do not load video (audio or pad only)
+
+		KEEPOPEN	keep the file open. 	SEE NOTE!!!
+
+		CLOSE		close the file, and do nothing else
+
+		QUIT		close the file, and quit (unresident
+				the loader), do nothing else
+
+		NOPAD		do not convert rendered data to 8 bit
+				or 24 bit raw
+
+	If you do not specify SKIPPAD or SKIPAUDIO, pad and audio will
+	be loaded, if present.
+
+NOTE:	WHEN YOUR THROUGH WITH A FILE WHICH YOU EXPLICITLY ASKED TO
+	``KEEPOPEN'',  YOU  MUST REMEMBER TO ISSUE A ``CLOSE'', OR RISK THE
+	FILE STILL BEING OPEN WHEN YOU REBOOT WITH POTENTIALLY HAZARDOUS
+	RESULTS
+
+---------------------------------------------------------------------------
+                                 The SAVER
+
+The  ADPro  CDXL  Saver allows you to create, modify and extend CDXL files.
+It  allows  you  to  specify  the  amount  of  space to leave for audio and
+padding.   It, in conjunction with the CDXL loader, can even be used to copy
+audio and pad data from other CDXL files.
+
+The  saver  may  be  used with 1-8 bit rendered data, HAM and EHB.  It also
+supports 8 bit gray and 24 bit color chunky image data.
+
+The  CDXL  saver  is special in that it stays resident after its first use.
+When used from ARexx, it can keep open the last file used.  This allows the
+saver to process animations extremely quickly.
+
+The CDXL Saver main window shows the number of frames (if any) currently in
+the  CDXL  file,  the amount of pad and audio space, and the type of image.
+If you are creating a new CDXL file, you are allowed to enter the amount of
+pad  and  audio  space,  and  well  as  the  type  of image - either raw or
+rendered.
+
+There are two buttons which allow you to select how to handle audio and pad
+space  in  the  file.  Each button has 3 settings.  "Skip Audio" leaves the
+audio  data  in the file intact, "Zero Audio" clears the audio space, "Keep
+Audio"  saves  the  audio  data  that  the  CDXL  loader  may  have  loaded
+previously.   The  "Keep  Audio"  selection will not appear unless you have
+loaded  Audio  data,  and  it  appropriately sized.  The other button, with
+values  of  "Zero Pad", "Skip Pad" and "Keep Pad" serves the same functions
+for pad data.
+
+Below  the  audio  and pad buttons in the Interleaved/Non-Interleaved image
+button  (this  button is only enabled if you are creating a new CDXL file).
+Beneath  this button is the button which allows you to pick rendered or raw
+data.
+
+If you choose interleaved, and you choose rendered data, then the planes of
+rendered data are interleaved in the file.
+
+If  you choose interleaved, and you choose raw data, then the format of the
+data is interleaved lines of of the three colors, red green blue.
+
+If  you  choose  non-interleaved,  and  you  choose rendered data, then the
+planes of rendered data are saved one at a time.
+
+If  you choose non-interleaved, and you choose raw data, then the format of
+the  data  is  as  triples  of  red,green,blue  bytes  in  a matrix of size
+width*height.
+
+The  three  buttons  along  the  bottom  of  the  window, "Accept", "Quit",
+"Cancel",  respectively saves the selected frame, closes the file and quits
+the  saver,  cancels  the  save  but leaves the saver resident and the file
+open.
+
+You  are  allowed  to  enter  a  frame number one larger than the number of
+frames in the file, thus extending the file by one frame.
+
+
+From AREXX, you interface to the CDXL saver in the following way:
+
+	The general format of the CDXL saver ARexx interface
+	is as follows:
+		SAVE "filename" TYPE framenum n [CMD]
+
+	Where TYPE may be one of
+		RAW		save "raw" image data
+		IMAGE		save "rendered" image data
+
+	where CMD is 0 or more of the following:
+
+		FRAMENUM nn	-1 means append, else must be
+				1..#of frames+1 in the file
+
+		PADSPACE nn	allows you to pick pad space. If not
+				creating a file, this number must agree with
+				the existing padspace in the file.
+
+				You must also specify SAVEPAD for PADSPACE
+				to perform its work
+
+		AUDIOSPACE nn	allows you to pick audio space. If not
+				creating a file, this number must agree
+				with the existing audiospace in the file
+
+				You must also specify SAVEAUDIO for AUDIOSPACE
+				to perform its work
+
+		SKIPPAD		do not save pad data - leave this
+				frames pad intact
+
+		SAVEPAD		save the loaded pad data into
+				this frame (sizes must match)
+
+		ZEROPAD		clear the pad space of this frame to zeros
+
+		SKIPAUDIO	do not save audio data - leave this
+				frames audio intact
+
+		SAVEAUDIO	save the loaded audio data into this
+				frame (sizes must match)
+
+		ZEROAUDIO	clear the audio space of this frame to zeros
+
+		KEEPOPEN	keep the file open	SEE NOTE!!!
+
+		CLOSE		close the file and do nothing else
+
+		QUIT		close the file, and quit (unresident)
+				the saver and do nothing else
+
+		INTERLEAVED	use "interleaved" format. If this
+				word is not present then save noninterleaved.
+
+NOTE:	WHEN YOUR THROUGH WITH A FILE WHICH YOU EXPLICITLY ASKED TO
+	``KEEPOPEN'',  YOU  MUST REMEMBER TO ISSUE A ``CLOSE'', OR RISK THE
+	FILE STILL BEING OPEN WHEN YOU REBOOT WITH POTENTIALLY HAZARDOUS
+	RESULTS

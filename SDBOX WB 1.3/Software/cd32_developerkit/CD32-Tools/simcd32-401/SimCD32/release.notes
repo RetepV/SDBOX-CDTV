@@ -1,0 +1,17 @@
+
+SimCD32 40.1 release notes.
+
+ o Now allows the image to be changed while running.
+
+ o Can now exit.
+
+ o Has an ARexx port, named SimCD32, supporting the following commands.
+
+   Quit -- Cause SimCD32 to exit.
+
+   GetISOName -- Returns the file name of the current ISO image.
+
+   SetISOName -- Set the ISO image to the given file (must provide the
+   complete path name).
+
+~DNJ~

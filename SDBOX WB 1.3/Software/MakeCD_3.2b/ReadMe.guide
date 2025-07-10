@@ -1,0 +1,588 @@
+@DATABASE ReadMe.guide
+
+@$VER: $Id$
+
+@NODE MAIN "README"
+
+
+
+@{B}
+Although we have finished most of the English translation for MakeCD 3.2,
+some  parts are still untranslated, especially the FAQ. If you understand
+German,  it  is  better  to  use the German manual instead of the English
+version.
+@{UB}
+
+
+
+
+@{U}@{B}* README * README * README * README * README * README * README * README *@{UU}@{UB}
+
+  @{"Dansk      " LINK DANSK     }  Danske noter (af Mark Holm)
+  @{"Deutsch    " LINK DEUTSCH   }  Deutsche Hinweise (von Angela Schmidt)
+  @{"English    " LINK ENGLISH   }  English notes (by Angela Schmidt)
+  @{"Español    " LINK SPANISH   }  Notas en español (por Javier Morata)
+  @{"Français   " LINK FRANCAIS  }  Notes françaises (par Jean-Marc Boursot)
+  @{"Italiano   " LINK ITALIANO  }  Note in italiano (a cura di Francesco Dipietromaria)
+  @{"Magyar     " LINK MAGYAR    }  Magyar megjegyzések (készítette Horváth Péter)
+  @{"Nederlands " LINK NEDERLANDS}  Nederlandse tekst (door Tim Jacobs en Korneel Ketelslegers)
+  @{"Norsk      " LINK NORSK     }  Norske merknader (av Eivind Olsen)
+  @{"Suomi      " LINK SUOMI     }  Tietoa suomeksi (tehnyt Mikko Virtanen)
+  @{"Svenska    " LINK SVENSKA   }  Svenska anmärkningar (av Fredrik Zetterlund)
+
+@{U}@{B}* README * README * README * README * README * README * README * README *@{UU}@{UB}
+
+
+
+
+COPYRIGHTS, DISCLAIMER
+======================
+
+MakeCD
+(C) Copyright 1996-1998 by Angela Schmidt and Patrick Ohly.
+All Rights Reserved.
+
+Installer
+(c) Copyright 1995-96 Escom AG.  All Rights Reserved.
+Reproduced and distributed under license from Escom AG.
+(New copyright holder is Gateway 2000 and/or Amiga Intenational)
+
+Triton
+MakeCD uses triton.library. Triton is (C) Copyright by Stefan Zeiger.
+
+Icons
+Some of the icons are (C) by Mick Hohmann and must not be used in other
+project without his written permission.
+
+MAKECD AND INSTALLER SOFTWARE IS PROVIDED "AS-IS" AND SUBJECT TO CHANGE;
+NO WARRANTIES ARE MADE.  ALL USE IS AT YOUR OWN RISK.  NO LIABILITY
+OR RESPONSIBILITY IS ASSUMED.
+
+@ENDNODE
+
+
+
+@NODE DANSK "Danske noter"
+
+@{B}Vigtigt:   Det er påkrævet at MakeCD-distributionen er installeret først,
+da lænkningerne på denne side ellers ikke vil virke.@{UB}
+
+
+Kære bruger,
+
+Bemærk venligst,  at udviklingen af MakeCD endnu ikke er færdig.   Vi har
+planer om at understøtte flere CD-brændere, og vi vil også tillægge flere
+egenskaber  til  vores  program  i den nærmeste fremtid.  Vi henviser til
+@{"MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"} for detaljer om MakeCD.
+
+Hvis du stadig mangler nogle egenskaber,  eller hvis din CD-brænder endnu
+ikke understøttes, må du vente på en opdatering.
+
+For opdateringer, kig på vores hjemmeside: @{B}http://makecd.core.de/@{UB}
+
+For juridisk information, læs afsnittet @{"'juridisk'" LINK "doc/english/MakeCD.guide/MLEGL"}.
+
+Hvis du ønsker at registrere dig nu, kan du enten klikke @{"her" SYSTEM "Execute registerscript dansk"},
+eller også kan du bruge "Registrér" knappen i registreringsforespørgslen.
+
+Vi gør også opmærksom på, at der også er firmaer, der legalt distribuerer
+MakeCD Privat. Vi henviser til dokumentationen for detaljer.
+
+For   en   kompabilitetsliste,  henviser  vi   til @{"Compatibility" LINK "doc/Compatibility/MAIN"} guiden.
+Specielt  før du køber en CD-brænder  eller  CD-R skiver,   anbefaler vi,
+at du læser denne fil for at undgå dårlige erfaringer og spild af penge.
+
+Hvis  du  skulle  have  nogle  spørgsmål,   beder vi dig om @{B}først@{UB} at læse
+@{"FAQ" LINK "doc/english/MakeCD.guide/MF000"}'en,   og kun stille os spørgsmål direkte,    hvis dit spørgsmål ikke
+besvares dér.   Bemærk,  at vi ikke svarer på spørgsmål,  der allerede er
+besvaret dér.   Vi beder dig desuden om ikke at stille spørgsmål om ting,
+der allerede beskrives i manualen.
+
+MakeCD bruger  triton.library  til  GUI-layout'et.  For mere information,
+henviser vi til @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"} afsnittet.
+
+Til sidst vil vi ønske dig masser af sjov og succés med MakeCD!
+
+        @{I}Forfatterne.@{UI}
+
+@ENDNODE
+
+
+
+@NODE DEUTSCH "Deutsche Hinweise"
+
+@{B}Hinweis:  bei  manchen  MakeCD-Distributionen  sind  die Links auf dieser
+Seite erst nach der Installation von MakeCD funktionsfähig!@{UB}
+
+
+Sehr geehrter Benutzer,
+
+bitte   beachten   Sie,   daß  die  Entwicklung  von  MakeCD  noch  nicht
+abgeschlossen  ist.  Wir  möchten  in  naher Zukunft noch mehr CD-Brenner
+unterstützen  und  auch  noch einige zusätzliche Features einbauen. Lesen
+Sie bitte @{"doc/deutsch/MakeCD.guide" LINK "doc/deutsch/MakeCD.guide/MAIN"}, um mehr über MakeCD zu erfahren.
+
+Falls  Sie noch einige Features vermissen, oder falls Ihr CD-Brenner noch
+nicht unterstützt wird, warten Sie bitte auf ein Update.
+
+Um  die  Updates zu bekommen, werfen Sie bitte hin und wieder einen Blick
+auf unsere Homepage: http://makecd.core.de/
+
+Um  sich zu @{"registrieren" SYSTEM "execute registerscript deutsch"},  lesen Sie bitte @{"doc/deutsch/MakeCD.guide" LINK "doc/deutsch/MakeCD.guide/MLEGL"} und
+@{"doc/deutsch/Registrierformular" LINK "doc/deutsch/Registrierformular/MAIN"},       oder      benutzen     Sie     den
+"Registrieren"-Knopf im Registrier-Fenster. Upgrades auf die Disc-At-Once
+Version können Sie mit dem Formular @{"doc/deutsch/Upgrade-DAO-Handbuch-usw" LINK "doc/deutsch/Upgrade-DAO-Handbuch-usw/MAIN"}
+bestellen.
+
+Es  gibt  übrigens  auch  Firmen,  die  registrierte Versionen von MakeCD
+Private legal vertreiben. Details entnehmen Sie bitte der Anleitung.
+
+Wenn  Sie  an  einer  Kompatibilitäts-Liste interessiert sind,  lesen Sie
+@{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}.  Insbesondere, wenn Sie planen, einen CD-Brenner oder
+CD-Rs  zu kaufen, sollten Sie diese Datei lesen, um schlechte Erfahrungen
+zu vermeiden und um Ihr Geld nicht zu verschwenden.
+
+Wenn   Sie   Fragen   haben,   lesen   Sie   bitte   @{B}zuerst@{UB}  die  FAQ  in
+@{"doc/deutsch/MakeCD.guide" LINK "doc/deutsch/MakeCD.guide/MF000"} und stellen Sie uns Ihre Frage nur direkt, wenn
+sie  dort  nicht  beantwortet wird. Wir haben leider nicht genügend Zeit,
+alle Fragen jedem persönlich zu beantworten. Bitte stellen Sie auch keine
+Fragen über Dinge, die im Handbuch erklärt werden.
+
+MakeCD  verwendet  triton.library, um die GUI zu erstellen. Wenn Sie mehr
+darüber wissen möchten, lesen Sie @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+Und nun viel Spaß und Erfolg mit MakeCD!
+
+        @{I}Die Autoren.@{UI}
+
+@ENDNODE
+
+
+
+@NODE ENGLISH "English notes"
+
+@{B}Important note:  some MakeCD distributions require being installed first.
+Otherwise the links on this page won't work.@{UB}
+
+
+Dear user,
+
+please  note  that the development of MakeCD is not yet finished. We plan
+to  support  more CD-Writers and we will add more features to our program
+in the near future.  Refer to @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"} for details about
+MakeCD.
+
+If  you  still  miss  some  features  or  if  your  CD-Writer  is not yet
+supported, wait for an update.
+
+For updates, have a look at our homepage: http://makecd.core.de/
+
+Read   @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"}   and   @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"}  to
+@{"register" SYSTEM "execute registerscript english"} or use the "Register" button in the registration requester. You
+can  order  upgrades  on  the Disc-At-Once version of MakeCD by using the
+form @{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}.
+
+Please  note  that  there  are  also  companies  who  legally  distribute
+registered versions MakeCD Private. For details, refer to the docs.
+
+For a compatibility list, please refer to @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}.  Especially
+before  buying  a CD writer or CD-Rs, you really should read this file in
+order to avoid bad experiences and waste money.
+
+In   case   you  have  any  questions,  please  read  @{B}first@{UB}  the  FAQ  in
+@{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"}  and ask us only directly,  if your question is
+not  answered  there.  Please note, that we can not answer questions that
+are  already answered there. Please don't ask questions about things that
+are described in the manual.
+
+MakeCD  uses  triton.library  for  the  GUI layout. For more information,
+refer to @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+And now a lot of fun and success with MakeCD!
+
+        @{I}The Authors.@{UI}
+
+@ENDNODE
+
+
+
+@NODE SPANISH "Notas en español"
+
+@{B}Nota importante: algunas distribuciones de MakeCD requieren ser instaladas primero,
+sino los enlaces en esta página no funcionarán.@{UB}
+
+
+Estimado usuario,
+
+Por favor, toma nota que el desarrollo de MakeCD no está aún finalizado. Planeamos
+dar más soporte a grabadoras y añadir más características a nuestro programa en un
+futuro cercano. Para más información sobre MakeCD: @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"}
+
+Si aún faltan algunas características o si tu grabadora no está aún soportada,
+espera a la actualización.
+
+Para actualizaciones, hecha una ojeada en nuestra página: http://makecd.core.de/
+
+Lee @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"}  y  @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"}  para
+@{"registrarte" SYSTEM "execute registerscript español"} o usa el botón de "Registro" en la petición de registro.
+Puedes pedir la versión mejorada de Disc-At-Once para MakeCD usando
+el formulario @{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}.
+
+Por favor, toma nota de que hay también compañias que legalmente distribuyen
+versiones registradas para uso privado de MakeCD. Para detalles, lee los docs.
+
+Para una lista de compatibilidad, lee @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}. Especialmente antes 
+de comprar una grabadora o CD-Rs, deberias leer este fichero para evitar malas
+experiencias y derrochar dinero.
+
+En caso de que tengas cualquier pregunta, por favor lee @{B}primero@{UB} las FAQ en
+@{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"} y preguntanos sólo directamente si tu pregunta no
+es respondida ahí. Por favor toma nota de que nosotros no podemos responder
+preguntas que ya están contestadas ahí. Por favor, no preguntes sobre cosas
+que son descritas en el manual.
+
+MakeCD usa la triton.library para el aspecto del GUI. Para más información,
+lee @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+Y ahora un montón de diversión y éxito con MakeCD!
+
+        @{I}Los autores.@{UI}
+
+@ENDNODE
+
+
+
+@NODE FRANCAIS "Notes françaises"
+
+@{B}Important: certains packs de distribution MakeCD nécessitent d'abord d'être
+installés sinon les liens de cette page ne fonctionneront pas.@{UB}
+
+
+Cher utilisateur,
+
+je  tiens  à vous dire que le développement de MakeCD n'est pas fini.  Nous
+avons  le  projet  de  reconnaître  d'autres  graveurs  CD et d'ajouter des
+fonctionnalités  à  notre  programme  et ce, très prochainement.  Consultez
+@{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"} pour avoir des détails sur MakeCD.
+
+Si certaines fonctions vous manquent ou si votre graveur n'est pas reconnu,
+attendez la prochaine mise à jour.
+
+Pour   avoir   les  dernières  mises  à  jour,  consultez  notre  homepage:
+http://makecd.core.de/
+
+Consultez  @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"}  et   @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"}
+pour vous @{"enregistrer" SYSTEM "execute registerscript français"}, ou bien utilisez le bouton "Enregistrer" de la boîte
+de requête d'enregistrement.  Vous pouvez commander une mise à jour vers la
+version    Disc-At-Once    de    MakeCD    en   utilisant   le   formulaire
+@{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}.
+
+Notez  qu'il  y  a également des entreprises qui distribuent legalement des
+versions  enregistrées  de MakeCD Private.  Pour plus de détails, consultez
+les documentations.
+
+Pour une liste de compatibilité, consultez @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}. Vous devriez
+lire  ce  fichier  particulièrement avant d'acheter un graveur ou des CD-R,
+afin d'éviter les mauvaises surprises et de perdre votre argent.
+
+Au  cas   où   vous   avez   des   questions, lisez  @{B}d'abord@{UB}  la  FAQ  dans
+@{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"}  et ne  posez  votre  question que  si vous  n'y
+trouvez  pas  de  réponse.   Notez  que nous ne pourrons pas répondre à des
+questions  dont  les  réponses  sont  là-bas.   Veuillez  ne  pas  poser de
+questions sur des rubriques décrites dans le manuel.
+
+MakeCD utilise la triton.library pour son interface utilisateur.  Pour plus
+d'informations, consultez @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+Nous vous souhaitons beaucoup d'amusement et de réussite avec MakeCD!
+
+
+        @{I}Les auteurs.@{UI}
+
+@ENDNODE
+
+
+
+@NODE ITALIANO "Note in italiano"
+
+@{B}Importante: alcune distribuzioni di MakeCD devono essere prima installate.
+Altrimenti i collegamenti a questa pagina potrebbero non funzionare.@{UB}
+
+
+Caro utente,
+
+volevamo ricordarti che lo sviluppo di MakeCD non è ancora terminato.  E`
+in progetto il supporto di altri CD writer e l'aggiunta  di  molte  nuove
+funzioni in futuro. Controlla @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"} per maggiori det-
+tagli su MakeCD.
+
+Se ti mancano alcune funzioni o se il tuo CD-Writer non è ancora  support-
+tato, aspetta il prossimo aggiornamento.
+
+Per gli aggiornamenti, controllla la nostra homepage:
+
+                        http://makecd.core.de/
+
+Per @{"registrarti" SYSTEM "execute registerscript italiano"}, leggi @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"} e @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"}
+o usa pulsante "Registrazione"  nella  finestra  di  registrazione.  Puoi
+ordinare l'aggiornamento alla versione  Disk-At-Once  di  MakeCD  con  il
+modulo @{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}.
+
+Esistono inoltre alcune società autorizzate che distribuiscono legalmente
+delle versioni registrate di MakeCD Private. Per  ulteriori  informazioni
+consulta la documentazione.
+
+Per la lista delle periferiche compatibili, consulta  @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}.
+Soprattutto se devi  ancora  acquistare  un  CD-Writer  o  dei  CD-R,  ti
+consigliamo vivamente di  leggere  questo  documento  per  evitare  delle
+brutte esperienze e di sprecare dei soldi.
+
+Nel caso avessi delle domande, ti chiediamo di consultare  @{B}prima@{UB}  le  FAQ
+(raccolta delle domande più comuni)  in  @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"}  e  di
+chiedere direttamente a noi se non trovi nessuna  risposta.  Per  favore,
+non possiamo rispondere a tutte le domande  che  sono  già  trattate  lì;
+non fateci domande le cui risposte sono già presenti nel manuale.
+
+MakeCD utilizza la triton.library  per  l'impaginazione  della  GUI.  Per
+ulteriori informazioni consulta @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+E adesso buona fortuna e buon divertimento con MakeCD!
+
+        @{I}Gli Autori.@{UI}
+
+@ENDNODE
+
+
+
+@NODE MAGYAR "Magyar megjegyzések"
+
+@{B}Fontos megjegyzés: egyes MakeCD elemeket elõször telepíteni kell.
+Máskülönben a linkek nem fognak mûködni ezen az oldalon.@{UB}
+
+
+Tisztelt felhasználó,
+
+kérjük, vegye figyelembe, hogy a MakeCD fejlesztése még nem ért véget. A jövõben
+még több CD írót tervezünk támogatni, és a közeljövõben programunk új funkciókkal
+bõvül majd. Ha további részletekre kíváncsi a MakeCD programról, olvassa el a 
+következõ dokumentációt: @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"}
+
+Ha még mindig hiányol bizonyos funkciókat, vagy az Ön CD íróját még nem támogatja a
+program, várja meg a következõ frissítést.
+
+A frissítésekért látogassa meg homepage-ünket: http://makecd.core.de/
+
+Olvassa el a @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"}  és a @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"}-ot 
+a regisztrációhoz, vagy használja a "Regisztráció" kapcsolót a regisztrációs kérdezõben.
+
+Figyelmébe ajánljuk, hogy egyes cégek is legálisan forgalmazzák a MakeCD privát felhasználók
+számára készült regisztrált változatát. Bõvebbet a dokumentációban találhat a témáról.
+
+A kompatibilitási listához olvassa el a @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}-t. Ez különösen
+ajánlatos, mielõtt megvásárolja a CD-írót vagy a CD-R-eket, így elkerülheti a rossz tapasztalatokat
+és a pénz felesleges kidobását.
+
+Ha bármilyen kérdése van, kérjük, @{B}elõszõr@{UB} olvassa el a FAQ-ot a
+@{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"}-ban, és csak olyasmit kérdezzen
+közvetlenül tõlünk, amire nem talál ott választ. Kérjük, vegye figyelembe, hogy nem tudunk olyan 
+kérdésekre válaszolni, amelyekre ott már válaszoltunk. Kérjük, kerülje el azokat a kérdéseket,
+amelyekre a választ a dokumentációban is megtalálhatja.
+
+A MakeCD  a triton.library-t használja a grafikus megjelenítéshez. További információkért forduljon
+a @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}-hez.
+
+Most pedig egy nagy rakás mókát és eredményes munkát kívánunk a MakeCD-vel!
+
+        @{I}A készítõk.@{UI}
+
+@ENDNODE
+
+
+
+@NODE NEDERLANDS "Nederlandse tekst"
+@{B}
+Belangrijke opmerking:  Sommige delen van MakeCD moeten geïnstalleerd zijn
+om   bepaalde   verwijzigingen   in   dit   document   te   laten   werken.
+@{UB}
+
+Beste gebruiker,
+
+We willen graag dat U weet dat MakeCD nog niet volledig af is. We zijn van
+plan om meer CD-Writers  te ondersteunen en we  willen nog enkele functies
+aan  ons programma toevoegen. Dit zal uiteraard allemaal zo snel  mogelijk
+gebeuren. Lees hierbij best @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"} voor meer informatie
+over MakeCD in haar huidige toestand.
+
+Als U functies mist in  dit programma of als  Uw CD-Writer nog niet onder-
+steund  wordt, dan kunnen we U enkel aanraden om op een nieuwe versie  van
+MakeCD te wachten.
+
+U  kan  deze nieuwe  versies (updates)  vinden  op onze internet  homepage:
+                           @{B}http://makecd.core.de/@{UB}
+
+Meer  informatie  over  het   registeren   van  MakeCD  kan  U  vinden  in:
+@{" doc/english/MakeCD.guide " LINK "doc/english/MakeCD.guide/MLEGL"}        of        @{" doc/english/Registrationform " LINK "doc/english/Registrationform/MAIN"}
+of  U  kan  de "Registratie" knop  gebruiken in  MakeCD (meer  bepaald  in
+de  Registratie  requester). U  kan  de  Disk-At-Once  versie  van  MakeCD
+bestellen  door  het  formulier  @{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}  in te
+vullen en op te sturen.
+
+Er  zijn ook bedrijven  en winkels die  legaal geregistreerde  versies van
+MakeCD Private  verdelen. Voor  meer informatie  hieromtrend kan U terecht
+in de documentatie van MakeCD.
+
+Als  U wil weten welke  systemen ondersteund  worden door MakeCD,  dan kan
+U   de    Compatibiliteitslijst    raadplegen   in    de   @{" documentatie " LINK "doc/Compatibility/MAIN"}.
+Wij  raden  U  aan  deze  lijst  te  lezen  voordat  U  een  CD-Writer  of
+CD-R mediums koopt  -  zo bespaart U zichzelf heel wat ellende en verspilt
+U zeker geen geld door niet-compatibel materiaal te kopen.
+
+Wanneer  U toch  vragen mocht  hebben,  kan  U @{B}eerst@{UB} de @{" FAQ " LINK "doc/english/MakeCD.guide/MF000"} (Frequently
+Asked  Questions  -  de meest gestelde vragen)  lezen.  Contacteer ons AUB
+alleen als  U  een vraag heeft  die  hierin niet beantwoord is. Wij kunnen
+helaas niet antwoorden  op  vragen die in de FAQ staan.  Stel ons AUB geen
+vragen waarvan het antwoord in de handleiding staat.
+
+MakeCD  gebruikt  de triton.library  voor de gebruikersinterface.  U vindt
+meer informatie over de triton.library in @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+Wij wensen U veel plezier en succes toe met MakeCD!
+
+        @{I}De makers van MakeCD.@{UI}
+
+@ENDNODE
+
+
+
+@NODE NORSK "Norske merknader"
+
+@{B}Viktig merknad:  noen MakeCD distribusjoner må installeres først.
+Hvis ikke vil ikke koblingene på denne siden fungere.@{UB}
+
+
+Kjære bruker,
+
+Husk at utviklingen av MakeCD enda ikke er ferdig. Vi planlegger å støtte
+flere CD-skrivere  og vi vil også  legge til flere  finesser i programmet
+vårt i fremtiden. Referer til @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/Main"} for nærmere detaljer
+om MakeCD.
+
+Hvis du fremdeles  savner noen finesser eller  CD-skriveren din enda ikke
+er støttet kan du vente på en oppdatering.
+
+For oppdateringer kan du se på vår hjemmeside: http://makecd.core.de/
+
+Les @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"} og @{"doc/english/Registrationform" LINK "doc/english/Registrationform/Main"} for å @{"registrere" SYSTEM "execute registerscript norsk"}
+eller bruk "Registrer" knappen i registreringsforespørselen. Du kan
+bestille oppgraderinger til Disc-At-Once versjonen av MakeCD ved å bruke
+skjemaet @{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}.
+
+Vennligst  merk  at  enkelte  firmaer   lovlig  distribuerer  registrerte
+versjoner av MakeCD Privat. For detaljer, referer til dokumentasjonen.
+
+For  en  kompatibilitetsliste kan  du se i  @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}.  Spesielt
+før du kjøper en CD-skriver eller  CD-R plater bør du lese denne filen så
+du kan unngå dårlige erfaringer og å sløse vekk pengene dine.
+
+Hvis du har noen  spørsmål  bør  du @{B}først@{UB}  lese  OBS'en  som du  finner i
+@{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"} og først  spørre oss direkte hvis spørsmålet ditt
+ikke besvares der.  Merk at vi ikke kan svare på spørsmål som allerede er
+besvart der.  Vær vennlig og ikke still oss spørsmål om ting som allerede
+er beskrevet i manualen.
+
+MakeCD bruker  triton.library til å  sette  opp brukergrensesnittet.  For
+mere informasjon kan du se i @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+Og nå må du ha mye glede og suksess med MakeCD!
+
+        @{I}Forfatterne.@{UI}
+
+@ENDNODE
+
+
+
+@NODE SUOMI "Tietoa suomeksi"
+
+@{B}Tärkeää:   jotkin    MakeCD:n     tiedostoista     täytyy    installoida   ensiksi.
+Muussa tapauksessa tämän sivun linkit eivät toimi.@{UB}
+
+
+Arvoisa käyttäjä,
+
+huomioithan    ettei    MakeCD:n   kehitystyö   ole  vielä  päättynyt.     Meillä    on
+lähitulevaisuuden   suunnitelmissa   alkaa   tukea     yhä    useampia  CD-kirjoittimia
+sekä  lisätä  ohjelmaan  uusia  ominaisuuksia.   Löydät  tarkempia  tietoja  MakeCD:stä
+tiedostosta @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"}.
+
+Jos   kaipaat    joitain    ominaisuuksia,    tai  jos    CD-kirjoitintasi  ei    vielä
+tueta, odota päivitystä.
+
+Päivityksistä saat tietoa kotisivultamme: http://makecd.core.de/
+
+Lue @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"}  ja  @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"} rekisteröidäksesi tai paina
+"Rekisteröi"-painiketta rekisteröintivalitsimesta.
+
+Ota myös  huomioon,   että on olemassa yrityksiä, jotka levittävät laillisesti MakeCD:n
+rekisteröityjä yksityisversioita. Tarkempia tietoja ohjeista.
+
+Yhteensopivuustiedot  näet  tästä:   @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}.   Varsinkin ennen  kuin  ostat
+CD-kirjoittimen tai  CD-R:iä,   sinun kannattaisi todellakin lukea tämä teksti,   jotta
+välttyisit ikäviltä seuraamuksilta tai rahanhaaskaukselta. 
+
+Jos sinulla on  joitain  kysymyksiä,  lue  @{B}ensin@{UB} FAQ, @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"}.   Kysy
+suoraan meiltä ainoastaan, jos FAQ:sta ei löytynyt vastausta kysymykseesi. Huomioithan,
+että me emme vastaa kysymyksiin,  joihin on  jo  vastattu FAQ:ssa. Ethän myöskään esitä
+kysymyksiä, jotka on jo selitetty ohjeissa.
+
+MakeCD käyttää   triton.libraryä   GUI:n  muodostukseen. Tarkempia tietoja siitä löydät
+tekstistä @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}.
+
+Toivotamme iloa ja menestystä MakeCD:n parissa!
+
+        @{I}Tekijät.@{UI}
+
+@ENDNODE
+
+
+
+@NODE SVENSKA "Svenska anmärkningar"
+@{B}Viktig anmärkning:  Vissa MakeCD-utgåvor kräver installation för att länkarna
+på denna sida skall fungera.@{UB} 
+
+
+Käre användare,
+
+vänligen uppmärksamma att utvecklingen av MakeCD inte är färdig. Vi planerar
+att stödja flera CD-brännare och vi kommer att lägga till flera funktioner
+i vårt program inom snar framtid. Referera till @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MAIN"} för detaljer
+om MakeCD.
+
+Om du fortfarande saknar funktioner eller om din CD-brännare inte stöds, vänta
+på en uppdatering.
+
+För uppdateringar, se vår hemsida: http://makecd.core.de/
+
+Läs @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MLEGL"} och @{"doc/english/Registrationform" LINK "doc/english/Registrationform/MAIN"} för att 
+@{"registrera" SYSTEM "execute registerscript svenska"} eller använd "Registrera"-knappen i registreringsförfrågan.
+Du kan beställa uppgraderingar av Disc-At-Once-versionen av MakeCD genom att
+använda formuläret @{"doc/english/Upgrade-DAO-Manual-etc" LINK "doc/english/Upgrade-DAO-Manual-etc/MAIN"}.
+
+Vänligen uppmärksamma att det även finns företag som legalt distribuerar
+registrerade versioner av MakeCD Privat. För detaljer, se dokumentationen.
+
+För en kompabilitetslista, läs @{"doc/Compatibility" LINK "doc/Compatibility/MAIN"}. Speciellt
+innan du köper en CD-brännare eller en CD-Rom. Det kan spara dig pengar och
+besvär.
+
+Om du har några frågor, vänligen läs FAQ'en i @{"doc/english/MakeCD.guide" LINK "doc/english/MakeCD.guide/MF000"} @{B}först@{UB},
+och fråga bara oss om svaret inte står där. Vi svarar inte på frågor som redan
+står där. Vänligen, fråga inte om saker som redan är beskrivna i manualen.
+
+MakeCD använder triton.library för GUI-layouten. För mer information,
+referera till @{"doc/Triton.readme" LINK "doc/Triton.readme/MAIN"}. 
+
+Och nu mycket lycka och framgång med MakeCD.
+
+        @{I}Författarna.@{UI}
+
+@ENDNODE

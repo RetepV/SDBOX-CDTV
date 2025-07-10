@@ -1,0 +1,6 @@
+CFLAGS = structureequivalence nostackcheck
+
+all: Example
+
+Example: Example.c Pan.h
+	sc link $(CFLAGS) Example.c

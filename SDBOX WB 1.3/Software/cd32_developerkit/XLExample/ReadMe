@@ -1,0 +1,21 @@
+
+5 march 1992
+
+
+This is an example of CDXL with audio "Sound on Film".
+
+To play it:
+
+        COPY df0:#? <harddisk>
+
+        CD <harddisk>
+
+        XLPlay callnow -r4
+
+
+Note that playback from a hard disk is only approximate.  You might hear
+"sound clipping", as well as an irregular playback rate.  If so, try
+copying the sequence to the RAM: disk, and playing back from there.
+
+These problems do not appear when playing this file from a CD in a CDTV
+player.

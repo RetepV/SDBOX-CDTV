@@ -1,0 +1,20 @@
+.key file1/a,file2/a,destdir/a
+.bra {
+.ket }
+
+;---- install file1 if newer than file2
+;---- uses vertextcomp (version text compare) command
+
+version >t:ver1{$$} {file1} FILE
+version >t:ver2{$$} {file2} FILE
+vertextcomp t:ver1{$$} t:ver2{$$}
+if warn
+	requestchoice >t:OKCancel TITLE "" BODY "Installing {file1}. OK?" GADGETS OK CANCEL
+	if not warn
+        	copy {file1} {destdir}
+	else
+	requestchoice >t:OKCancel TITLE "" BODY "Aborting partial installation." GADGETS OK
+	endif
+else
+	requestchoice >t:OKCancel TITLE "" BODY "Not Installing {file1} (newer or same present)." GADGETS OK
+endif

@@ -1,0 +1,70 @@
+.key isofilename/a,unitnum/k
+.def unitnum "2"
+.bra {
+.ket }
+
+; Mounts an ISO image file using modified Dillon's fmsdisk.device
+; and the Amiga L:cdfilesystem (V40)
+; 
+; Usage: isomount isofilename  (unitnum is optional)
+; 
+; Default unit 2, device name ISO2:
+; Will use next higher unit numbers/names if a unit is already mounted.
+;
+; Warning - I would not suggest mounting an ISO image with exact
+; match CD in a CD-ROM drive attached to same system.  Might be
+; identical enough to confuse/hand Workbench.
+; 
+; Technical details taken care of by this script, FYI....
+; Modified fmsdisk.device 1.1 (CAS 7/93) will look for
+; ENV:FMSUnit<n> where n is digit of the unit and will read the
+; ENV variable for the full path to the disk image file.
+; If ENV variable is not found, falls back to old method:
+; ISO image must be named Unitn where n is digit of the Unit below
+; (for example Unit2) and the ISO image file must reside at FMS:
+; (an asignment)
+;
+
+if not exists {isofilename}
+   echo "isomount: File *"{isofilename}*" not found... Aborting"
+   quit
+endif
+
+setenv tmpu{$$} {unitnum}
+
+lab loop
+assign >NIL: ISO$tmpu{$$}: exists
+if warn ; this unitnum is available
+   skip postloop
+else ; try next unitnum
+   setenv tmpu{$$} `eval $tmpu{$$} + 1`
+   skip loop back
+endif
+lab postloop
+
+echo  >t:isomountlist$tmpu{$$} "ISO$tmpu{$$}:"
+echo >>t:isomountlist$tmpu{$$} "FileSystem	= L:CDFileSystem"
+echo >>t:isomountlist$tmpu{$$} "Device		= fmsdisk.device"
+echo >>t:isomountlist$tmpu{$$} "Unit		= $tmpu{$$}"
+echo >>t:isomountlist$tmpu{$$} "Flags		= 0"
+echo >>t:isomountlist$tmpu{$$} "Surfaces	= 1"
+echo >>t:isomountlist$tmpu{$$} "SectorsPerTrack	= 1"
+echo >>t:isomountlist$tmpu{$$} "SectorSize	= 2048"
+echo >>t:isomountlist$tmpu{$$} "Mask		= 0x7ffffffe"
+echo >>t:isomountlist$tmpu{$$} "MaxTransfer	= 0x100000"
+echo >>t:isomountlist$tmpu{$$} "Reserved	= 0"
+echo >>t:isomountlist$tmpu{$$} "Interleave	= 0"
+echo >>t:isomountlist$tmpu{$$} "LowCyl		= 0"
+echo >>t:isomountlist$tmpu{$$} "HighCyl		= 0"
+echo >>t:isomountlist$tmpu{$$} "Buffers		= 5"
+echo >>t:isomountlist$tmpu{$$} "BufMemType	= 0"
+echo >>t:isomountlist$tmpu{$$} "StackSize	= 1000"
+echo >>t:isomountlist$tmpu{$$} "Priority	= 10"
+echo >>t:isomountlist$tmpu{$$} "GlobVec		= -1"
+echo >>t:isomountlist$tmpu{$$} "DosType		= 0x43443031"
+echo >>t:isomountlist$tmpu{$$} "Mount		= 1"
+echo >>t:isomountlist$tmpu{$$} "#"
+
+setenv FMSUnit$tmpu{$$} "`which {isofilename} NORES`"
+echo "Mounting `getenv FMSUnit$tmpu{$$}` as ISO$tmpu{$$}:"
+mount ISO$tmpu{$$}: from t:isomountlist$tmpu{$$}

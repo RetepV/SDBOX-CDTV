@@ -1,0 +1,37 @@
+/*
+ * CD-ROM file system entry
+ *
+ * This file enables the CD-ROM file system which allows you to read standard
+ * ISO-9660 images off of a hard drive using the SimCD32 developer tool.
+ * Use this mount list if you are using the FROM keyword:
+ *
+ * > mount cd0: FROM devs:CD0_Mount.
+ *
+ * Note that this uses CDFileSystem_40.8. Which is a version of CDFileSystem
+ * which does NOT use any 2.0 packets. This is better for emulation as the
+ * ROM CD32 CDFileSystem does NOT use any 2.0 packets.
+ */
+
+CD0:
+        Device          = cd.device
+        Unit            = 0
+        Activate        = 1
+        FileSystem      = L:CDFileSystem_40.8
+        Flags           = 0
+        Surfaces        = 1
+        SectorsPerTrack = 1
+        SectorSize      = 2048
+        Mask            = 0x7ffffffe
+        MaxTransfer     = 0x100000
+        Reserved        = 0
+        Interleave      = 0
+        LowCyl          = 0
+        HighCyl         = 0
+        Buffers         = 5
+        BufMemType      = 0
+        StackSize       = 1000
+        Priority        = 10
+        GlobVec         = -1
+        DosType         = 0x43443031
+#
+

@@ -1,0 +1,5 @@
+Assign MCDTMPDIR<$$>: ""
+CD //
+Brik >CON:0/0/640/200/Brik-Test/WAIT/CLOSE -vC CRCList-binaries
+CD MCDTMPDIR<$$>:
+Assign MCDTMPDIR<$$>:

@@ -1,0 +1,89 @@
+Define			WD0				"Sunday"
+Define			WD1				"Monday"
+Define			WD2				"Tuesday"
+Define			WD3				"Wednesday"
+Define			WD4				"Thursday"
+Define			WD5				"Friday"
+Define			WD6				"Saturday"
+
+Echo			"It is [hour]:[minute]:[second] on ([WD[weekday]]) [month]/[day]/[year]"
+
+Volume				ISO9660				""
+
+PrimaryVolume
+
+DescriptorWrites	2
+SystemIdentifier	"CDTV"
+LogicalBlockSize	2048
+VolumeIdentifier	
+VolumeSetIdentifier	
+PublisherIdentifier	
+
+Hierarchy
+
+	File 'RMTM'
+	Source 'rmtm'
+	EndFile
+
+	File 'SCSIVIEW'
+	Source 'scsiview'
+	EndFile
+
+	File 'ISO.DOC'
+	Source 'iso.doc'
+	EndFile
+
+	File 'CDTV.TM'
+	Source 'cdtv.tm'
+	EndFile
+
+	File 'FIXTM'
+	Source 'fixtm'
+	EndFile
+
+	File 'ISO_VOLUME_END'
+	Source 'ISO_Volume_End'
+	EndFile
+
+	File 'EXAM'
+	Source 'exam'
+	EndFile
+
+	File 'ISO_VOLUME_START'
+	Source 'ISO_Volume_Start'
+	EndFile
+
+	File 'BUILDTRACK'
+	Source 'buildtrack'
+	EndFile
+
+	File 'BOOKIT'
+	Source 'bookit'
+	EndFile
+
+	File 'CONTROLFILE'
+	Source 'ControlFile'
+	EndFile
+
+	File 'SYSTEM-CONFIGURATIONBLK+P'
+	Source 'system-configurationBLK+P'
+	EndFile
+
+	File 'BYTEDRIVE'
+	Source 'bytedrive'
+	EndFile
+
+	File 'ISO'
+	Source 'iso'
+	EndFile
+EndHierarchy
+
+LPath
+MPath
+OPtionalLPath
+OptionalMPath
+
+EndPrimaryVolume
+
+EndVolume
+

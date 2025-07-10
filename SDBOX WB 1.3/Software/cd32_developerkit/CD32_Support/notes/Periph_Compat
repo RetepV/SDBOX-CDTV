@@ -1,0 +1,169 @@
+
+	     CD32 Titles and CD32-Compatible Peripherals
+
+Workbench 3.1 includes disk-loadable versions of the CD32 modules
+libs/nonvolatile.library, libs/lowlevel.library, and l/CDFileSystem.
+Included on this disk is a beta devs/cd.device, a disk-loadable version
+of the CD32 cd.device which talks to a peripheral SCSI2 CD-ROM drive.
+
+With these software modules on an AGA Amiga system (A4000, A1200)
+equipped with SCSI2 CD-ROM drive, it should be possible to run many
+CD32 titles.  There may be future Commodore peripherals with these
+CD32 modules in an onboard ROM.  However, since these CD32-specific
+modules are disk-based, the user will probably need to boot into
+Workbench and then start your title from a Workbench icon.  To make
+this possible, you must provide an icon for your CD-ROM application, and
+you must be able to start up and function properly from that icon.
+
+Please bear in mind that someone who wishes to run your title
+on a peripheral CD-ROM with soft-loaded libraries might not have
+a game controller input device.
+
+----------------------------------------------------------------------
+NOTE!!!  If your CD32 application is not multitasking friendly,
+or can not run safely and exit cleanly back to Workbench, your icon
+startup procedure should warn the user that your application will take
+over the system and/or will not exit, and at that point should give
+them a chance to OK or CANCEL the startup of your application.
+One way to accomplish this: use c:RequestChoice to present a
+requester to the user, and continue or quit your script based
+on their response. 
+----------------------------------------------------------------------
+
+The following describes methods for starting your title from a Workbench
+icon.
+
+For an AmigaCD application to work on an Amiga computer (A4000 for
+example), the application should first be "OS friendly".  Secondly, it is
+always desirable that the application have a way to exit the program (and
+exit cleanly).  Thirdly, the application should be runnable from WorkBench.
+This can be done in a few ways:
+
+The first thing that is necessary is that the disk contain an application
+icon.  When the application disk is inserted into the CD-ROM drive, a disk
+icon will appear on the WorkBench.  When the user double-clicks on your
+application's disk icon, a window will appear and your application's icon
+should be contained within it.  You should make sure that this window is
+sized to the appropriate size to display all icons on your CD that you want
+the user to see.  The only icon that you will probably want the user to see
+is the application's icon itself.  This is nothing new to Amiga developers.
+This is no different than if you were developing a floppy based
+application.
+
+When your application's icon is double-clicked, your application should
+begin running.  This can be done in one of two ways.  The traditional
+method for running a program from the WorkBench is to make your application
+"WorkBench friendly".  In order to do this, your application must be able
+to deal with the WorkBench startup message (see the Amiga Technical
+Reference Manuals for information on how to do this).  The other option is
+to use the program supplied with this package named "MyGame" (which you
+will want to rename to your application's name).  This is a
+WorkBench-friendly program that simply runs a script file.  By running a
+script file, you have much more control over the environment that your
+application will be running.  An example script file (called cd-startup) is
+included and looks like this:
+
+
+;   Example cd-startup file executed when the application's icon
+;   residing on the application's CD is double-clicked.
+
+Assign >NIL: SYS:  CD0:     add    ; Multi-Assign primary directories
+Assign >NIL: C:    CD0:C    add
+Assign >NIL: L:    CD0:L    add
+Assign >NIL: S:    CD0:S    add
+Assign >NIL: DEVS: CD0:DEVS add
+Assign >NIL: LIBS: CD0:LIBS add
+
+stack 4096                         ; Make sure your stack size is big enough
+cd CD0:                            ; CD to the CD (if necessary)
+CD0:MyApplication                  ; Run your application
+
+Assign >NIL: SYS:  CD0:     remove ; Remove multi-assignments
+Assign >NIL: C:    CD0:C    remove
+Assign >NIL: L:    CD0:L    remove
+Assign >NIL: S:    CD0:S    remove
+Assign >NIL: DEVS: CD0:DEVS remove
+Assign >NIL: LIBS: CD0:LIBS remove
+
+
+
+The MyGame program knows which script file to run by the "Tool Type"
+assigned to the icon.  You can set this by clicking once on the MyGame icon
+from WorkBench, then by holding down the right mouse button select
+"Information" under the "Icon" heading of the menu bar.  Under the "Tool
+Types" area you will see "CD0:s/cd-startup".  This is where the MyGame
+program gets the file name of the script to run.
+
+As an over-simplified example, lets say you have an application called
+"Lemmings".  Your CD would contain (at least) the following files:
+
+     s (dir)
+       startup-sequence     - Executed when booting from an AmigaCD
+       cd-startup           - Executed when running from WorkBench
+
+  Lemmings                  - Workbench program that runs a custom script
+                              (formerly MyGame)
+  Lemmings.info             - Your application's icon for previous program
+                              (formerly MyGame.info)
+  Lemmings.ld               - Actual application program
+
+
+
+----------------------------------------------------------------------------
+
+Your startup-sequence file might look something like this:
+
+;   startup-sequence
+
+stack 4096
+CD0:Lemmings.ld
+
+
+----------------------------------------------------------------------------
+
+Your cd-startup file might look something like this:
+
+;   Example cd-startup file executed when the application's icon
+;   residing on the application's CD is double-clicked.
+
+Assign >NIL: SYS:  CD0:     add     ; Multi-Assign primary directories
+Assign >NIL: C:    CD0:C    add     ; (only if they exist of course)
+Assign >NIL: L:    CD0:L    add
+Assign >NIL: S:    CD0:S    add
+Assign >NIL: DEVS: CD0:DEVS add
+Assign >NIL: LIBS: CD0:LIBS add
+
+stack 4096                          ; Make sure your stack size is big enough
+cd CD0:                             ; CD to the CD
+CD0:Lemmings.ld                     ; Run Lemmings
+
+Assign >NIL: SYS:  CD0:     remove  ; Remove multi-assignments
+Assign >NIL: C:    CD0:C    remove
+Assign >NIL: L:    CD0:L    remove
+Assign >NIL: S:    CD0:S    remove
+Assign >NIL: DEVS: CD0:DEVS remove
+Assign >NIL: LIBS: CD0:LIBS remove
+
+----------------------------------------------------------------------------
+
+Actually, in this simple example, if the program Lemmings.ld didn't access
+any files off of SYS:, C:, L:, S:, DEVS:, or LIBS:, the "Assign" statements
+would not be necessary.  Likewise, if any files that Lemmings.ld did
+accessed specified the device CD0:, then the "cd" statement would not be
+necessary.  In this example, the cd-startup file could look as simple as
+the startup-sequence file.
+
+Of course, you wouldn't want to do any assigns to directories that didn't
+exist on the CD.
+
+
+To summarize:
+
+When a title is booted on an AmigaCD32 system, the startup-sequence is
+executed which invokes the game.  When running a title on an AGA Amiga
+system, the title is executed by double-clicking on the disk icon of the CD
+from WorkBench, and then double-clicking on the application's icon.  If the
+MyGame program is used as the application's icon, then a secondary script
+will be run in place of the startup-sequence. This script is located by the
+"Tool Type" of the MyGame icon.
+

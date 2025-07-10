@@ -1,0 +1,34 @@
+
+s/isomount script and devs/fmsdisk.device
+=========================================
+
+The files here are a modified Dillon fmsdisk.device (original sources on
+Fish Disk 94) and script called "isomount".
+
+Used with the Amiga V40 CDFilesystem, you can easily mount an ISO image
+file for examination without having to rename the file to "Unit<n>" or
+assign "FMS:"  (I modified fmsdisk.device to first look for an environment
+variable called FMSUnit<n> containing the full path to the ISO file you
+wish to mount. The isomount script creates that env variable and a mountlist,
+and mounts the ISO file)
+
+To use:
+Put fmsdisk.device in devs: and isomount in s: (and CDFilesystem should
+already be in L: - I have only tested this under V40)
+
+Simple usage (mounts your ISO file as ISO2: fmsdisk.device unit #2):
+
+     isomount isofilename
+
+If you want to mount additional ISO images, you must supply a unit
+   number other than the default of 2, for example:
+
+     isomount isofilename unitnum=3
+
+NOTE - the mount may take a while with harddisk light on (FS or WB
+reading file or something - who knows).  Wait until HD light goes off
+before accessing ISO2: or its volumename.
+
+NOTE - It is possible that isomount does not work properly on files
+in RAM: or files with spaces in their names or files on volumes with spaces
+in their names.  Symptom is "No disk in drive"

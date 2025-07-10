@@ -1,0 +1,102 @@
+CDXL ToolKit Version 1.10
+-------------------------
+
+3 March 1992
+Pantaray, Inc.
+P.O. Box 1510
+Ukiah, CA 95482 USA
+707-462-4878
+
+Kenneth Yeast, Programmer
+Carl Sassenrath, Producer
+
+Additional Programs:
+
+        XLIFF
+                Will take a pan file and convert requested frames to
+                individual IFF files for use with your favorite paint
+                programs.  These files are named according to
+                a simple convention:
+                "File" will produce "File.0001", "File.0002", etc.
+                "File.001" will produce "File.001","File.002", etc.
+                -f (first), -l (last), -n (number of frames) specifies
+                what frames are produced and -u will create IFF files
+                that are uncompressed.
+                If an output name is not given, the input file name is
+                used as the base name.
+
+Additional Features:
+
+        The "pan.h" standard include file has been updated to permit
+        new video encoding formats.  Most standard formats are now
+        supported for both "raw" and "processed" video.
+
+        Support for interleaved image data (PIF_LINES).  Planes are
+        interleaved on a line rather than image basis. This allows for
+        a single blit which results in increased speed during CDXL
+        playback (See: AmigaWorld Tech. Journal)
+
+        Support for pad data.  A given frame may include padding to change
+        its playback to an easier to handle rate.  Padding may also be
+        used to include other information with each frame, and the tools
+        will preserve this data.
+
+        XLMake supports the same base name logic that XLIFF uses.  This
+        allows automated conversion of IFF files.
+
+        XLCopy provides for single frame copy (-s).
+
+        XLPlay now produces more accurate audio playback with a variable
+        buffering technology.  These buffers can be increased if the file
+        is stored over too many dos extents.
+
+        XLPlay can start play at a particular frame (-f) and stop at a
+        frame (-l) or play a certain number of frames (-n).
+
+        XLInfo can now ignore size errors (-e option) when extra padding
+        has been added to the frames.
+
+        Example.c includes the buffering logic and code to handle audio.
+
+Bug Fixes:
+
+        More than 16 iff files for XLMake or XLJoin, would mistake the
+        17th file for the XL file.
+
+        XLInfo is now more clear when reporting improper sizes.
+
+        XLMake was not checking CAMG chunk to guess HAM or EHB!
+
+        XLPlay did not center screens correctly under 2.0 when other views
+        where available.  New method works under all cases.
+
+        XLPlay & XLJoin now handle initial memory allocations more
+        efficiently.
+
+        XLMake's activity printout now conforms to the "look & feel" of
+        the rest of the tools.
+
+        If there is enough memory, writes are buffered.
+
+        XLTrim option -e1 did not work.
+
+        Example was not cleaning up correctly. CloseDevice...
+
+        XLPlay now returns old audio interrupt and asks audio.device for the
+        two channels.
+
+        LoadRGB4 was too time consuming for Example.c, so a copy of a
+        correctly produced copper list is used and colors manually added
+        to allow for additional time.
+
+        XLInfo no longer accepts odd sized values for audio info.
+
+        XLInfo -w was printing last frame twice if last was different.
+
+        XLPlay was not closing IntuitionBase.
+
+        XLPlay would pause on a frame if it was supposed to be displayed
+        faster than 1/60th of a second.
+
+        Added checking for CHUNKY/BYTE in XLIFF and XLPlay (where they
+        can't currently handle these types)

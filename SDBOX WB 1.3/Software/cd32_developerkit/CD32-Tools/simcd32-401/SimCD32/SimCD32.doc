@@ -1,0 +1,88 @@
+TABLE OF CONTENTS
+
+SimCD32
+SimCD32                                                             SimCD32
+
+   NAME
+        SimCD32 - A cd.device/CDROM simulator.
+
+   SYNOPSIS
+        SimCD32 ISOIMAGE:
+
+   FUNCTION
+        Simulate a cd.device/CDROM envirnoment.
+
+   INPUTS
+        ISOIMAGE     - The complete path to the isoimage to be mounted
+                       as a simulated CDROM.
+
+   RESULTS
+        The specified isoimage will be used as the CDROM isoimage.
+
+
+   NOTES
+        To kick the CDROM simulation to life, from the shell type:
+
+        > run SimCD32 work:isoimage
+        > mount cd0: FROM devs:SimCD32_Mountlist
+
+        Notice that after SimCD32 is run, cd0: must be manually mounted
+        with the mount command. You may need to use the FROM keyword to point
+        mount to the proper amiga mountlist. Here is a mountlist which can
+        be used to mount CD0:
+
+        CD0:
+                Device          = cd.device
+                Unit            = 0
+                Activate        = 1
+                FileSystem      = L:CDFileSystem_40.8
+                Flags           = 0
+                Surfaces        = 1
+                SectorsPerTrack = 1
+                SectorSize      = 2048
+                Mask            = 0x7ffffffe
+                MaxTransfer     = 0x100000
+                Reserved        = 0
+                Interleave      = 0
+                LowCyl          = 0
+                HighCyl         = 0
+                Buffers         = 5
+                BufMemType      = 0
+                StackSize       = 1000
+                Priority        = 10
+                GlobVec         = -1
+                DosType         = 0x43443031
+        #
+
+        Note that this uses CDFileSystem_40.8. Which is a version of CDFileSystem
+        which does NOT use any 2.0 packets. This is better for emulation as the
+        ROM CD32 CDFileSystem does NOT use any 2.0 packets.
+
+        Once SimCD32 is run, and cd0: is mounted, you may access cd0: in the
+        normal fashion:
+
+        > list cd0:
+        etc.
+
+        You may also run CDXL files off of the simulated cd.device/CDROM in
+        the same manor in which you'd do this in a real cd.device/CDROM
+        envirnoment.
+
+        SimCD32 has an ARexx port, named SimCD32, supporting the following commands.
+
+           Quit         -- Causes SimCD32 to exit.
+
+           GetISOName   -- Returns the file name of the current ISO image.
+
+           SetISOName   -- Sets the ISO image to the given file (must provide
+                           the complete path name). This can be used to change
+                           the image that is mounted, (say from work:isoimage
+                           to work:isoimage2, or whatever).
+
+
+   SEE ALSO
+
+   BUGS
+        None?
+
+

@@ -1,0 +1,43 @@
+
+The Install program will install the following files onto your hard drive:
+
+     devs (dir)
+
+          DOSDrivers (dir)
+             CD0            - MountList entry for CD0:
+             CD0.info       - .info file for CD0
+
+       cd.device            - cd.device that uses SCSI-2 CD-ROMs
+       cd.device.config     - cd.device configuration file
+
+     l (dir)
+       CDFileSystem         - CD's ISO9660 file system
+
+     libs (dir)
+       lowlevel.library     - disk-based lowlevel library
+       nonvolatile.library  - disk-based nonvolatile library
+
+In order for this installation program to succeed, you must have a SCSI2
+CD-ROM drive attached to a SCSI host adapter (2091/4091 or equivalent). 
+You must know the following things:  What the name of the SCSI device
+driver is.  If you are installing on a SCSI based system and you are using
+a Commodore SCSI host adapter, then your device name will be "scsi.device".
+If you are installing on an IDE based system and you are using a SCSI card
+to get SCSI capability, then your device name will be "2nd.scsi.device". 
+If you are using a third-party SCSI host adapter, the device name may be
+different.  You must also know the SCSI ID number of the drive.  IDs range
+from 0 to 7 (7 is generally not used).  Consult your drive's manual for
+information on how to determine or set your drive's SCSI ID.
+
+The Install program will ask you where you would like any nonvolatile data
+(data that the CD application may want to store (high scores, etc...)) to
+be stored.  The installer will then create a directory called
+"nonvolatile" in the path that you select.  The file
+"SYS:Prefs/env-archive/sys/nv_location" will then be created to tell
+nonvolatile.library where this directory is located.
+
+Once the installation is complete, you should be able to insert AmigaCD
+titles into your SCSI2 CD-ROM drive and, if you have an AGA machine, begin
+running them.
+
+

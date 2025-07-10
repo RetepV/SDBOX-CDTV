@@ -1,0 +1,8 @@
+CFLAGS = nostackcheck structureequivalence
+
+LIBS = lib:debug.lib
+
+all: wpixel
+
+wpixel: wpixel.c
+	sc $(CFLAGS) link wpixel.c lib $(LIBS)

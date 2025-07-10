@@ -1,0 +1,21 @@
+
+;   Example cd-startup file executed when the application's icon
+;   residing on the application's CD is double-clicked.
+
+Assign >NIL: SYS:  CD0:     add     ; Multi-Assign primary directories
+Assign >NIL: C:    CD0:C    add
+Assign >NIL: L:    CD0:L    add
+Assign >NIL: S:    CD0:S    add
+Assign >NIL: DEVS: CD0:DEVS add
+Assign >NIL: LIBS: CD0:LIBS add
+
+stack 4096                          ; Make sure your stack size is big enough
+cd CD0:                             ; CD to the CD (if necessary)
+CD0:MyApplication                   ; Run your application
+
+Assign >NIL: SYS:  CD0:     remove  ; Remove multi-assignments
+Assign >NIL: C:    CD0:C    remove
+Assign >NIL: L:    CD0:L    remove
+Assign >NIL: S:    CD0:S    remove
+Assign >NIL: DEVS: CD0:DEVS remove
+Assign >NIL: LIBS: CD0:LIBS remove

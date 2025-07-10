@@ -1,0 +1,44 @@
+
+(source code for many or all of these provided in examples directory)
+
+
+joycheck - utility for testing game controllers
+
+
+warnifpressed - returns a non-zero WARN value if the specified
+           game controller or joystick keys/directions are being
+           pressed.  Uses lowlevel.library.  Could be useful
+           in a CD32 startup-sequence or script to branch based
+           on the button(s) a user is holding down.  Defaults
+           to port 1 (the normal game controller port)
+
+	Usage: warnifpressed button [button button...] [PORT0]
+
+	Acceptable button names:
+	RED(LMB) BLUE(RMB) GREEN YELLOW FORWARD(R_EAR) REVERSE(L_EAR) PLAY
+
+        Example:
+
+	warnifpressed RED GREEN
+	if warn	; user is holding both RED and GREEN gamecontroller buttons
+	  ; do something here
+	else
+	  ; do something else
+	endif
+
+
+warnifnotpal - returns a non-zero WARN value if a system is not a
+	PAL system.  Could be useful for branching in a CD32
+	startup-sequence or other script.
+
+	warnifnotpal
+	if warn ; not a PAL system
+	  ; maybe start NTSC version or change some assignments
+	else	; is a PAL system
+	  ; maybe start PAL version or change some assignments
+	endif
+
+MyGame - program with icon which calls s/cd-startup, suggested
+	for use when placing an icon on your CD if your title
+	is multitasking friendly and can be run from an icon.
+	see notes and CD_SCSI for more info.

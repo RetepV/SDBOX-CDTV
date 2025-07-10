@@ -1,0 +1,195 @@
+.KEY language/A
+.BRA {
+.KET }
+
+; $Id: registerscript 1.7 1998/08/13 08:25:05 angela Exp $
+
+; If you want to add support for further languages, please
+; contact angela@core.de first to check if somebody else is already
+; working on such a translation.
+
+SET makecdlang {language}
+
+; By Angela Schmidt
+; *** This is the filename under which the registration form is saved
+SET makecdregfilename "Registrationform"
+SET makecdnoregform "Sorry, could not find registration form for MakeCD."
+SET makecdregreq "Registration Request"
+SET makecdshallprint "Do you want the registration form being printed now?"
+SET makecdshalldelete "Do you want the registration form in T: being deleted now?"
+SET makecdansok "OK"
+SET makecdansyes "Yes"
+SET makecdansno "No"
+
+; by Angela Schmidt
+IF $makecdlang EQ "deutsch"
+  SET makecdregfilename "Registrierformular"
+  SET makecdnoregform "Leider konnte kein Registrierformular für MakeCD gefunden werden."
+  SET makecdregreq "Registrations-Dialogfenster"
+  SET makecdshallprint "Soll das Registrierformular nun gedruckt werden?"
+  SET makecdshalldelete "Soll das Registrierformular nun aus T: gelöscht werden?"
+  SET makecdansok "OK"
+  SET makecdansyes "Ja"
+  SET makecdansno "Nein"
+ENDIF
+
+; By Mark Holm <mholm@email.dk>
+IF $makecdlang EQ "dansk"
+  SET makecdregfilename "Registreringsformular"
+  SET makecdnoregform "Beklager, kan ikke finde MakeCD's registreringsformular."
+  SET makecdregreq "Registreringsforespørgsel"
+  SET makecdshallprint "Vil du udskrive registreringsformularen nu?"
+  SET makecdshalldelete "Vil du slette registreringsformularen i T: nu?"
+  SET makecdansok "OK"
+  SET makecdansyes "Ja"
+  SET makecdansno "Nej"
+ENDIF
+
+; By Javier Morata <jmorata@kaos.es>
+IF $makecdlang EQ "español"
+SET makecdregfilename "Formulario_de_registro"
+SET makecdnoregform "Lo siento, no he podido encontrar el formulario de registro para MakeCD."
+SET makecdregreq "Pedido de Registro"
+SET makecdshallprint "Quieres que el formulario de registro sea imprimido ahora ?"
+SET makecdshalldelete "Quieres que el formulario de registro en T: sea borrado ahora ?"
+SET makecdansok "OK"
+SET makecdansyes "Si"
+SET makecdansno "No"
+ENDIF
+
+; By Jean-Marc Boursot <jmboursot@nucleus.fr>
+IF $makecdlang EQ "français"
+  SET makecdregfilename "FormEnregistrement"
+  SET makecdnoregform "Désolé, impossible de trouver le formulaire d'enregistrement pour MakeCD."
+  SET makecdregreq "Requête d'enregistrement"
+  SET makecdshallprint "Voulez-vous que la fiche d'enregistrement soit imprimée maintenant ?"
+  SET makecdshalldelete "Voulez-vous que la fiche d'enregistrement dans T: soit effacée maintenant ?"
+  SET makecdansok "OK"
+  SET makecdansyes "Oui"
+  SET makecdansno "Non"
+ENDIF
+
+; By Francesco Dipietromaria <dpm@sinet.it>
+IF $makecdlang EQ "italiano"
+  SET makecdregfilename "Moduloregistrazione"
+  SET makecdnoregform "Spiacente, non trovo il modulo di registrazione per MakeCD."
+  SET makecdregreq "Registrazione"
+  SET makecdshallprint "Volete stampare il modulo di registrazione adesso?"
+  SET makecdshalldelete "Volete cheil modulo di registrazione venga cancellato da T: adesso?"
+  SET makecdansok "OK"
+  SET makecdansyes "Si"
+  SET makecdansno "No"
+ENDIF
+
+; By Horváth Péter <pcpince@syneco.hu>
+IF $makecdlang EQ "magyar"
+  SET makecdregfilename "Regisztrációs ûrlap"
+  SET makecdnoregform "Sajnos nem találom a MakeCD regisztrációs ûrlapját."
+  SET makecdregreq "Regisztrációs kérés"
+  SET makecdshallprint "Kívánja a regisztrációs ûrapot most kinyomtatni?"
+  SET makecdshalldelete "Kívánja a T:-ben lévõ regisztrációs ûrlapot most letörölni?"
+  SET makecdansok "OK"
+  SET makecdansyes "Igen"
+  SET makecdansno "Nem"
+ENDIF
+
+; By Wessel Dankers <wsldanke@cs.ruu.nl>
+IF $makecdlang EQ "nederlands"
+  SET makecdregfilename "Registratieformulier"
+  SET makecdnoregform "Sorry, kon registratieformulier niet vinden voor MakeCD"
+  SET makecdregreq "Verzoek tot registratie"
+  SET makecdshallprint "Zal ik het registratieformulier nu printen?"
+  SET makecdshalldelete "Zal ik het registratieformulier in T: nu wissen?"
+  SET makecdansok "Ok"
+  SET makecdansyes "Ja"
+  SET makecdansno "Nee"
+ENDIF
+
+; By Eivind Olsen <eivindo@bgnett.no>
+IF $makecdlang EQ "norsk"
+  SET makecdregfilename "Registrerings-skjema"
+  SET makecdnoregform "Beklager, kunne ikke finne registrerings-skjemaet for MakeCD."
+  SET makecdregreq "Registrerings-forespørsel"
+  SET makecdshallprint "Vil du skrive ut registrerings-skjemaet nå?"
+  SET makecdshalldelete "Vil du slette registrerings-skjemaet som ligger i T:?"
+  SET makecdansok "OK"
+  SET makecdansyes "Ja"
+  SET makecdansno "Nei"
+ENDIF
+
+; By Mikko Virtanen <mtv@klinja.fipnet.fi>
+IF $makecdlang EQ "suomi"
+  SET makecdregfilename "Rekisteröintikaavake"
+  SET makecdnoregform "En löytänyt rekisteröintikaavaketta MakeCD:lle."
+  SET makecdregreq "Rekisteröintipyyntö"
+  SET makecdshallprint "Haluatko, että rekisteröintikaavake tulostetaan nyt?"
+  SET makecdshalldelete "Haluatko, että T:ssä oleva rekisteröintikaavake tuhotaan nyt?"
+  SET makecdansok "OK"
+  SET makecdansyes "Kyllä"
+  SET makecdansno "Ei"
+ENDIF
+
+; By Fredrik Zetterlund <frallan@canit.se>
+IF $makecdlang EQ "svenska"
+  SET makecdregfilename "Registreringsformulär"
+  SET makecdnoregform "Hittar inte registreringsformuläret för MakeCD."
+  SET makecdregreq "Registreringsförfrågan"
+  SET makecdshallprint "Vill du skriva ut registreringsformuläret nu?"
+  SET makecdshalldelete "Vill du radera registreringsformuläret i T: nu?"
+  SET makecdansok "Okej"
+  SET makecdansyes "Ja"
+  SET makecdansno "Nej"
+ENDIF
+
+IF NOT EXISTS doc/$makecdlang/$makecdregfilename
+  SET makecdlang english
+  SET makecdregfilename "Registrationform"
+ENDIF
+
+IF NOT EXISTS doc/$makecdlang/$makecdregfilename
+  SET makecdlang deutsch
+  SET makecdregfilename "Registrierformular"
+ENDIF
+
+IF EXISTS doc/$makecdlang/$makecdregfilename
+  Copy doc/$makecdlang/$makecdregfilename T:Registrationform
+  Protect T:Registrationform rwd
+  IF EXISTS ENV:EDITOR
+    $EDITOR T:Registrationform
+  ELSE
+    Ed T:Registrationform
+  ENDIF
+ELSE
+  IF EXISTS C:RequestChoice
+    RequestChoice >NIL: "$makecdregreq" "$makecdnoregform" "$makecdansok"
+  ELSE
+    Echo >CON:0/0/640/100/Error "$makecdnoregform"
+  ENDIF
+  SKIP unsetvars
+ENDIF
+
+IF EXISTS C:RequestChoice
+  RequestChoice >ENV:makecdANSWER "$makecdregreq" "$makecdshallprint" "$makecdansyes" "$makecdansno"
+  IF $makecdANSWER EQ 1
+    Type T:Registrationform TO PRT:
+  ENDIF
+  RequestChoice >ENV:makecdANSWER "$makecdregreq" "$makecdshalldelete" "$makecdansyes" "$makecdansno"
+  IF $makecdANSWER EQ 1
+    Delete QUIET T:Registrationform
+  ENDIF
+  Delete QUIET ENV:makecdANSWER
+ENDIF
+
+LAB unsetvars
+
+UNSET makecdlang
+UNSET makecdregfilename
+UNSET makecdnoregform
+UNSET makecdregreq
+UNSET makecdshallprint
+UNSET makecdshalldelete
+UNSET makecdansok
+UNSET makecdansyes
+UNSET makecdansno
+
+LAB end

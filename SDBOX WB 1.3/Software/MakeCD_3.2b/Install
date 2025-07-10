@@ -1,0 +1,2582 @@
+; $Id: Install 1.17 1999/03/21 18:20:36 angela Exp $
+; $VER: Install-MakeCD 2.4 (8.7.97)
+
+; If you want to add support for further languages, please
+; contact angela@core.de first to check if somebody else is
+; already working on such a translation.
+
+(procedure P_GET_LANG_FROM_ENV
+	(
+		(if (= 1 (exists "ENV:Language"))
+			( ; then
+				(if (patmatch (getenv "language") txt_lang_0) ; Dansk
+					0
+					(if (patmatch (getenv "language") txt_lang_1) ; Deutsch
+						1
+						(if (patmatch (getenv "language") txt_lang_2) ; English
+							2
+							(if (patmatch (getenv "language") txt_lang_3) ; Español
+								3
+								(if (patmatch (getenv "language") txt_lang_4) ; Français
+									4
+									(if (patmatch (getenv "language") txt_lang_5) ; Italiano
+										5
+										(if (patmatch (getenv "language") txt_lang_6) ; Magyar
+											6
+											(if (patmatch (getenv "language") txt_lang_7) ; Nederlands
+												7
+												(if (patmatch (getenv "language") txt_lang_8) ; Norsk
+													8
+													(if (patmatch (getenv "language") txt_lang_9) ; Suomi
+														9
+														(if (patmatch (getenv "language") txt_lang_10) ; Svenska
+															10
+															(if (patmatch (getenv "language") txt_lang_11) ; ÃeÓtina (Czech)
+																11
+																2 ; English
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
+			( ; else
+				(if (patmatch @language txt_lang_0) ; Dansk
+					0
+					(if (patmatch @language txt_lang_1) ; Deutsch
+						1
+						(if (patmatch @language txt_lang_2) ; English
+							2
+							(if (patmatch @language txt_lang_3) ; Español
+								3
+								(if (patmatch @language txt_lang_4) ; Français
+									4
+									(if (patmatch @language txt_lang_5) ; Italiano
+										5
+										(if (patmatch @language txt_lang_6) ; Magyar
+											6
+											(if (patmatch @language txt_lang_7) ; Nederlands
+												7
+												(if (patmatch @language txt_lang_8) ; Norsk
+													8
+													(if (patmatch @language txt_lang_9) ; Suomi
+														9
+														(if (patmatch @language txt_lang_10) ; Svenska
+															10
+															(if (patmatch @language txt_lang_10) ; ÃeÓtina (Czech)
+																11
+																2 ; English
+															)
+														)
+													)
+												)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+)
+
+
+
+; Für neue Sprache (Catalog oder Anleitung für MakeCD):
+; - Sprache hier einfügen
+; - numlangs auf Anzahl der von MakeCD supporteten Sprachen setzen
+; - bei #which_languages_to_install Sprache hinzufügen
+
+(procedure P_SELECT_LANGUAGE
+	(
+;                                   |                                  | 2 if doc exists,         |                              | 
+;     Name of language              | Name of Catalog directory        | 1 if catalog exists,     | Translation of "by"          | Name of translator
+;                                   |                                  | 0 if xyz does not exist  |                              |
+;     ==============================|==================================|==========================|==============================|=============================================
+		(set txt_lang_0  "Dansk")        (set txt_langdir_0  "dansk")        (set langbits_0  (+ 0 1))   (set txt_by_0  "af")            (set trans_lang_0  "Mark Holm")
+		(set txt_lang_1  "Deutsch")      (set txt_langdir_1  "deutsch")      (set langbits_1  (+ 2 1))   (set txt_by_1  "von")           (set trans_lang_1  "Angela Schmidt")
+		(set txt_lang_2  "English")      (set txt_langdir_2  "english")      (set langbits_2  (+ 2 0))   (set txt_by_2  "by")            (set trans_lang_2  "Angela Schmidt")
+		(set txt_lang_3  "Español")      (set txt_langdir_3  "español")      (set langbits_3  (+ 0 1))   (set txt_by_3  "por")           (set trans_lang_3  "Javier Morata")
+		(set txt_lang_4  "Français")     (set txt_langdir_4  "français")     (set langbits_4  (+ 0 1))   (set txt_by_4  "par")           (set trans_lang_4  "Jean-Marc Boursot")
+		(set txt_lang_5  "Italiano")     (set txt_langdir_5  "italiano")     (set langbits_5  (+ 0 1))   (set txt_by_5  "a cura di")     (set trans_lang_5  "Francesco Dipietromaria")
+		(set txt_lang_6  "Magyar")       (set txt_langdir_6  "magyar")       (set langbits_6  (+ 0 1))   (set txt_by_6  "készítette")    (set trans_lang_6  "Horváth Péter")
+		(set txt_lang_7  "Nederlands")   (set txt_langdir_7  "nederlands")   (set langbits_7  (+ 0 1))   (set txt_by_7  "door")          (set trans_lang_7  "Tim J. en Korneel K.")          ; (Tim Jacobs en Korneel Ketelslegers)
+		(set txt_lang_8  "Norsk")        (set txt_langdir_8  "norsk")        (set langbits_8  (+ 0 1))   (set txt_by_8  "av")            (set trans_lang_8  "Eivind Olsen")
+		(set txt_lang_9  "Suomi")        (set txt_langdir_9  "suomi")        (set langbits_9  (+ 0 1))   (set txt_by_9  "tehnyt")        (set trans_lang_9  "Mikko Virtanen")
+		(set txt_lang_10 "Svenska")      (set txt_langdir_10 "svenska")      (set langbits_10 (+ 0 1))   (set txt_by_10 "av")            (set trans_lang_10 "Fredrik Zetterlund")
+		(set txt_lang_11 "ÃeÓtina")      (set txt_langdir_11 "ÃeÓtina")      (set langbits_11 (+ 0 1))   (set txt_by_10 "pÒeloÚil")      (set trans_lang_10 "VÉt óindlÁÒ")
+;		The following languages are not available in this installer script, but there might be a catalog etc.
+		(set txt_lang_12 "Greek")        (set txt_langdir_12 "greek")        (set langbits_12 (+ 0 1))
+		; looking for português, ...
+
+		(set numlangs 13)
+
+		(if (AND (= 0 origuserlevel) (= 1 (exists "ENV:Language")))
+			(
+				(set langnum (P_GET_LANG_FROM_ENV))
+			)
+			(
+				(user 2)
+				(set langnum
+					(askchoice
+						(prompt "Choose the language to be used in this installer script.")
+						(help "Please select your favourite language.\n\n" "Bitte wählen Sie ihre bevorzugte Sprache.\n\n"
+							("%s: %s %s" txt_lang_0 txt_by_0 trans_lang_0)
+							("%s: %s %s" txt_lang_1 txt_by_1 trans_lang_1)
+							("%s: %s %s" txt_lang_2 txt_by_2 trans_lang_2)
+							("%s: %s %s" txt_lang_3 txt_by_3 trans_lang_3)
+							("%s: %s %s" txt_lang_4 txt_by_4 trans_lang_4)
+							("%s: %s %s" txt_lang_5 txt_by_5 trans_lang_5)
+							("%s: %s %s" txt_lang_6 txt_by_6 trans_lang_6)
+							("%s: %s %s" txt_lang_7 txt_by_7 trans_lang_7)
+							("%s: %s %s" txt_lang_8 txt_by_8 trans_lang_8)
+							("%s: %s %s" txt_lang_9 txt_by_9 trans_lang_9)
+							("%s: %s %s" txt_lang_10 txt_by_10 trans_lang_10)
+							("%s: %s %s" txt_lang_10 txt_by_10 trans_lang_11)
+						)
+						(choices
+							("%s" txt_lang_0)
+							("%s" txt_lang_1)
+							("%s" txt_lang_2)
+							("%s" txt_lang_3)
+							("%s" txt_lang_4)
+							("%s" txt_lang_5)
+							("%s" txt_lang_6)
+							("%s" txt_lang_7)
+							("%s" txt_lang_8)
+							("%s" txt_lang_9)
+							("%s" txt_lang_10)
+							("%s" txt_lang_11)
+						)
+						(default
+							(P_GET_LANG_FROM_ENV)
+						)
+					)
+				)
+				(user origuserlevel)
+			)
+		)
+
+		(if (= langnum 0)  (set langstring txt_lang_0))
+		(if (= langnum 1)  (set langstring txt_lang_1))
+		(if (= langnum 2)  (set langstring txt_lang_2))
+		(if (= langnum 3)  (set langstring txt_lang_3))
+		(if (= langnum 4)  (set langstring txt_lang_4))
+		(if (= langnum 5)  (set langstring txt_lang_5))
+		(if (= langnum 6)  (set langstring txt_lang_6))
+		(if (= langnum 7)  (set langstring txt_lang_7))
+		(if (= langnum 8)  (set langstring txt_lang_8))
+		(if (= langnum 9)  (set langstring txt_lang_9))
+		(if (= langnum 10) (set langstring txt_lang_10))
+		(if (= langnum 11) (set langstring txt_lang_11))
+		(if (= langnum 12) (set langstring txt_lang_12))
+		(if (= langnum 13) (set langstring txt_lang_13))
+
+		(if (<> 1 (exists "ENV:Language"))
+			(
+				(run ("%s%s" "setenv Language " langstring))
+			)
+		)
+
+
+		; Set default strings
+
+		; By Angela Schmidt
+		(set #yes_answer
+			"Yes"
+		)
+		(set #no_answer
+			"No"
+		)
+		(set #choose_yes_or_no
+			"Please chose \"Yes\" or \"No\"."
+		)
+		(set #archive_not_found_warning
+			("%s%s%s"
+				"Warning:\n"
+				"Could not extract \"%s\".\n"
+				"Archive not found."
+			)
+		)
+		(set #archive_not_found_error
+			("%s%s%s"
+				"Error:\n"
+				"Could not extract \"%s\".\n"
+				"Archive not found."
+			)
+		)
+		(set #extracting_archive
+			"Extracting archive \"%s\" to directory \"%s\"."
+		)
+		(set #warning_old_os
+			(
+				"%s%s"
+				"Please update the operating system. "
+				"MakeCD requires OS 2.04."
+			)
+		)
+		(set #intro_msg
+			("%s%s%s%s"
+				"Welcome at the MakeCD installation!\n\n"
+				"Although MakeCD is able to run without further installation "
+				"(except the disk version), you might want to "
+				"copy it to your hard disk. This program will help you doing this."
+			)
+		)
+		(set #select_dest_dir
+			("%s%s"
+				"Please select the destination directory for MakeCD. "
+				"The \"MakeCD\" directory will be created automatically."
+			)
+		)
+		(set #which_languages_to_install
+			"Which languages do you want to install?"
+		)
+		(set #install_developer
+			("%s%s%s%s%s"
+				"Do you want to install developer material? This material "
+				"describes all you have to know about SUSP (System Use "
+				"Sharing Protocol), RRIP (Rock Ridge Interchange Protocol) "
+				"and about the support of Amiga protection bits and file "
+				"comments on CD-ROM."
+			)
+		)
+		(set #install_goodies
+			("%s%s%s"
+				"Do you want to install some goodies? This material does not "
+				"really belong to MakeCD and is not included in the MakeCD "
+				"registration fee, but might be useful."
+			)
+		)
+		(set #remove_oldversion
+			("%s%s%s%s%s"
+				"The destination directory \"%s\" that you chose already exists. Before installing the "
+				"new version, this directory has to be cleaned up. Files and directories which have been "
+				"created by you, are not affected - except when their names collide with the names of "
+				"MakeCD related files.\n\n"
+				"May the installer script delete the affected files and directories?"
+			)
+		)
+		(set #remove_oldversion_help
+			"The following commands will be performed:"
+		)
+		(set #abort_on_cleanup
+			"Could not cleanup directory.\n\nAborting.\n\nInstallation not done."
+		)
+		(set #deleting_old_files
+			"Deleting old files and directories."
+		)
+		(set #no_catalog
+			"no catalog"
+		)
+		(set #catalog
+			"catalog"
+		)
+		(set #no_doc
+			"no docs"
+		)
+		(set #doc
+			"docs"
+		)
+		(set #cannot_find_lang_docs
+			("%s%s%s%s"                         ; *** CHANGED ***
+				"Sorry, cannot find any docs for language \"%s\".\n\n"
+				"Installation of the docs of this language skipped.\n\n"
+				"You obviously do not have the documentation files for this language. "
+				"You can download them from http://makecd.core.de/."
+			)
+		)
+		(set #cannot_find_lang_catalogs
+			("%s%s%s%s"                         ; *** CHANGED ***
+				"Sorry, cannot find any catalogs for language \"%s\".\n\n"
+				"Installation of the catalogs of this language skipped.\n\n"
+				"You obviously do not have the catalog files for this language. "
+				"You can download them from http://makecd.core.de/."
+			)
+		)
+		(set #cannot_find_div_docs
+			("%s%s"
+				"Sorry, cannot find some of the doc files.\n\n"
+				"Installation of these docs skipped."
+			)
+		)
+		(set #copying_files
+			"Please stand by while copying ..."
+		)
+		(set #cannot_find_development_docs
+			("%s%s"
+				"Sorry, cannot find the development docs.\n\n"
+				"Installation of these docs skipped."
+			)
+		)
+		(set #select_drivers
+			("%s%s"                         ; *** CHANGED ***
+				"Please select the drivers to install. "
+				"Copy ALL drivers, if you are not an expert."
+			)
+		)
+		(set #copy_libs
+			"MakeCD requires triton.library V6."
+		)
+		(set #start_makecd                         ; *** CHANGED ***
+			"Do you want to start MakeCD now?"
+		)
+
+		; Now the strings that are required for further languages, will follow.
+		; For translations to further languages, simply copy one of the following
+		; block and change the texts. The control characters should remail
+		; unchanged. If you have to add or delete a line, you have to change
+		; the number of %s accordingly. For each line, on %s is required.
+
+		; By Mark Holm <markh@email.dk>
+		(if (patmatch langstring "Dansk")
+			(
+				(set #yes_answer
+					"Ja"
+				)
+				(set #no_answer
+					"Nej"
+				)
+				(set #choose_yes_or_no
+					"Vælg venligst \"Ja\" eller \"Nej\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Advarsel:\n"
+						"Kunne ikke udpakke \"%s\".\n"
+						"Arkivet blev ikke fundet."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Fejl:\n"
+						"Kunne ikke udpakke \"%s\".\n"
+						"Arkivet blev ikke fundet."
+					)
+				)
+				(set #extracting_archive
+					"Udpakker arkivet \"%s\" til biblioteket \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Opdatér venligst operativsystemet. "
+						"MakeCD kræver OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Velkommen til MakeCD installationen!\n\n"
+						"Selvom MakeCD er i stand til at køre uden videre installation "
+						"(undtagen disk-versionen), vil du muligvis "
+						"kopiere filerne til din harddisk. Dette script vil hjælpe dig med dette."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Vælg destinationsbiblioteket for MakeCD. "
+						"Biblioteket \"MakeCD\" vil automatisk blive oprettet."
+					)
+				)
+				(set #which_languages_to_install
+					"Hvilke(t) sprog vil du installere?"
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Vil du installere nogle 'godbidder'? De hører egentlig ikke "
+						"med i MakeCD pakken, og er heller ikke indregnet i "
+						"registreringsgebyret, men kan dog være nyttige. "
+					)
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Vil du installere udvikler-materialet? Dette materiale "
+						"beskriver alt, hvad du skal vide om SUSP (System Use "
+						"Sharing Protocol), RRIP (Rock Ridge Interchange Protocol), "
+						"og om understøttelsen af Amiga beskyttelses-bits og om "
+						"filkommentarer på CD-ROM."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"Destinationsbiblioteket \"%s\", du har valgt, eksisterer allerede. Før den nye version kan "
+						"installeres, skal der ryddes op i dette bibliotek. Filer og kataloger, du selv har oprettet, "
+						"vil ikke blive berørt - undtagen når filnavnene kolliderer med navnene på "
+						"MakeCD relaterede filnavne.\n\n"
+						"Må installtionsscriptet slette de berørte filer og biblioteker?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Følgende kommandoer vil blive udført:"
+				)
+				(set #abort_on_cleanup
+					"Kunne ikke rydde op i biblioteket.\n\nAfbryder.\n\nInstallationen blev ikke fuldført."
+				)
+				(set #deleting_old_files
+					"Sletter gamle filer og biblioteker."
+				)
+				(set #no_catalog
+					"ingen catalog"
+				)
+				(set #catalog
+					"catalog"
+				)
+				(set #no_doc
+					"ingen vejledning"
+				)
+				(set #doc
+					"vejledning"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Beklager, kan ikke finde vejledningen til sproget \"%s\".\n\n"
+						"Installationen af vejledningen til dette sprog springes over.\n\n"
+						"Du har tilsyneladende ikke vejlednings-filerne til dette sprog. "
+						"Du kan downloade dem fra http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Beklager, kan ikke finde nogen catalog-filer til sproget \"%s\".\n\n"
+						"Installationen af catalog-filer til dette sprog springes over.\n\n"
+						"Du har tilsyneladende ikke catalog-filerne til dette sprog. "
+						"Du kan downloade dem fra http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Beklager, kan ikke finde nogle af vejlednings-filerne.\n\n"
+						"Installationen af denne vejledning springes over."
+					)
+				)
+				(set #copying_files
+					"Vent venligst ... kopierer filerne"
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Beklager, kan ikke finde udvikler-vejledningen.\n\n"
+						"Installationen af denne vejledning springes over."
+					)
+				)
+				(set #select_drivers
+					("%s%s"
+						"Vælg de drivere, der skal installeres. "
+						"Kopier ALLE drivere, hvis du ikke er en ekspert."
+					)
+				)
+				(set #copy_libs
+					"MakeCD kræver triton.library V6."
+				)
+				(set #start_makecd
+					"Vil du starte MakeCD nu?"
+				)
+			)
+		)
+
+		; By Angela Schmidt
+		(if (patmatch langstring "Deutsch")
+			(
+				(set #yes_answer
+					"Ja"
+				)
+				(set #no_answer
+					"Nein"
+				)
+				(set #choose_yes_or_no
+					"Wählen Sie bitte \"Ja\" oder \"Nein\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Warnung:\n"
+						"Konnte \"%s\" nicht entpacken.\n"
+						"Archiv nicht gefunden."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Fehler:\n"
+						"Konnte \"%s\" nicht entpacken.\n"
+						"Archiv nicht gefunden."
+					)
+				)
+				(set #extracting_archive
+					"Entpacke Archiv \"%s\" ins Verzeichnis \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Bitte bringen Sie Ihr Betriebssystem auf den neuesten Stand. "
+						"MakeCD funktioniert erst ab OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Willkommen zur MakeCD Installation!\n\n"
+						"MakeCD ist zwar auch ohne weitere Installation lauffähig "
+						"(außer die Disketten-Version), aber Sie werden es sicherlich "
+						"auch auf Festplatte installieren wollen. Dabei hilft Ihnen dieses Programm."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Bitte wählen Sie das Verzeichnis, in dem Sie MakeCD installieren möchten. "
+						"Ein Verzeichnis \"MakeCD\" wird automatisch angelegt."
+					)
+				)
+				(set #which_languages_to_install
+					"Welche Sprachen möchten Sie installieren?"
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Sollen einige Goodies installiert werden? Die Goodies gehören "
+						"nicht wirklich zu MakeCD und sind nicht in der Registrier-Gebühr "
+						"von MakeCD enthalten, könnten sich jedoch als nützlich erweisen. "
+					)
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Möchten Sie die Dateien für Entwickeler installieren? Diese "
+						"Dateien beschreiben alles, was Sie über SUSP (System Use "
+						"Sharing Protocol), RRIP (Rock Ridge Interchange Protocol) "
+						"und über die Unterstützung von Amiga Protection Bits and Datei-Kommentaren "
+						"auf CD-ROMs wissen müssen."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"Das von Ihnen gewählte Zielverzeichnis \"%s\" existiert bereits. Bevor die neue Version "
+						"installiert wird, muß in diesem Verzeichnis aufgeräumt werden. Dateien und Verzeichnisse, "
+						"die von Ihnen in diesem Verzeichnis angelegt wurden, sind davon nicht betroffen - außer "
+						"wenn Sie Namen vergeben haben, die mit den von MakeCD vergebenen Namen kollidieren.\n\n"
+						"Darf das Installer-Skript die betroffenen Dateien und Verzeichnisse löschen?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Die folgenden Befehle werden ausgeführt:"
+				)
+				(set #abort_on_cleanup
+					"Konnte Verzeichnis nicht aufräumen.\n\nBreche Installation ab.\n\nEs wurde nichts installiert."
+				)
+				(set #deleting_old_files
+					"Lösche alte Dateien und Verzeichnisse."
+				)
+				(set #no_catalog
+					"kein Catalog"
+				)
+				(set #catalog
+					"Catalog"
+				)
+				(set #no_doc
+					"keine Dokumentation"
+				)
+				(set #doc
+					"Dokumentation"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Die Anleitung für die Sprache \"%s\" kann leider nicht gefunden werden.\n\n"
+						"Die Installation der Anleitung dieser Sprache wurde übersprungen.\n\n"
+						"Offenbar ist die Anleitung für diese Sprache nicht in Ihrer Distribution vorhanden. "
+						"Sie können sie von http://makecd.core.de/ herunterladen."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Der Katalog für die Sprache \"%s\" kann leider nicht gefunden werden.\n\n"
+						"Die Installation des Katalogs dieser Sprache wurde übersprungen.\n\n"
+						"Offenbar ist die Catalog-Datei für diese Sprache nicht in Ihrer Distribution vorhanden. "
+						"Sie können sie von http://makecd.core.de/ herunterladen."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Einige der Dokumentations-Dateien können leider nicht gefunden werden.\n\n"
+						"Die Installation dieser Dateien wurde übersprungen."
+					)
+				)
+				(set #copying_files
+					"Kopiere ... Bitte etwas Geduld."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Die Entwickler-Dokumentation kann leider nicht gefunden werden.\n\n"
+						"Die Installation dieser Dokumentation wurde übersprungen."
+					)
+				)
+				(set #select_drivers
+					("%s%s"
+						"Welche Treiber möchten Sie installieren? "
+						"Kopieren Sie ALLE Treiber, wenn Sie kein Experte sind!"
+					)
+				)
+				(set #copy_libs
+					"MakeCD benötigt triton.library V6."
+				)
+				(set #start_makecd
+					"Soll MakeCD nun gestartet werden?"
+				)
+			)
+		)
+
+		; By Javier Morata <jmorata@kaos.es>
+		(if (patmatch langstring "Español")
+			(
+				(set #yes_answer
+					"Si"
+				)
+				(set #no_answer
+					"No"
+				)
+				(set #choose_yes_or_no
+					"Por favor escoge \"Si\" o \"No\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Atención:\n"
+						"No he podido extraer \"%s\".\n"
+						"Archivo no encontrado."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Error:\n"
+						"No he podido extraer \"%s\".\n"
+						"Archivo no encontrado."
+					)
+				)
+				(set #extracting_archive
+					"Extrayendo archivo \"%s\" al directorio \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Por favor, actualiza el sistema operativo."
+						"MakeCD requiere OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Bienvenido a la instalación de MakeCD!\n\n"
+						"A pesar de que MakeCD es capaz de ejecutarse sin instalar"
+						"(excepto la versión de disco), deberías querer"
+						"copiarlo en tu disco duro. Este programa te ayudará en ello."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Por favor, selecciona el directorio destino para MakeCD."
+						"El directorio \"MakeCD\" será creado automaticamente."
+					)
+				)
+				(set #which_languages_to_install
+					"Que lenguajes quieres instalar?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Quieres instalar el material de desarrollo? Este material"
+						"describe todo lo que tienes que saber sobre SUSP (protocolo"
+						"de compartición del uso del sistema), RRIP (protocolo de"
+						"intercambio del Rock Ridge), y sobre el soporte de los bits"
+						"de protección del Amiga y los comentarios en CD-ROM."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Quieres instalar algunos extras? Este material no pertenece"
+						"realmente a MakeCD y no está incluido en el previo pago del"
+						"registro de MakeCD, pero puede ser útil."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"El directorio destino \"%s\" que has escogido ya existe. Antes de instalar la nueva"
+						"versión, este directorio tiene que ser limpiado. Ficheros y directorios los cuales"
+						"han sido creados por ti no son afectados - excepto cuando sus nombres coinciden con"
+						"los nombres de los ficheros propios de MakeCD.\n\n"
+						"Debe el instalador borrar los ficheros afectados y los directorios?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Los siguientes comandos serán realizados:"
+				)
+				(set #abort_on_cleanup
+					"No he podido limpiar el directorio.\n\nAbortando.\n\nLa instalación no fue realizada."
+				)
+				(set #deleting_old_files
+					"Borrando ficheros antiguos y directorios."
+				)
+				(set #no_catalog
+					"no catalogo"
+				)
+				(set #catalog
+					"catalogo"
+				)
+				(set #no_doc
+					"no documento"
+				)
+				(set #doc
+					"documento"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"									; *** CHANGED ***
+						"Lo siento, no puedo encontrar ningún documento en \"%s\".\n\n"
+						"Instalación de los documentos de este lenguaje saltada.\n\n"
+						"Obviamente no tienes los ficheros documento para esta lengua."
+						"Puedes bajartelos de http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"									; *** CHANGED ***
+						"Lo siento, no puedo encontrar ningún catalogo en \"%s\".\n\n"
+						"Instalación de los catalogos de este lenguaje saltada.\n\n"
+						"Obviamente no tienes los ficheros catalogo para esta lengua."
+						"Puedes bajartelos de http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Lo siento, no puedo encontrar alguno de"
+						"los ficheros documento.\n\n"
+						"Instalación de estos catalogos saltada."
+					)
+				)
+				(set #copying_files
+					"Por favor, espera mientras copio ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Lo siento, no puedo encontrar los"
+						"documentos de desarrollo.\n\n"
+						"Instalación de estos documentos saltada."
+					)
+				)
+				(set #select_drivers
+					("%s%s"								  ; *** CHANGED ***
+						"Por favor, selecciona los controladores"
+						"a instalar. Copia TODOS los controladores"
+						"si no eres un usuario experto."
+					)
+				)
+				(set #copy_libs
+					"MakeCD requiere triton.library V6."
+				)
+				(set #start_makecd								 ; *** CHANGED ***
+					"Quieres ejecutar MakeCD ahora?"
+				)
+			)
+		)
+
+		; Chaînes utilisées pour l'installation en français. Pour les traduire
+		; dans une autre langue, copiez simplement le bloc et traduisez le.
+		; Les noms de variables ne doivent pas être changés. Si une phrase doit
+		; être éliminée, changez alors le nombre de "%s" (il y en a un par
+		; phrase).
+
+		; By Jean-Marc Boursot <jmarc.boursot@mail.dotcom.fr>
+		(if (patmatch langstring "Français")
+			(
+				(set #yes_answer
+					"Oui"
+				)
+				(set #no_answer
+					"Non"
+				)
+				(set #choose_yes_or_no
+					"Choisissez \"Oui\" ou \"Non\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Attention:\n"
+						"Extraction de \"%s\" impossible.\n"
+						"Archive introuvable."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Erreur:\n"
+						"Extraction de \"%s\" impossible.\n"
+						"Archive introuvable."
+					)
+				)
+				(set #extracting_archive
+					"Extraction de l'archive \"%s\" dans le répertoire \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Veuillez mettre à jour votre système d'exploitation. "
+						"MakeCD nécessite un OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Bienvenue à l'installation MakeCD!\n\n"
+						"Bien que MakeCD puisse fonctionner sans installation "
+						"(sauf la version disque), vous pouvez souhaiter le copier "
+						"sur votre disque dur. Ce script vous y aidera."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Choisissez le répertoire destination de MakeCD. "
+						"Un tiroir \"MakeCD\" sera créé automatiquement."
+					)
+				)
+				(set #which_languages_to_install
+					"Quelles langues voulez-vous installer?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Voulez-vous installer les éléments développeur? Ces éléments "
+						"décrivent tout ce que vous avez besoin de savoir sur SUSP (System "
+						"Use Sharing Protocol), RRIP (Rock Ridge Interchange Protocol) "
+						"et sur le support des bits de protection Amiga et les "
+						"commentaires sur CD-ROM."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Voulez-vous installer quelques compléments? Ces éléments ne "
+						"font pas vraiment partie de MakeCD et ne sont pas intégrés "
+						"lors du paiement de l'enregistrement, mais peuvent être utiles."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"Le répertoire destination \"%s\" que vous avez choisit existe déjà. Avant d'installer "
+						"la nouvelle version, ce répertoire doit être nettoyé. Les fichiers et répertoires créés "
+						"par vous ne seront pas affectés (sauf si leur nom correspond au nom d'un fichier de "
+						"MakeCD).\n\n"
+						"Continuer le script en effaçant les fichiers et répertoires concernés?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Les commandes suivantes vont être exécutées:"
+				)
+				(set #abort_on_cleanup
+					"Ne peut nettoyer le répertoire.\n\nAnnulation.\n\nInstallation incomplète."
+				)
+				(set #deleting_old_files
+					"Effacement des vieux fichiers et répertoires."
+				)
+				(set #no_catalog
+					"aucun catalogue"
+				)
+				(set #catalog
+					"catalogue"
+				)
+				(set #no_doc
+					"aucun document"
+				)
+				(set #doc
+					"document"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Désolé, je ne trouve aucun document pour la langue \"%s\".\n\n"
+						"Installation des documents de cette langue passée.\n\n"
+						"Vous n'avez manifestement pas les documentations dans cette langue. "
+						"Vous pouvez les télécharger depuis http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Désolé, je ne trouve aucun catalogue pour la langue \"%s\".\n\n"
+						"Installation des catalogues de cette langue passée.\n\n"
+						"Vous n'avez manifestement pas les catalogues dans cette langue. "
+						"Vous pouvez les télécharger depuis http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Désolé, je ne trouve pas certains documents.\n\n"
+						"Installation de ces documents passée."
+					)
+				)
+				(set #copying_files
+					"Veuillez patienter pendant la copie ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Désolé, je ne trouve les documents développeur.\n\n"
+						"Installation de ces documents passée."
+					)
+				)
+				(set #select_drivers
+					("%s%s"
+						"Choisissez les pilotes à installer. "
+						"Copiez TOUS les pilotes si vous n'êtes pas un spécialiste."
+					)
+				)
+				(set #copy_libs
+					"MakeCD nécessite la triton.library V6."
+				)
+				(set #start_makecd
+					"Voulez-vous maintenant démarrer MakeCD?"
+				)
+			)
+		)
+
+		; By Francesco Dipietromaria <dpm@sinet.it>
+		(if (patmatch langstring "Italiano")
+			(
+				(set #yes_answer
+					"Si"
+				)
+				(set #no_answer
+					"No"
+				)
+				(set #choose_yes_or_no
+					"Scegli \"Si\" o \"No\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Attenzione:\n"
+						"Non posso estrarre \"%s\".\n"
+						"Archivio non trovato."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Errore:\n"
+						"Non posso estrarre \"%s\".\n"
+						"Archivio non trovato."
+					)
+				)
+				(set #extracting_archive
+					"Sto estraendo l'archivio \"%s\" nella directory \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Aggiorna il sistema operativo. "
+						"MakeCD richiede l'OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Benvenuti nel programma di installazione di MakeCD!\n\n"
+						"Anche se MakeCD può funzionare senza essere installato, "
+						"(esclusa la versione su disco), è più comodo copiarlo sul "
+						"disco rigido. Questo script ti aiuterà in questa operazione."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Seleziona la directory destinazione per MakeCD. "
+						"La directory \"MakeCD\" verrà creata automaticamente."
+					)
+				)
+				(set #which_languages_to_install
+					"Quali lingue vuoi installare?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Vuoi installare il materiale per sviluppatori? Questo materiale "
+						"descrive tutto cuò che devi sapere su SUSP (System Use "
+						"Sharing Protocol), RRIP (Rock Ridge Interchange Protocol) "
+						"e sul supporto dei bit di protezione e dei commenti dei "
+						"file Amiga su CD-ROM."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Vuoi installare alcuni extra? Questo materiale non appartiene "
+						"a MakeCD e non è incluso nella registrazione di MakeCD, "
+						"ma può essere molto utile."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"La directory di destinazione \"%s\" che hai scelto esiste già. Prima di installare la "
+						"nuova versione, questa directory deve essere svuotata. I file e le directory che sono "
+						"state create da te non saranno toccate - a meno che i loro nomi non coincidano con i nomi "
+						"dei file di MakeCD.\n\n"
+						"Posso cancellare le directory e i file interessati?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Saranno eseguiti i seguenti comandi:"
+				)
+				(set #abort_on_cleanup
+					"Non posso svuotare la directory.\n\nInterrompo.\n\nInstallazione non completata."
+				)
+				(set #deleting_old_files
+					"Sto cancellando i vecchi file e directory."
+				)
+				(set #no_catalog
+					"nessun catalogo"
+				)
+				(set #catalog
+					"catalogo"
+				)
+				(set #no_doc
+					"nessun doc"
+				)
+				(set #doc
+					"doc"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Spiacente, non trovo la documentazione tradotta in \"%s\".\n\n"
+						"Salto l'installazione della documentazione in lingua.\n\n"
+						"Evidentemente non hai i file della documentazione per questa lingua. "
+						"Eventualmente li puoi scaricare da http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Spiacente, non trovo i cataloghi tradotti in \"%s\".\n\n"
+						"Salto l'installazione dei cataloghi in lingua.\n\n"
+						"Evidentemente non hai i file della documentazione per questa lingua. "
+						"Eventualmente li puoi scaricare da http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Spiacente, non trovo alcuni file di documentazione.\n\n"
+						"Salto l'installazione di questi file."
+					)
+				)
+				(set #copying_files
+					"Attendere, copia in corso ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Spiacente non trovo la documentazione per sviluppatori.\n\n"
+						"Salto l'installazione di questa documentazione."
+					)
+				)
+				(set #select_drivers
+					("%s%s"
+						"Seleziona i driver da installare. "
+						"Copia TUTTI i driver se non sei sicuro."
+					)
+				)
+				(set #copy_libs
+					"MakeCD richiede la triton.library V6."
+				)
+				(set #start_makecd
+					"Vuoi eseguire MakeCD adesso?"
+				)
+			)
+		)
+
+		; By Horváth Péter <pcpince@syneco.hu>
+		(if (patmatch langstring "Magyar")
+			(
+				(set #yes_answer
+					"Igen"
+				)
+				(set #no_answer
+					"Nem"
+				)
+				(set #choose_yes_or_no
+					"Kérem, válasszon! \"Igen\" vagy \"Nem\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Figyelem:\n"
+						"Nem tudtam kitömöríteni: \"%s\".\n"
+						"Nem találtam meg az archívumot."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Hiba:\n"
+						"Nem tudtam kitömöríteni: \"%s\".\n"
+						"Nem találtam meg az archívumot."
+					)
+				)
+				(set #extracting_archive
+					"\"%s\" archívum kitömörítése a(z) \"%s\" könyvtárba."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Kérem, szerezzen be újabb operációs rendszert."
+						"A MakeCD csak legalább OS 2.04 alatt fut."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Üdvözlöm a MakeCD installálásánál!\n\n"
+						"Bár a MakeCD képes további installálás nélkül futni "
+						"(kivéve a lemezes változatot), Ön esetleg a merevlemezre "
+						"kívánja másolni. Ez a script segíteni fog Önnek ebben."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Kérem, válassza ki a MakeCD számára a célkönyvtárat. "
+						"A \"MakeCD\" könyvtár automatikusan létrejön."
+					)
+				)
+				(set #which_languages_to_install
+					"Mely nyelveket kívánja installálni?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"A fejlesztõi anyagot is fel kívánja installálni? Ez az anyag "
+						"leír mindent, amit tudnia kell a SUSP-ról (System Use "
+						"Sharing Protocol), RRIP-ról (Rock Ridge Interchange Protocol), "
+						"az Amiga protection bitekrõl és file kommentárokról "
+						"egy CD-ROM-on."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Kíván installálni néhány apró, hasznos programot? Ezek nem tartoznak "
+						"szorosan a MakeCD-hez és a MakeCD regisztrációs díjában sincsenek"
+						"benne, de hasznosak lehetnek."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"A célkönyvtár \"%s\", amelyet kiválasztott, már létezik. Mielõtt az új változat "
+						"installálásra kerül, e könyvtárat ki kell tisztítani. Azokat a file-okat és "
+						"könyvtárakat, amelyeket Ön hozott létre, nem érinti a törlés - kivéve, ha "
+						"nevük ütközik a MakeCD által használt file-okkal.\n\n"
+						"Letörölhetem az érintett file-okat és könyvtárakat?"
+					)
+				)
+				(set #remove_oldversion_help
+					"A következõ parancsok kerülnek végrehajtásra: "
+				)
+				(set #abort_on_cleanup
+					"Nem lehet a könyvtárat megtisztítani.\n\nMegszakítás.\n\nAz installálás nem volt sikeres."
+				)
+				(set #deleting_old_files
+					"Régi file-ok és könyvtárak törlése."
+				)
+				(set #no_catalog
+					"nincs katalógus"
+				)
+				(set #catalog
+					"katalógus"
+				)
+				(set #no_doc
+					"nincs dokumentáció"
+				)
+				(set #doc
+					"dokumentáció"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"                         ; *** CHANGED ***
+						"Sajnos a(z) \"%s\" nyelvhez nem található dokumentáció.\n\n"
+						"A dokumentáció installálása ehhez a nyelvhez nem történhet meg.\n\n"
+						"You obviously do not have the documentation files for this language. "
+						"You can download them from http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"                         ; *** CHANGED ***
+						"Sajnos ehhez a nyelvhez egyáltalán nem találtam katalógust: \"%s\".\n\n"
+						"A katalógusok installálása ehhez a nyelvhez nem lehetséges.\n\n"
+						"You obviously do not have the catalog files for this language. "
+						"You can download them from http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Sajnos, a dokumentációs file-ok egy része nem található.\n\n"
+						"Ezek installálása nem lehetséges."
+					)
+				)
+				(set #copying_files
+					"Kérem, várjon, míg másolok ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Sajnos, a fejlesztõi dokumentáció nem található.\n\n"
+						"Ennek installálása nem lehetséges."
+					)
+				)
+				(set #select_drivers
+					("%s%s"                         ; *** CHANGED ***
+						"Kérem, válassza ki az installálni kívánt drivereket. "
+						"Copy ALL drivers, if you are not an expert."
+					)
+				)
+				(set #copy_libs
+					"A MakeCD mûködéséhez szükség van a triton.library V6-ra."
+				)
+				(set #start_makecd                         ; *** CHANGED ***
+					"Do you want to start MakeCD now?"
+				)
+			)
+		)
+
+		; Hierna volgen de teksten in het Nederlands. Om deze in een andere taal om te zetten,
+		; moet je gewoon de hele blok kopieren en daarna vertalen. De namen van de variabelen
+		; moeten/mogen niet veranderd worden. Als een zin toegevoegd of verwijderd wordt, moet
+		; je het aantal "%s"-en aanpassen. Er is telkens één %s per zin.
+
+		; By Tim Jacobs <crisp@unicall.be>
+		(if (patmatch langstring "Nederlands")
+			(
+				(set #yes_answer
+					"Ja"
+				)
+				(set #no_answer
+					"Nee"
+				)
+				(set #choose_yes_or_no
+					"Kies \"Ja\" ou \"Nee\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Opgelet:\n"
+						"Kan het archief \"%s\" niet uitpakken.\n"
+						"Archief niet gevonden."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Fout:\n"
+						"Kan het archief \"%s\" niet uitpakken.\n"
+						"Archief niet gevonden."
+					)
+				)
+				(set #extracting_archive
+					"Het archief \"%s\" wordt uitgepakt naar deze lade: \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Installeer AUB een nieuw operating system. "
+						"MakeCD heeft minstens OS 2.04 nodig."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s%s%s"
+						"Welkom bij de installatie van MakeCD!\n\n"
+						"MakeCD kan ook opgestart worden zonder deze installatie. "
+						"(Dit geldt echter niet voor de diskette-versie, deze moet eerst "
+                                                "geïnstalleerd worden).\n"
+                                                "Als U MakeCD op uw harddisk wilt installeren, zal dit script U "
+                                                "daarbij helpen."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Kies AUB de lade waarin MakeCD geïnstalleerd moet worden. "
+						"Er zal automatisch een lade \"MakeCD\" aangemaakt worden."
+					)
+				)
+				(set #which_languages_to_install
+					"Welke talen wilt U installeren?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Wilt U de documentatie voor software-ontwikkelaars installeren? "
+						"Deze documentatie beschrijft alles over SUSP (System Use Sharing "
+						"Protocol), RRIP (Rock Ridge Interchange Protocol) en over de "
+						"protectie-bits van de Amiga. Hierin staat ook informatie over "
+						"bestandscommentaren op CD-ROM's."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Wilt U enkele extra programma's installeren ? Deze programma's maken eigenlijk "
+						"geen deel uit van MakeCD, maar ze kunnen wel handig zijn. Deze programma's "
+                                                "vallen niet onder het registratiebedrag van MakeCD."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"De bestemmingslade \"%s\" die U gekozen heeft bestaat al. Alvorens de nieuwe versie van MakeCD geïnstalleerd "
+						"zal worden, moet deze lade eerst opgeruimd worden. De bestanden en de lades die U aangemaakt heeft "
+						"zullen niet gewist worden (tenzij dat hun naam overeenkomt met een naam die door MakeCD gebruikt "
+						"wordt).\n\n"
+						"Mag dit installer-script deze oude bestanden en lades verwijderen?"
+					)
+				)
+				(set #remove_oldversion_help
+					"De volgende commando's zullen uitgevoerd worden:"
+				)
+				(set #abort_on_cleanup
+					"Kon de lade niet opruimen.\n\nInstallatie wordt afgebroken.\n\nInstallatie niet volledig gedaan."
+				)
+				(set #deleting_old_files
+					"De oude bestanden en lades worden nu verwijderd ..."
+				)
+				(set #no_catalog
+					"geen catalog"
+				)
+				(set #catalog
+					"catalog"
+				)
+				(set #no_doc
+					"geen document"
+				)
+				(set #doc
+					"document"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"                         ; *** CHANGED ***
+						"Sorry, kan geen docs vinden voor de taal \"%s\".\n\n"
+						"Het installeren van de docs van deze taal wordt overgeslagen.\n\n"
+						"U heeft waarschijnlijk de docs van deze taal niet. "
+						"U kan ze afhalen van het internet op: http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"                         ; *** CHANGED ***
+						"Sorry, kan geen catalogs vinden voor de taal \"%s\".\n\n"
+						"Het installeren van de catalogs van deze taal wordt overgeslagen.\n\n"
+						"U heeft waarschijnlijk de catalogs van deze taal niet. "
+						"U kan ze afhalen van het internet op: http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Sorry, kan enkele doc bestanden niet vinden.\n\n"
+						"Het installeren van deze docs wordt overgeslagen."
+					)
+				)
+				(set #copying_files
+					"Even geduld. De bestanden worden gekopieerd ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Sorry, kan de docs voor software-ontwikkelaars niet vinden.\n\n"
+						"Het installeren van deze docs wordt overgeslagen."
+					)
+				)
+				(set #select_drivers
+					("%s%s"                         ; *** CHANGED ***
+						"Kies AUB welke drivers geïnstalleerd moeten worden. "
+						"Als U geen expert bent kopiëert U best ALLE drivers."
+					)
+				)
+				(set #copy_libs
+					"MakeCD heeft de triton.library versie 6 nodig."
+				)
+				(set #start_makecd                         ; *** CHANGED ***
+					"Wilt U MakeCD nu opstarten ?"
+				)
+			)
+		)
+
+		; By Eivind Olsen <eivindo@bgnett.no>
+		(if (patmatch langstring "Norsk")
+			(
+				(set #yes_answer
+					"Ja"
+				)
+				(set #no_answer
+					"Nei"
+				)
+				(set #choose_yes_or_no
+					"Vennligst velg \"Ja\" eller \"Nei\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Advarsel:\n"
+						"Kunne ikke pakke opp \"%s\".\n"
+						"Arkivet ble ikke funnet."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Feil:\n"
+						"Kunne ikke pakke opp \"%s\".\n"
+						"Arkivet ble ikke funnet."
+					)
+				)
+				(set #extracting_archive
+					"Pakker opp arkivet \"%s\" til katalogen \"%s\"."
+				)
+				(set #warning_old_os
+					("%s%s"
+						"Vennligst oppdater operativsystemet. "
+						"MakeCD krever OS 2.04 eller nyere."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Velkommen til installeringen av MakeCD!\n\n"
+						"Selv om MakeCD kan kjøres uten videre installering "
+						"(unntatt diskettversjonen), vil du kanskje "
+						"kopiere det til din harddisk. Dette skriptet hjelper deg med dette."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Velg en katalog å installere MakeCD til. "
+						"Katalogen \"MakeCD\" vil bli opprettet automatisk."
+					)
+				)
+				(set #which_languages_to_install
+					"Hvilke språk vil du installere?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Vil du installere utviklermateriale? Dette materialet "
+						"forklarer alt du behøver å vite om SUSP (delingsprotokoll "
+						"for systembruk), RRIP (Rock Ridge Interchange Protocol) "
+						"og om støtten for Amiga beskyttelsesatributter og "
+						"fil-kommentarer på CD-ROM platen."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Vil du installere noe smågodt? Dette materialet tilhører "
+						"ikke egentlig MakeCD og er ikke inkludert i registrerings- "
+						"avgiften til MakeCD, men kan allikevel komme til nytte."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"Målkatalogen \"%s\" som du valgte eksisterer allerede. Før du installerer "
+						"den nye versjonen må denne katalogen renskes opp i. Filer og kataloger som "
+						"du har laget blir ikke påvirket - unntatt når navnene deres "
+						"kolliderer med navnene på MakeCD relaterte filer.\n\n"
+						"Kan installeringsskriptet slette disse filene og katalogene?"
+					)
+				)
+				(set #remove_oldversion_help
+					"De følgende kommandoene vil bli utført:"
+				)
+				(set #abort_on_cleanup
+					"Kunne ikke renske opp i katalogen.\n\nAvbryter.\n\nInstallering ikke fullført."
+				)
+				(set #deleting_old_files
+					("%s%s"
+						"Sletter gamle filer og kataloger."
+						"Deleting old files and directories."
+					)
+				)
+				(set #no_catalog
+					"ingen språkfil"
+				)
+				(set #catalog
+					"språkfil"
+				)
+				(set #no_doc
+					"ingen dokumentasjon"
+				)
+				(set #doc
+					"dokumentasjon"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Beklager - ingen dokumentasjon finnes for språket \"%s\".\n\n"
+						"Installering av dokumentasjon for dette språket ble hoppet over.\n\n"
+						"Du har åpenbart ikke dokumentasjonsfilene for dette språket. "
+						"Du kan hente dem fra http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Beklager - ingen språkfiler finnes for språket \"%s\".\n\n"
+						"Installering av språkfiler for dette språket ble hoppet over.\n\n"
+						"Du har åpenbart ikke språkfilene for dette språket. "
+						"Du kan hente dem ned fra http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Beklager - ingen dokumentasjon ble funnet.\n\n"
+						"Installering av dokumentasjon ble hoppet over."
+					)
+				)
+				(set #copying_files
+					"Vennligst vent under kopiering ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Beklager - kan ikke finne utviklerdokumentasjon.\n\n"
+						"Installering av dokumentasjon ble hoppet over."
+					)
+				)
+				(set #select_drivers
+					("%s%s"
+						"Vennligst velg drivere som skal installeres. "
+						"Kopier ALLA driverene hvis du ikke er en ekspert."
+					)
+				)
+				(set #copy_libs
+					"MakeCD krever triton.library V6."
+				)
+				(set #start_makecd
+					"Vil du starte MakeCD nå?"
+				)
+			)
+		)
+
+		; By Mikko Virtanen <mtv@klinja.fipnet.fi>
+		(if (patmatch langstring "Suomi")
+			(
+				(set #yes_answer
+					"Kyllä"
+				)
+				(set #no_answer
+					"Ei"
+				)
+				(set #choose_yes_or_no
+					"Valitse \"Kyllä\" tai \"Ei\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Varoitus:\n"
+						"En pystynyt purkamaan \"%s\".\n"
+						"Pakettia ei löytynyt."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Virhe:\n"
+						"En pystynyt purkamaan \"%s\".\n"
+						"Pakettia ei löytynyt."
+					)
+				)
+				(set #extracting_archive
+					"Puran pakettia \"%s\" hakemistoon \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Päivitä käyttöjärjestelmä. "
+						"MakeCD vaatii OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Tervetuloa asentamaan MakeCD!\n\n"
+						"Vaikkakin MakeCD:tä voi käyttää ilman asennustakin"
+						"(paitsi levykeversiota), haluat varmaankin kopioida"
+						"sen kovalevyllesi. Tämä asennusohjelma auttaa sinua siinä."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Valitse kohdehakemisto MakeCD:lle. "
+						"\"MakeCD\" hakemisto luodaan automaattisesti."
+					)
+				)
+				(set #which_languages_to_install
+					"Mitkä kielet haluat asentaa?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Haluatko asentaa developer-materiaalin? Materiaali"
+						"sisältää kaiken, mitä sinun tulee tietää SUSP:sta (System Use "
+						"Sharing Protocol), RRIP:stä (Rock Ridge Interchange Protocol) "
+						"ja Amigan suojausbittien ja tiedostokomenttien tuesta "
+						"CD-ROM:lla."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Haluatko asentaa muutamia namupaloja? Tämä materiaali ei "
+						"oikeastaan kuulu MakeCD:hen, eikä sisälly MakeCD:n rekisteröinti- "
+						"maksuun, mutta saattaa kuitenkin osoittautua hyödylliseksi."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"Valitsemasi kohdehakemisto \"%s\" on jo olemassa. Ennen uuden version "
+						"asennusta, tämä hakemisto pitää siivota. Itse luomiisi tiedostoihin "
+						"ja hakemistoihin ei kosketa, paitsi jos niillä on samoja nimiä kuin "
+						"MakeCD:n omilla tiedostoilla.\n\n"
+						"Voidaanko MakeCD:hen liittyvät tiedostot ja hakemistot tuhota?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Seuraavat komennot suoritetaan:"
+				)
+				(set #abort_on_cleanup
+					"En pystynyt siivoamaan hakemistoa.\n\nKeskeytän.\n\nAsennusta ei tehty."
+				)
+				(set #deleting_old_files
+					"Tuhoan vanhoja tiedostoja ja hakemistoja."
+				)
+				(set #no_catalog
+					"ei sanastoa"
+				)
+				(set #catalog
+					"sanasto"
+				)
+				(set #no_doc
+					"ei ohjeita"
+				)
+				(set #doc
+					"ohjeet"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"                         ; *** CHANGED ***
+						"Pahoittelen, en löytänyt ohjeita kielelle \"%s\".\n\n"
+						"Hyppään tämän asennuskohdan yli.\n\n"
+						"You obviously do not have the documentation files for this language. "
+						"You can download them from http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"                         ; *** CHANGED ***
+						"Pahoittelen, en löytänyt sanastoa kielelle \"%s\".\n\n"
+						"Hyppään tämän asennuskohdan yli.\n\n"
+						"You obviously do not have the catalog files for this language. "
+						"You can download them from http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"En löytänyt muutamia ohjetiedostoja.\n\n"
+						"Asennus jätetty väliin tältä osin."
+					)
+				)
+				(set #copying_files
+					"Pieni hetki, kopioin ..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"En löydä kehittelyohjeita.\n\n"
+						"Asennus jätetty väliin tältä osin."
+					)
+				)
+				(set #select_drivers
+					("%s%s"                         ; *** CHANGED ***
+						"Valitse asennettavat ajurit. " 
+						"Copy ALL drivers, if you are not an expert."
+					)
+				)
+				(set #copy_libs
+					"MakeCD vaatii triton.library V6:n."
+				)
+				(set #start_makecd                         ; *** CHANGED ***
+					"Do you want to start MakeCD now?"
+				)
+			)
+		)
+
+		; By Fredrik Zetterlund <frallan@canit.se>
+		(if (patmatch langstring "Svenska")
+			(
+				(set #yes_answer
+					"Ja"
+				)
+				(set #no_answer
+					"Nej"
+				)
+				(set #choose_yes_or_no
+					"Välj antingen \"Ja\" eller \"Nej\"."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"Varning:\n"
+						"Kan inte utvinna \"%s\".\n"
+						"Hittar ej arkivet."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Fel:\n"
+						"Kan inte utvinna \"%s\".\n"
+						"Hittar ej arkivet."
+					)
+				)
+				(set #extracting_archive
+					"Utvinner arkiv \"%s\" till låda \"%s\"."  
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Vänligen uppdatera ditt operativsystem. "
+						"MakeCD kräver OS 2.04." 
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"Välkommen till MakeCD's installationsprogram!\n\n"
+						"Även om MakeCD klarar av att köras utan fortsatt "
+						"installation (förutom diskversionen), kanske du "
+						"vill kopiera den till din hårddisk. Detta skript hjälper dig med det."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Vänligen välj destinationslåda för MakeCD. "
+						"\"MakeCD\"-lådan skapas automatiskt."
+					)
+				)
+				(set #which_languages_to_install
+					"Vilka språk vill du installera?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"Vill du installera utvecklarmaterialet? Det materialet "
+						"beskriver allt du behöver veta om SUSP (System Use "
+						"Sharing Protocol), RRIP (Rock Ridge Interchange Protocol) "
+						"och om stödet för Amigans skyddsbittar och filkommentarer "
+						"på CD-ROMen."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"Vill du installera några godbitar? Det materialet tillhör "
+						"egentligen inte MakeCD och är inte inkluderat i MakeCD's "
+						"registreringsavgift, men kan vara användbart."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"Destinationslådan \"%s\" som du valt existerar redan. Innan "
+						"du installerar den nya versionen, måste lådan rensas upp. "
+						"Filer och lådor skapade av dig kommer inte att röras, om "
+						"inte deras namn kolliderar med namn som relateras till MakeCD-filer.\n\n"
+						"Får installationsskriptet radera de berörda lådorna?"
+					)
+				) 
+				(set #remove_oldversion_help
+					"Följande kommanon kommer att utföras:"
+				) 
+				(set #abort_on_cleanup
+					"Kunde inte rensa lådan.\n\nAvbryter.\n\nInstallation ej klar."
+				) 
+				(set #deleting_old_files
+					"Raderar gamla filer och lådor."
+				) 
+				(set #no_catalog
+					"ingen katalog"
+				)
+				(set #catalog
+					"katalog"
+				)
+				(set #no_doc
+					"ingen dokumentation"
+				)
+				(set #doc
+					"dokumentation"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Ledsen, hittar ingen dokumentation för ditt språk \"%s\".\n\n"
+						"Installationen av dokumentationen på det språket hoppas över.\n\n"
+						"Du har uppenbarligen inte dokumentationsfilerna för detta språk. "
+						"Du kan ladda ned dom från http://makecd.core.de/."
+					)
+				) 
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Ledsen, hittar inga kataloger för ditt språk \"%s\".\n\n"
+						"Installationen av katalogen på det språket hoppas över.\n\n" 
+						"Du har uppenbarligen inte katalogfilerna för detta språk. "
+						"Du kan ladda ned dom från http://makecd.core.de/."
+					)
+				) 
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Ledsen, hittar inte vissa delar av dokumentationen.\n\n"
+						"Installationen av den dokumentationen hoppas över."
+					)
+				) 
+				(set #copying_files
+					"Kopiering sker, var god dröj..."
+				) 
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Ledsen, kan inte hitta utvecklardokumentationen.\n\n"
+						"Installationen av den dokumentationen hoppas över."
+					)
+				) 
+				(set #select_drivers
+					("%s%s"
+						"Vänligen välj vilka drivrutiner som skall installeras. "
+						"Kopiera ALLA drivrutiner, om du inte är en expert."
+					)
+				) 
+				(set #copy_libs
+					 "MakeCD kräver triton.library V6."
+				)
+				(set #start_makecd
+					"Vill du starta MakeCD nu?"
+				)
+			)
+		)
+
+		; By Stepan Chladek <snappy@gyzamb.cz> and Vit Sindlar <sindlarv@voskop.cz>
+		(if (patmatch langstring "ÃeÓtina")
+			(
+				(set #yes_answer
+					"Ano"
+				)
+				(set #no_answer
+					"Ne"
+				)
+				(set #choose_yes_or_no
+					"Zvolte \"Ano\" nebo \"Ne\", prosÉm."
+				)
+				(set #archive_not_found_warning
+					("%s%s%s"
+						"UpozornÅnÉ:\n"
+						"Nelze rozbalit \"%s\".\n"
+						"ArchÉv nebyl nalezen."
+					)
+				)
+				(set #archive_not_found_error
+					("%s%s%s"
+						"Chyba:\n"
+						"Nelze rozbalit \"%s\".\n"
+						"ArchÉv nebyl nalezen."
+					)
+				)
+				(set #extracting_archive
+					"RozbalovÁnÉ archÉvu \"%s\" do adresÁÒe \"%s\"."
+				)
+				(set #warning_old_os
+					(
+						"%s%s"
+						"Aktualizujte vÁÓ operaÃnÉ syst×m. "
+						"MakeCD vyÚaduje OS 2.04."
+					)
+				)
+				(set #intro_msg
+					("%s%s%s%s"
+						"VÉtejte pÒi instalaci MakeCD!\n\n"
+						"AÃkoliv MakeCD lze spustit bez dalÓÉ instalace "
+						"(vyjma disketov× verze), pÒece jen bude lepÓÉ, "
+						"kdyÚ si jej nakopÉrujete na vÁÓ harddisk. Tento "
+						"program vÁm s tÉm pomÊÚe."
+					)
+				)
+				(set #select_dest_dir
+					("%s%s"
+						"Zvolte cÉlov× mÉsto na harddisku pro MakeCD, prosÉm. "
+						"AdresÁÒ \"MakeCD\" bude vytvoÒen automaticky."
+					)
+				)
+				(set #which_languages_to_install
+					"KterÙ z pÒekladÊ MakeCD si pÒejete nainstalovat?"
+				)
+				(set #install_developer
+					("%s%s%s%s%s"
+						"PÒejete si nainstalovat materiÁl pro vÙvojÁÒe? JednÁ se "
+						"o dokumentaci, ve kter× je popsÁno vÓe ohlednÅ SUSP "
+						"(System Use Sharing Protocol), RRIP (Rock Ridge Interchange "
+						"Protocol) a podpory ochrannÙch bitÊ a komentÁÒÊ Amigy "
+						"na m×diu CD-ROM."
+					)
+				)
+				(set #install_goodies
+					("%s%s%s"
+						"PÒejete si nainstalovat nÅkter× programy navÉc? NejednÁ se "
+						"sice o vÅci patÒÉcÉ k MakeCD nebo spadajÉcÉ do registrace, "
+						"ale mÊÚou bÙt uÚiteÃn×."
+					)
+				)
+				(set #remove_oldversion
+					("%s%s%s%s%s"
+						"CÉlovÙ adresÁÒ \"%s\", kterÙ jste zvolili, jiÚ existuje. PÒed "
+						"instalacÉ nov× verze musÉ bÙt vymazÁn. Soubory a adresÁÒe, kter× "
+						"jste vytvoÒili Vy, ovÓem smazÁny nebudou (pokud jejich nÁzvy "
+						"nekolidujÉ s tÅmi, co pÊvodnÅ pouÚÉvÁ MakeCD).\n\n"
+						"MÊÚou bÙt tedy pÒÉsluÓn× soubory a adresÁÒe smazÁny?"
+					)
+				)
+				(set #remove_oldversion_help
+					"Budou provedeny nÁsledujÉcÉ pÒÉkazy:"
+				)
+				(set #abort_on_cleanup
+					"Nelze vymazat adresÁÒ.\n\nPÒeruÓeno.\n\nInstalace nebyla provedena."
+				)
+				(set #deleting_old_files
+					"MaÚou se star× soubory a adresÁÒe."
+				)
+				(set #no_catalog
+					"katalog neexistuje"
+				)
+				(set #catalog
+					"katalog"
+				)
+				(set #no_doc
+					"dokumentace neexistuje"
+				)
+				(set #doc
+					"dokumentace"
+				)
+				(set #cannot_find_lang_docs
+					("%s%s%s%s"
+						"Pardon, ale pro jazyk \"%s\" nelze nal×zt dokumentaci.\n\n"
+						"Instalace dokumentace pro danÙ jazyk byla pÒeskoÃena.\n\n"
+						"Pro tento jazyk zÒejmÅ nemÁte pÒÉsluÓnou dokumentaci. "
+						"MÊÚete si je stÁhnout z http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_lang_catalogs
+					("%s%s%s%s"
+						"Pardon, ale pro jazyk \"%s\" nelze nal×zt katalog.\n\n"
+						"Instalace katalogu pro danÙ jazyk byla pÒeskoÃena.\n\n"
+						"Pro tento jazyk zÒejmÅ nemÁte pÒÉsluÓn× katalogy. "
+						"MÊÚete si je stÁhnout z http://makecd.core.de/."
+					)
+				)
+				(set #cannot_find_div_docs
+					("%s%s"
+						"Pardon, nelze nal×zt nÅkter× ze souborÊ dokumentace.\n\n"
+						"Instalace t×to dokumentace byla pÒeskoÃena."
+					)
+				)
+				(set #copying_files
+					"KopÉrovÁnÉ souborÊ, moment prosÉm..."
+				)
+				(set #cannot_find_development_docs
+					("%s%s"
+						"Pardon, nelze nal×zt dokumentaci pro vÙvojÁÒe.\n\n"
+						"Instalace t×to dokumentace byla pÒeskoÃena."
+					)
+				)
+				(set #select_drivers
+					("%s%s"
+						"Zvolte si ovladaÃe, kter× se majÉ nainstalovat, prosÉm. "
+						"Pokud nejste expertem, mÅli byste zkopÉrovat VóECHNY."
+					)
+				)
+				(set #copy_libs
+					"MakeCD vyÚaduje triton.library V6."
+				)
+				(set #start_makecd
+					"PÒejete si spustit MakeCD okamÚitÅ?"
+				)
+			)
+		)
+
+		(if (IN langbits_0  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_0  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_0  ("%s (%s, %s)" txt_lang_0  #catres #docres))  (set langchoiceh_0  ("%s (%s, %s)" txt_lang_0  #catresh #docresh))
+		(if (IN langbits_1  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_1  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_1  ("%s (%s, %s)" txt_lang_1  #catres #docres))  (set langchoiceh_1  ("%s (%s, %s)" txt_lang_1  #catresh #docresh))
+		(if (IN langbits_2  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_2  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_2  ("%s (%s, %s)" txt_lang_2  #catres #docres))  (set langchoiceh_2  ("%s (%s, %s)" txt_lang_2  #catresh #docresh))
+		(if (IN langbits_3  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_3  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_3  ("%s (%s, %s)" txt_lang_3  #catres #docres))  (set langchoiceh_3  ("%s (%s, %s)" txt_lang_3  #catresh #docresh))
+		(if (IN langbits_4  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_4  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_4  ("%s (%s, %s)" txt_lang_4  #catres #docres))  (set langchoiceh_4  ("%s (%s, %s)" txt_lang_4  #catresh #docresh))
+		(if (IN langbits_5  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_5  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_5  ("%s (%s, %s)" txt_lang_5  #catres #docres))  (set langchoiceh_5  ("%s (%s, %s)" txt_lang_5  #catresh #docresh))
+		(if (IN langbits_6  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_6  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_6  ("%s (%s, %s)" txt_lang_6  #catres #docres))  (set langchoiceh_6  ("%s (%s, %s)" txt_lang_6  #catresh #docresh))
+		(if (IN langbits_7  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_7  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_7  ("%s (%s, %s)" txt_lang_7  #catres #docres))  (set langchoiceh_7  ("%s (%s, %s)" txt_lang_7  #catresh #docresh))
+		(if (IN langbits_8  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_8  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_8  ("%s (%s, %s)" txt_lang_8  #catres #docres))  (set langchoiceh_8  ("%s (%s, %s)" txt_lang_8  #catresh #docresh))
+		(if (IN langbits_9  0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_9  1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_9  ("%s (%s, %s)" txt_lang_9  #catres #docres))  (set langchoiceh_9  ("%s (%s, %s)" txt_lang_9  #catresh #docresh))
+		(if (IN langbits_10 0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_10 1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_10 ("%s (%s, %s)" txt_lang_10 #catres #docres))  (set langchoiceh_10 ("%s (%s, %s)" txt_lang_10 #catresh #docresh))
+		(if (IN langbits_11 0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_11 1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_11 ("%s (%s, %s)" txt_lang_11 #catres #docres))  (set langchoiceh_11 ("%s (%s, %s)" txt_lang_11 #catresh #docresh))
+		(if (IN langbits_12 0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_12 1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_12 ("%s (%s, %s)" txt_lang_12 #catres #docres))  (set langchoiceh_12 ("%s (%s, %s)" txt_lang_12 #catresh #docresh))
+		(if (IN langbits_13 0) ((set #catres #catalog) (set #catresh "CAT")) ((set #catres #no_catalog) (set #catresh "NOCAT")))   (if (IN langbits_13 1) ((set #docres #doc) (set #docresh "DOC")) ((set #docres #no_doc) (set #docresh "NODOC")))   (set langchoice_13 ("%s (%s, %s)" txt_lang_13 #catres #docres))  (set langchoiceh_13 ("%s (%s, %s)" txt_lang_13 #catresh #docresh))
+	)
+)
+
+
+
+(procedure P_SET_GLOBALS
+	(
+		(set osversion (/ (getversion) 65536))
+		(set volname (expandpath (":")))
+		(set origuserlevel @user-level)
+	)
+)
+
+
+
+(procedure P_EXTRACT_FILE archive path objectname required
+	(
+		(if (= 1 (exists archive))
+			( ; then
+				(working (#extracting_archive archive path))
+				(run ("untgz %s %s" archive path))
+			)
+			( ; else
+				(if (= 1 required)
+					( ; then
+						(abort (#archive_not_found_error arc))
+					)
+					( ; else
+						(message (#archive_not_found_warning arc))
+					)
+				)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_WARN_OLD_OS
+	(
+		(if (< osversion 37)
+			(
+				(user 2)
+				(message
+					#warning_old_os
+				)
+				(user origuserlevel)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_SELECT_DEST
+	(
+		(set destdir
+			(tackon
+				(askdir
+					(prompt #select_dest_dir)
+					(help @askdir-help)
+					(default @default-dest)
+				)
+				"MakeCD"
+			)
+		)
+	)
+)
+
+
+
+(procedure P_CLEANUP_OLD
+	(
+		(set executestring1 ("delete %s QUIET FORCE" (tackon destdir "(ReadMe|ReadMe.guide|History|MakeCD|Install(%|er)|registerscript|Triton.readme|triton.library|brik|briktest-from-doc|CRCList-binaries|CRCList-binaries.pgp)(%|.info)")))
+		(set executestring2 ("delete %s QUIET FORCE" (tackon destdir "(Extras|Goodies|doc|deutsch|english|Modules|Development|Catalogs).info")))
+		(set executestring3 ("delete %s QUIET FORCE ALL" (tackon destdir "(Extras|Goodies|doc|deutsch|english|Modules|Development|Catalogs)")))
+
+		(if
+			(askbool
+				(prompt (#remove_oldversion destdir))
+				(choices #yes_answer #no_answer)
+				(help #remove_oldversion_help "\n\n" executestring1 "\n\n" executestring2 "\n\n" executestring3)
+				(default 0)
+			)
+			( ; then
+				(working #deleting_old_files)
+				(run executestring1)
+				(run executestring2)
+				(run executestring3)
+			)
+			( ; else
+				(abort #abort_on_cleanup)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_CREATE_DIRS
+	(
+		(if (NOT (exists destdir))
+			( ; then
+				(makedir
+					destdir
+					(infos)
+				)
+			)
+			( ; else
+				(P_CLEANUP_OLD)
+			)
+		)
+
+		(if (NOT (exists (tackon destdir "Modules")))
+			(
+				(makedir
+					(tackon
+						destdir
+						"Modules"
+					)
+				)
+			)
+		)
+
+		(if (NOT (exists (tackon destdir "Modules/SCSIDrivers")))
+			(
+				(makedir
+					(tackon
+						destdir
+						"Modules/SCSIDrivers"
+					)
+				)
+			)
+		)
+
+		(if (NOT (exists (tackon destdir "Catalogs")))
+			(
+				(makedir
+					(tackon
+						destdir
+						"Catalogs"
+					)
+				)
+			)
+		)
+
+		(if (NOT (exists (tackon destdir "doc")))
+			(
+				(makedir
+					(tackon
+						destdir
+						"doc"
+					)
+				)
+			)
+		)
+
+		(if (NOT (exists (tackon destdir "Tracks")))
+			(
+				(makedir
+					(tackon
+						destdir
+						"Tracks"
+					)
+				)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_TEMPORARY_EXTRACT_MAKECD
+	(
+		(if (NOT (exists "MakeCD"))
+			( ; then
+				(set makecdtmpdir
+					(tackon
+						destdir
+						"MakeCD-Temporary"
+					)
+				)
+				(makedir makecdtmpdir)
+				(P_EXTRACT_FILE "MakeCD.tar.gz" makecdtmpdir "MakeCD" 1)
+			)
+			( ; else
+				(set makecdtmpdir "")
+			)
+		)
+	)
+)
+
+
+
+(procedure P_SELECT_INSTALL_LANG
+	(
+		(set i 0)
+		(set langbits 0)
+		(while (< i numlangs)
+			(
+				(set thislangdir (select i txt_langdir_0 txt_langdir_1 txt_langdir_2 txt_langdir_3 txt_langdir_4 txt_langdir_5 txt_langdir_6 txt_langdir_7 txt_langdir_8 txt_langdir_9 txt_langdir_10 txt_langdir_11 txt_langdir_12 txt_langdir_13))
+				(set langbits
+					(if
+						(OR
+							(OR
+								(= 1 (exists ("doc_%s.tar.gz" thislangdir)))
+								(= 2 (exists (tackon makecdtmpdir (tackon "Catalogs" thislangdir))))
+							)
+							(= 2 (exists (tackon makecdtmpdir (tackon "doc" thislangdir))))
+						)
+						( ; then
+							(+ langbits (shiftleft 1 i))
+						)
+						( ; else
+							(+ langbits 0)
+						)
+					)
+				)
+				(set i (+ i 1))
+			)
+		)
+
+
+		(set langbits
+			(askoptions
+				(prompt #which_languages_to_install)
+				(help 
+					langchoice_0 "\n"
+					langchoice_1 "\n"
+					langchoice_2 "\n"
+					langchoice_3 "\n"
+					langchoice_4 "\n"
+					langchoice_5 "\n"
+					langchoice_6 "\n"
+					langchoice_7 "\n"
+					langchoice_8 "\n"
+					langchoice_9 "\n"
+					langchoice_10 "\n"
+					langchoice_11 "\n"
+					langchoice_12 "\n"
+					 "\n"
+					@askoptions-help
+				)
+				(choices langchoiceh_0 langchoiceh_1 langchoiceh_2 langchoiceh_3 langchoiceh_4 langchoiceh_5 langchoiceh_6 langchoiceh_7 langchoiceh_8 langchoiceh_9 langchoiceh_10 langchoiceh_11 langchoiceh_12)
+				(default langbits)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_ASK_INSTALL_GOODIES
+	(
+		(if (= 2 (exists (tackon makecdtmpdir "Goodies")))
+			( ; then
+				(set installgoodies
+					(askbool
+						(prompt #install_goodies)
+						(choices #yes_answer #no_answer)
+						(help #choose_yes_or_no)
+						(default 1)
+					)
+				)
+			)
+			( ;else
+				(set install_goodies 0)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_ASK_INSTALL_DEVELOPER
+	(
+		(if
+			(OR
+				(= 1 (exists (tackon makecdtmpdir "doc_development.tar.gz")))
+				(= 2 (exists (tackon makecdtmpdir "doc/Development")))
+			)
+			(
+				(set installdev
+					(askbool
+						(prompt #install_developer)
+						(choices #yes_answer #no_answer)
+						(help #choose_yes_or_no)
+						(default 0)
+					)
+				)
+			)
+			( ;else
+				(set installdev 0)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_COPY_DOCS
+	(
+
+		(set i 0)
+		(while (< i numlangs)
+			(
+				(set thislang (select i txt_lang_0 txt_lang_1 txt_lang_2 txt_lang_3 txt_lang_4 txt_lang_5 txt_lang_6 txt_lang_7 txt_lang_8 txt_lang_9 txt_lang_10 txt_lang_11 txt_lang_12 txt_lang_13))
+				(set thislangdir (select i txt_langdir_0 txt_langdir_1 txt_langdir_2 txt_langdir_3 txt_langdir_4 txt_langdir_5 txt_langdir_6 txt_langdir_7 txt_langdir_8 txt_langdir_9 txt_langdir_10 txt_langdir_11 txt_langdir_12 txt_langdir_13))
+				(set thislangbits (select i langbits_0 langbits_1 langbits_2 langbits_3 langbits_4 langbits_5 langbits_6 langbits_7 langbits_8 langbits_9 langbits_10 langbits_11 langbits_12 langbits_13))
+				(if (IN langbits i)
+					(
+						(if (= 2 (exists (tackon makecdtmpdir (tackon "doc" thislangdir))))
+							(
+								(copyfiles
+									(source (tackon makecdtmpdir "doc"))
+									(dest (tackon destdir "doc"))
+									(pattern ("%s#?" thislangdir))
+									(optional force)
+								)
+							)
+							(
+								(if (= 1 (exists ("doc_%s.tar.gz" thislangdir)))
+									( ; then
+										(P_EXTRACT_FILE ("doc_%s.tar.gz" thislangdir) (tackon destdir "doc") ("doc/%s" thislangdir) 0)
+									)
+									( ; else
+										(if (IN thislangbits 1)
+											( ; then
+												(message (#cannot_find_lang_docs thislang))
+											)
+										)
+									)
+								)
+							)
+						)
+						(if (= 2 (exists (tackon makecdtmpdir (tackon "Catalogs" thislangdir))))
+							(
+								(copyfiles
+									(source (tackon makecdtmpdir "Catalogs"))
+									(dest (tackon destdir "Catalogs"))
+									(pattern thislangdir)
+									(optional force)
+								)
+								(copyfiles
+									(source (tackon makecdtmpdir "Catalogs"))
+									(dest (tackon destdir "Catalogs"))
+									(pattern ("%s.info" thislangdir))
+									(optional force)
+								)
+							)
+							( ; else
+								(if (NOT (patmatch "english" thislangdir))	; not English
+									(
+										(if (IN thislangbits 0)
+											( ; then
+												(message (#cannot_find_lang_catalogs thislang))
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+				(set i (+ i 1))
+			)
+		)
+
+		(
+			(if (AND
+					(= 1 (exists (tackon makecdtmpdir "doc/History")))
+					(AND
+						(= 1 (exists (tackon makecdtmpdir "doc/History.info")))
+						(AND
+							(= 1 (exists (tackon makecdtmpdir "doc/Compatibility")))
+							(AND
+								(= 1 (exists (tackon makecdtmpdir "doc/Compatibility.info")))
+								(AND
+									(= 1 (exists (tackon makecdtmpdir "doc/Triton.readme")))
+									(= 1 (exists (tackon makecdtmpdir "doc/Triton.readme.info")))
+								)
+							)
+						)
+					)
+				)
+				( ;then
+					(copyfiles
+						(source (tackon makecdtmpdir "doc"))
+						(dest (tackon destdir "doc"))
+						(choices "History" "History.info" "Compatibility" "Compatibility.info" "Triton.readme" "Triton.readme.info")
+						(optional force)
+					)
+				)
+				( ;else
+					(if (= 1 (exists ("doc_div.tar.gz")))
+						( ; then
+							(P_EXTRACT_FILE "doc_div.tar.gz" (tackon destdir "doc") "doc/#?" 0)
+						)
+						( ; else
+							(message #cannot_find_div_docs)
+						)
+					)
+				)
+			)
+		)
+
+	)
+)
+
+
+
+(procedure P_COPY_FILES
+	(
+		(copyfiles
+			(prompt #copying_files)
+			(choices
+				"MakeCD"
+				"MakeCD.info"
+				"CopyCD.info"
+				"registerscript"
+				"doc.info"
+				"Modules.info"
+				"Catalogs.info"
+				"brik"
+				"briktest-from-doc"
+				"CRCList-binaries"
+				"CRCList-binaries.pgp"
+			)
+			(help @copyfiles-help)
+			(source makecdtmpdir)
+			(dest destdir)
+			(optional force)
+		)
+
+		(copyfiles
+			(prompt #copying_files)
+			(choices
+				"ReadMe.guide"
+				"ReadMe.guide.info"
+			)
+			(help @copyfiles-help)
+			(source "")
+			(dest destdir)
+			(optional force)
+		)
+
+		(copyfiles
+			(prompt #copying_files)
+			(help @copyfiles-help)
+			(source (tackon makecdtmpdir "Tracks.noinfo"))
+			(dest destdir)
+			(newname "Tracks.info")
+			(optional force)
+		)
+
+		(copyfiles
+			(prompt #copying_files)
+			(help @copyfiles-help)
+			(source (tackon makecdtmpdir "MakeCD.noinfo"))
+			(dest (pathonly ("%s.info" destdir)))
+			(newname (fileonly ("%s.info" destdir)))
+			(optional force)
+		)
+
+		(copyfiles
+			(prompt #copying_files)
+			(help @copyfiles-help)
+			(choices "makecdromfs.module" "SCSISupport.module" "ReadWrite.module" "SCSIDrivers.info")
+			(source (tackon makecdtmpdir "Modules"))
+			(dest (tackon destdir "Modules"))
+			(optional force)
+		)
+
+		(if (= 1 installdev)
+			(
+				(if (= 2 (exists (tackon makecdtmpdir "doc/Development")))
+					(
+						(copyfiles
+							(prompt #copying_files)
+							(help @copyfiles-help)
+							(source (tackon makecdtmpdir "doc"))
+							(dest (tackon destdir "doc"))
+							(pattern "Development#?")
+							(optional force)
+						)
+					)
+					(
+						(if (= 1 (exists "doc_development.tar.gz"))
+							( ; then
+								(P_EXTRACT_FILE "doc_development.tar.gz" (tackon destdir "doc") "doc/Development" 0)
+							)
+							( ; else
+								(message (#cannot_find_development_docs))
+							)
+						)
+					)
+				)
+			)
+		)
+
+		(if (= 1 installgoodies)
+			(
+				(copyfiles
+					(prompt #copying_files)
+					(help @copyfiles-help)
+					(source makecdtmpdir )
+					(dest destdir)
+					(pattern "Goodies#?")
+					(optional force)
+				)
+			)
+		)
+	)
+)
+
+
+
+(procedure P_COPY_DRIVERS
+	(
+		(copyfiles
+			(prompt #select_drivers)
+			(help @copyfiles-help)
+			(pattern "#?")
+			(source (tackon makecdtmpdir "Modules/SCSIDrivers"))
+			(dest (tackon destdir "Modules/SCSIDrivers"))
+			(confirm)
+			(optional force)
+		)
+	)
+)
+
+
+
+(procedure P_COPY_LIBS
+	(
+		(copylib 
+			(prompt #copy_libs)
+			(help #copy_libs)
+			(confirm)
+			(source (tackon makecdtmpdir "triton.library"))
+			(dest "LIBS:")
+		)
+	)
+)
+
+
+
+(procedure P_DELETE_TMPDIR
+	(
+		(if (> (strlen makecdtmpdir) 0)
+			( ; then
+				(run ("delete %s QUIET FORCE ALL" makecdtmpdir))
+			)
+		)
+	)
+)
+
+
+(procedure P_START_MAKECD
+	(
+		(if
+			(askbool
+				(prompt #start_makecd)
+				(choices #yes_answer #no_answer)
+				(help #choose_yes_or_no)
+				(default 1)
+			)
+			( ; then
+				(run (tackon destdir "MakeCD"))
+			)
+		)
+	)
+)
+
+
+
+
+(complete 5)
+(P_SET_GLOBALS)
+(complete 7)
+(P_SELECT_LANGUAGE)
+(complete 10)
+(P_WARN_OLD_OS)
+(complete 13)
+(message #intro_msg)
+(complete 15)
+(P_SELECT_DEST)
+(complete 20)
+(P_CREATE_DIRS)
+(complete 25)
+(P_TEMPORARY_EXTRACT_MAKECD)
+(complete 35)
+(P_SELECT_INSTALL_LANG)
+(complete 40)
+(P_ASK_INSTALL_DEVELOPER)
+(complete 45)
+(P_ASK_INSTALL_GOODIES)
+(complete 50)
+(P_COPY_DOCS)
+(complete 60)
+(P_COPY_FILES)
+(complete 70)
+(P_COPY_DRIVERS)
+(complete 80)
+(P_COPY_LIBS)
+(complete 90)
+(P_DELETE_TMPDIR)
+(complete 95)
+
+(set @default-dest destdir)
+
+(complete 99)
+(P_START_MAKECD)
+(complete 100)

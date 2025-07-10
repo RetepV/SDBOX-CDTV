@@ -1,0 +1,18 @@
+.bra {
+.ket }
+failat 30
+echo "*Ec			ReselectOff"
+echo "*NThis program turns reselection OFF for all scsi units."
+echo "Other data stored on the drive will not be affected."
+
+
+    Prod_prep Unit 6 layout PrepReselectOff
+    Prod_prep Unit 5 layout PrepReselectOff
+    Prod_prep Unit 4 layout PrepReselectOff
+    Prod_prep Unit 3 layout PrepReselectOff
+    Prod_prep Unit 2 layout PrepReselectOff
+    Prod_prep Unit 1 layout PrepReselectOff
+    Prod_prep Unit 0 layout PrepReselectOff
+
+echo "*NOperation complete.  Please reboot for change to take effect."
+

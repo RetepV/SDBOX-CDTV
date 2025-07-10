@@ -1,0 +1,15 @@
+.c.o:
+	sc $(CFLAGS) $<
+
+.asm.o:
+	asm $(AFLAGS) $<
+
+CFLAGS = OPT OptInL OptInLocal nostkchk noversion mccons
+LFLAGS = sc sd stripdebug
+
+LIBS = lib:sc.lib lib:amiga.lib lib:debug.lib
+
+all: Play
+
+Play: Play.o Play_rev.o
+	slink lib:c.o Play.o Play_rev.o to $@ lib $(LIBS) $(LFLAGS)

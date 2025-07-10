@@ -1,0 +1,19 @@
+The CD-ROM distribution of the CD³² Native Developer Kit contains a
+number of changes from the original five disk set distribution. The
+organization of drawers and disks has been preserved as closely as
+possible. Here is the list of changes:
+
+- Unpacked all archive files.
+
+- Moved legal information text to CD-ROM top directory.
+
+- Added icons to all included files.
+
+- Added smakefiles to all sample programs in "CD32-Tools", "CD32_Support",
+  "XL_Toolkit_1.1". All projects can be built using SAS/C 6.56 just by
+  entering "smake". All executables were rebuilt using the provided
+  smakefiles to verify that the build setup works.
+
+- Added the BuildCD package.
+
+- Removed debox.library from the distribution due to legal reasons.

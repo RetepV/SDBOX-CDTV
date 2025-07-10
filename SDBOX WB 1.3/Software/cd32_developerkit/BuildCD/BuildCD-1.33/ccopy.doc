@@ -1,0 +1,13 @@
+
+CCOPY's usage is just like the Amiga C directory COPY command.
+
+At its simplest, the usage is: CCOPY srcfile destfile
+
+The difference is that CCOPY, when used to copy to a freshly formatted
+partition (or at least a partition where files have only been CCOPY'd to
+and files have never been deleted or modified), CCOPY will attempt to
+make the files as contiguous as possible with all file extension blocks
+at the beginning.  This should allow BuildCD to read the file quickly
+and smoothly to maintain the transfer rate required for cutting a CD
+from the data being read.
+

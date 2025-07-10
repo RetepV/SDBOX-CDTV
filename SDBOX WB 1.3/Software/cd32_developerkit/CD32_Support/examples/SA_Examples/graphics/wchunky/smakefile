@@ -1,0 +1,8 @@
+CFLAGS = nostackcheck structureequivalence
+
+LIBS = lib:debug.lib
+
+all: wchunky
+
+wchunky: wchunky.c
+	sc $(CFLAGS) link wchunky.c lib $(LIBS)

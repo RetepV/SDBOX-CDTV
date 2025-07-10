@@ -1,0 +1,9 @@
+
+This archive contains AmigaCD32 simulation tools. Uncompress this
+to a bootable floppy. Edit the s/startup-sequence to point SimCD32
+to an ISOimage on your hard drive. Booting off of this floppy, simulates
+how your application would run when boot off of the AmigaCD32.
+
+See the ReadME and .doc files in the SimCD32 and SimCD32Env directories
+for more info.
+

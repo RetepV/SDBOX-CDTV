@@ -1,0 +1,99 @@
+.key none
+.bra {
+.ket }
+
+failat 21
+
+version >NIL: exec.library 40
+if warn
+    requestchoice >NIL: TITLE "" BODY "This software requires V40.*NNot installing." GADGETS OK
+    quit
+endif
+
+if not exists installifnewer
+    requestchoice >NIL: TITLE "" BODY "You must CD to where this script resides.*NNot installing." GADGETS OK
+    quit
+endif
+
+echo >T:0 "0"
+
+requestchoice >t:OKCancel TITLE "" BODY "SCSI-CD Software Installer.*NRequires a SCSI-2 CD-ROM Drive*NYou must know device name & unit (see Readme)*NWill Overwrite Devs/DosDrivers/CD0 if any*Nand update other system files.*NContinue?" GADGETS OK CANCEL
+
+fileeq t:0 T:OKCancel >NIL:
+IF WARN
+
+    requeststring >devs:cd.device.config TITLE "" BODY "Select SCSI Device Name" LABEL "Device:" DEFAULT "2nd.scsi.device"
+
+    IF NOT WARN
+        requestchoice >t:SCSIUnit TITLE "" BODY "Select SCSI ID of CD-ROM UNIT" GADGETS 0 1 2 3 4 5 6 7
+
+        fileeq t:0 t:SCSIUnit >NIL:
+        IF NOT WARN
+            echo >t:Unit 7
+        ELSE
+            eval <t:SCSIUnit >nil: to t:Unit value2=1 op=- ?
+        ENDIF
+
+        type >>devs:cd.device.config t:Unit
+
+	execute installifnewer /devs/cd.device devs:cd.device devs:
+	execute installifnewer /l/CDFileSystem l:CDFileSystem  l:
+
+        copy /devs/DOSDrivers/CD0#? DEVS:DOSDrivers quiet
+
+
+        requestchoice >t:OKCancel TITLE "" BODY "Select Volume or Location for nonvolatile drawer*NYou may wish to insert a uniquely named floppy NOW" GADGETS OK CANCEL
+
+        fileeq t:0 T:OKCancel >NIL:
+
+	IF WARN
+
+lab tryagain
+           requestfile >t:NVDrawer DRAWER SYS: TITLE "Select Volume/Location for Nonvolatile" DRAWERSONLY SAVEMODE
+
+	   assign oldcd{$$}: ""
+	   cd `type t:NVDrawer`
+	   if not exists nonvolatile
+		makedir nonvolatile
+	   endif
+
+	   cd oldcd{$$}:
+	   assign oldcd{$$}:
+
+	   ;remove linefeed and quotes, add "nonvolatile" part of path
+           strip t:NVDrawer t:temp 10
+	   strip t:temp t:NVDrawer 34
+	   echo >>t:NVDrawer "nonvolatile"
+				    
+           IF NOT EXISTS SYS:Prefs
+               makedir SYS:Prefs
+           ENDIF
+           IF NOT EXISTS SYS:Prefs/env-archive
+               makedir SYS:Prefs/env-archive
+           ENDIF
+           IF NOT EXISTS SYS:Prefs/env-archive/sys
+               makedir SYS:Prefs/env-archive/sys
+           ENDIF
+           copy t:NVDrawer SYS:Prefs/env-archive/sys/nv_location
+
+	   execute installifnewer /libs/lowlevel.library libs:lowlevel.library libs:
+           execute installifnewer /libs/nonvolatile.library libs:nonvolatile.library libs:
+
+           mount >nil: CD0:
+
+           requestchoice >t:OKCancel TITLE "" BODY "AmigaCD Installation Complete" GADGETS Ok
+
+        ENDIF ;NV-RAM
+
+        delete  t:0          quiet
+        delete  t:OKCancel   quiet
+        delete  t:temp       quiet
+        delete  t:NVDrawer   quiet
+        delete  t:Unit       quiet
+        delete  t:SCSIUnit   quiet
+	delete  t:ver1{$$}   quiet
+	delete  t:ver2{$$}   quiet
+
+    ENDIF ; scsi.device name
+
+ENDIF ;installer

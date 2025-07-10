@@ -1,0 +1,5 @@
+
+This is a beta version of peripheral cd.device which is to be used with
+a SCSI CD-ROM drive connected to an Amiga.
+
+See SCSI_CD.Readme

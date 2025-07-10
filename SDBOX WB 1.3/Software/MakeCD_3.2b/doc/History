@@ -1,0 +1,893 @@
+Format:
+
+<string in about requester> = <version string(s)>
+  - <List of changes>
+
+MakeCD V3.0 = MakeCD 3.22 (19.12.97)
+              makecdromfs.module V10.2 (20-12-1997)
+              ReadWrite.module 11.23 (07.01.98)
+              
+              CDR_JVC_Teac.driver 10.24 (20.12.97)
+              CDR_MMC_ATAPI.driver 10.24 (20.12.97)
+              CDR_Panasonic.driver 10.24 (20.12.97)
+              CDR_Philips_2000.driver 10.24 (20.12.97)
+              CDR_Philips_2600.driver 10.24 (20.12.97)
+              CDR_Plextor_Ricoh.driver 10.24 (20.12.97)
+              CDR_Ricoh_6200.driver 10.24 (20.12.97)
+              CDR_Sony.driver 10.24 (20.12.97)
+              CDR_Yamaha_10x.driver 10.24 (20.12.97)
+              CD_ATAPI.driver 10.24 (20.12.97)
+              CD_NEC.driver 10.24 (20.12.97)
+              CD_Plextor.driver 10.24 (20.12.97)
+              CD_ROM.driver 10.24 (20.12.97)
+              CD_Sony.driver 10.24 (20.12.97)
+              CD_Toshiba.driver 10.24 (20.12.97)
+
+ - disc-at-once
+ - indices (not always possible in track-at-once)
+ - rewrote and enhanced GUI
+ - renamed SCSI drivers
+ - new settings
+ - AHI support
+ - Formating a CD-RW is much more flexible now: can delete session only,
+   remove fixation, ...
+ - ISO image creation: a file with a list of filenames can be used to
+   specify files that are included in the image
+ - MS-DOS boot options: MakeCD can create ISO images for CD-Rs booting MS-DOS
+   on a PC now.
+ - JVC/Teac driver: mode 2 writing (without form) might work now
+ - CD_ATAPI.driver: Some drives incorrectly reported "wrong track type" errors
+   when reading CDDA.
+ - Bugfix: Left and right audio channel should no longer be swapped when
+   using Amiga audio.
+ - Bugfix: User aborts were ignored during writing if the IO error handling
+   was set to "Ignore" or "Pad".
+
+
+MakeCD V3.1: MakeCD 3.27 (23.01.98)
+             makecdromfs.module V10.2 (20-12-1997)
+             ReadWrite.module 12.26 (23.01.98)
+
+             CDR_JVC_Teac.driver 11.31 (23.01.98)
+             CDR_Panasonic.driver 11.31 (23.01.98)
+             CDR_Philips_2000.driver 11.31 (23.01.98)
+             CDR_Philips_2600.driver 11.31 (23.01.98)
+             CDR_Plextor_Ricoh.driver 11.31 (23.01.98)
+             CDR_Ricoh_6200.driver 11.31 (23.01.98)
+             CDR_SCSI3_ATAPI.driver 11.31 (23.01.98)
+             CDR_Sony.driver 11.31 (23.01.98)
+             CDR_Yamaha_10x.driver 11.31 (23.01.98)
+             CD_ATAPI.driver 11.31 (23.01.98)
+             CD_NEC.driver 11.31 (23.01.98)
+             CD_Plextor.driver 11.31 (23.01.98)
+             CD_ROM.driver 11.31 (23.01.98)
+             CD_Sony.driver 11.31 (23.01.98)
+             CD_Toshiba.driver 11.31 (23.01.98)
+
+ ***************** SCSI and IO changes **********************
+ - Read speed can be reduced for data tracks, too.
+ - slightly improved generic SCSI handling
+ - SCSI driver now choose supported write command automatically. This
+   makes writing with Panasonic 7502 and HP 7500+ possible.
+ - recognize more drives
+ - MMC driver supports Panasonic/Matsushita 7502 now. However,
+   this drive has several problems (at least with firmware V3.02 -
+   V3.05 is available, but untested):
+   * It often forgets the correct contents of the CD-R. E.g. "Update"
+     after writing and fixation in test mode makes it forget the
+     fixation, but not the tracks. Reinsert the CD-R in such a case.
+     This prevents "write after test" writing.
+   * It sometimes reads wrong track types from a CD-R (e.g. mode 2 
+     instead of audio).
+   * ISRCs in DAO don't work at the moment. Make sure your projects
+     don't contain any, otherwise you will get an "Illegal field in
+     command descriptor error". This might be fixed soon.
+   * In DAO mixed CDs have to be copied with raw data. The drive
+     cannot handle the different block sizes MakeCD uses. If you try
+     to use cooked data you might get a "buffer underrun" between data
+     and audio tracks. V3.1 will select raw data if you instruct MakeCD
+     to choose automatically by using data mode "writer".
+   * Mode 2, form 1 does not work in TAO.
+   * In TAO gaps between tracks of different types are too short.
+ - Bugfix: TOC type was chosen incorrectly for DAO if raw data was written,
+   resulting in wrong medium type and not working PSX copies. This also
+   caused Philips/Ricoh/Plextor writers to report a wrong mode for the
+   mode 2 data track.
+ - Bugfix: although none given, Philips/Ricoh wrote medium catalog number 
+   both in TAO  and DAO. This made PSX copies unusable in a PlayStation.
+ - Bugfix: data encoding for CDR_Plextor_Ricoh.driver was wrong, resulting
+   in trashed DAO CD-Rs.
+ - Bugfix (Philips, Plextor): didn't work with all controllers
+ - Bugfix: removing the source CD while MakeCD was preparing for
+   index scanning trapped MakeCD in a loop until the CD was inserted
+   again.
+ - Bugfix: CDR_Sony.driver couldn't write audio tracks.
+ - SCSI error detection failed for JVC/Teac drives when connected to some
+   controllers. This prevented writing to empty CD-Rs.
+ - Yamaha CDR10x couldn't always write all tracks with
+   cybppc.device V44.2, because this device doesn't report
+   some essential sense codes. Enhanced workaround.
+ - Bugfix: priority of conversion process was not always increased
+ - Bugfix: MMC driver still knew Ricoh MP6200S.
+ - MMC/ATAPI: support for writing mode 2 with block size 2332; enabled
+   only for Sony 928E, because mode 2 with 2336 didn't work there. Not
+   tested completely with Sony 928E yet.
+   If only mode 2 writing fails for a MMC/ATAPI writer than this optional
+   mode is not implemented. For known drives like the Sony 928E MakeCD selects
+   a substitute automatically, but not generally, because PSX copies might
+   be less compatible in this mode. You can enforce this workaround by
+   setting a environment variable with "setenv MAKECD_MODE2_MIXED". If it
+   works only this way, please tell Patrick.
+ - MMC/ATAPI: $30 and $C are recognizes as buffer underruns, too.
+ - Bugfix: CDs with two consecutive data tracks of the same type were
+   not copied properly (e.g. video CDs).
+ - Bugfix: Adding pause blocks to a ISO image that was written online was not
+   possible.
+ - MakeCD now adds some blocks to a created ISO image to compensate for read
+   errors that might occur at the end (but never did so far - only the
+   new Panasonic 7502 might trash the last two blocks).
+ - Renamed CDR_MMC_ATAPI.driver to CDR_SCSI3_ATAPI.driver because of the
+   confusion caused by the "ATAPI" in the name. ATAPI and MMC (Multi Media
+   Command set defined by SCSI 3) are so similar that only ome driver is
+   sufficient to cover both.
+
+ ************************* GUI changes ********************************
+ - Several QuickHelps were rewritten.
+ - ISO image source file requester offers pattern gadgets and shows
+   .info by default.
+ - MakeCD can execute several user selectable commands on different
+   occasions, e.g. to play sounds. If a command is not set, MakeCD
+   flashes the screen instead to draw the intention to requesters.
+ - MakeCD now indicates more clearly when the write window is idle again.
+ - Track option gadgets are disabled if no track exists.
+ - Track options window is opened after adding a new track.
+ - Bugfix: changing tracks while pausing audio playing is possible now.
+ - Bugfix: lock on base dir was not freed if the advanced options
+   window was open when exiting the program.
+ - Bugfix: Pausing audio playing did not always work properly, and volume
+   and filter were reset at the beginning of each new track.
+ - Bugfix: "-" could be entered in medium catalog number gadget, although it
+   is an illegal character
+
+
+MakeCD V3.1a: MakeCD 3.33 (12.02.98)
+              makecdromfs.module V10.2 (20-12-1997)
+              ReadWrite.module 13.28 (12.02.98)
+              SCSISupport.module 12.21 (12.02.98)
+
+              CDR_JVC_Teac.driver 12.40 (12.02.98)
+              CDR_Panasonic.driver 12.40 (12.02.98)
+              CDR_Philips_2000.driver 12.40 (12.02.98)
+              CDR_Philips_2600.driver 12.40 (12.02.98)
+              CDR_Plextor_Ricoh.driver 12.40 (12.02.98)
+              CDR_Ricoh_6200.driver 12.40 (12.02.98)
+              CDR_SCSI3_ATAPI.driver 12.40 (12.02.98)
+              CDR_Sony.driver 12.40 (12.02.98)
+              CDR_Yamaha_10x.driver 12.40 (12.02.98)
+              CD_ATAPI.driver 12.40 (12.02.98)
+              CD_NEC.driver 12.40 (12.02.98)
+              CD_Plextor.driver 12.40 (12.02.98)
+              CD_ROM.driver 12.40 (12.02.98)
+              CD_Sony.driver 12.40 (12.02.98)
+              CD_Toshiba.driver 12.40 (12.02.98)
+
+ ***************** SCSI and IO changes **********************
+ - Bugfix CDR_Yamaha_CDR10x: DAO writing of cooked data + audio was broken.
+ - Bugfix CDR_Panasonic: writing of audio was broken and the changed generic
+   SCSI handling might have caused a worse performance.
+ - Sony 928E: the drive didn't read mode 2 correctly, but with the new raw
+   mode 2 reading it works now. Writing of mode 2 + audio now works, too.
+ - Panasonic 7502: the tray is opened and closed to make the drive forget
+   tracks written in test mode (necessary because just turning off the test
+   mode confused this drive). With the Commodore scsi.device writing was
+   aborted due to "bad status" errors although writing seemed to work fine.
+   This is ignored now, but not completely tested yet.
+ - Bugfix Philips CDD522: choosing speeds > 2 was not caught by the driver
+   but caused an error requester.
+ - Bugfix (SCSI3): ISRCs were written incorrectly in DAO
+ - Bugfix: MakeCD might have got the track starts and lengths wrong by a
+   factor of 2 or 4 if the source drive didn't use 2048 bytes as default
+   block size or was set to this value by some other application.
+ - CD_Toshiba.driver couldn't read audio tracks after reading a raw
+   data track (it failed already for the first block).
+ - improved index scanning to make it more robust
+ - added some more drive IDs (see Compatibility.guide in case your drive
+   is still not known)
+ - Workaround: mode 2 tracks might have been recognized as mode 1 when
+   writing in DAO with raw data. The relevant part of the track is okay
+   and a PSX copy actually works in a PlayStation nonetheless. The reason
+   are probably the missing checksums in the gap before the data track.
+ - Workaround for mode 2 reading problems (see "MAKECD_READ_MODE2_RAW"
+   below).
+ - SCSI3/ATAPI Workaround "MAKECD_MODE2_MIXED" was renamed to
+   "MAKECD_WRITE_MODE2_MIXED".
+ - Workaround for PPC SCSI and fixation/repair/format problems:
+   cybppc.device with version < 44.36 cancels all SCSI commands automatically
+   that are not returned by the drive in a certain amount of time. This is
+   done to prevent lockups of the SCSI bus, but it also aborted some of
+   the commands that are used for CD writing and really go on for a while,
+   the most common one probably being fixation. Formating, repair and DAO
+   might also be affected.
+
+   MakeCD now applies a workaround for this problem by making the drive return
+   the command immediately and querying the drive until it is ready again.
+   However, it depends on the drive and on the command whether this is
+   possible or not. For fixation this immediate response is only supported by
+   SCSI3/ATAPI, Philips, Plextor/Ricoh and Yamaha drives, but not by JVC/Teac,
+   Panasonic/Matsushita or Sony drives (unless they use the SCSI3/ATAPI driver).
+   It is not supported by any drive for the repair or format commands.
+
+   This workaround is only used for the cybppc.device, because not all
+   other controllers would handle this correctly (the dracoscsi.device
+   crashes when fixating with a Philips CDD2600 this way).
+
+ ********************* GUI changes **************************
+ - CONTEXT SENSITIVE AMIGAGUIDE: Pressing HELP over a gadget opens the
+   AmigaGuide documentation at the corresponding node. However, this is not
+   possible with the V2.5 English documentation and the new translation is
+   not ready yet.
+ - MakeCD now allows the frequency of AIFF to be off by upto 10%, because
+   not every system is able to produce exactly 44.1kHz. BE WARNED: MakeCD
+   does not adapt the frequency, it just assumes it was 44.1kHz. Playing
+   a sample with a frequency that is 10% too high or low already sounds
+   quite awful!
+ - Bugfix: text for publisher field in ISO image was wrong in some cases
+ - Bugfix: manually jumping between tracks during audio playing still forgot
+   the current settings for low pass filter and volume.
+ - Bugfix: updating from final TAO to DAO was not possible with the menu
+   item "Projects/Registration..."
+ - MakeCD is more intelligent when choosing the best data format if you don't
+   override this choice yourself by choosing "raw" or "cooked" explicitely:
+   some drives like the Panasonic 7502 (firmeware 3.02) have problems when
+   copying CDs with cooked data, so MakeCD uses raw data by default. However,
+   if your source is an ISO image than cooked is used as MakeCD couldn't
+   convert this to raw.
+ - If speed cannot be set, then the speed gadgets are empty now and no longer
+   set to the unused value.
+ - Fix for problems with saving the settings. This might have failed after
+   fixing the icon position of MakeCD if the Workbench protected the
+   MakeCD.info from writing.
+ - fixed some English texts
+
+
+MakeCD V3.1a - update 1: CD_Toshiba 12.41 (16.02.98)
+ - Bugfix CD_Toshiba: the fix for the "audio after raw" problem made things
+   worse. Audio reading now didn't work at all with at least one drive :-(
+
+
+MakeCD V3.1a - update 2 (available as public beta only):
+   ReadWrite.module 13.32 public beta (18.03.98)
+   SCSISupport.module 12.22 public beta (18.03.98)
+
+   CDR_JVC_Teac.driver 12.46 public beta (18.03.98)
+   CDR_Panasonic.driver 12.46 public beta (18.03.98)
+   CDR_Philips_2000.driver 12.46 public beta (18.03.98)
+   CDR_Philips_2600.driver 12.46 public beta (18.03.98)
+   CDR_Plextor_Ricoh.driver 12.46 public beta (18.03.98)
+   CDR_Ricoh_6200.driver 12.46 public beta (18.03.98)
+   CDR_SCSI3_ATAPI.driver 12.46 public beta (18.03.98)
+   CDR_Sony.driver 12.46 public beta (18.03.98)
+   CDR_Yamaha_10x.driver 12.46 public beta (18.03.98)
+   CD_ATAPI.driver 12.46 public beta (18.03.98)
+   CD_NEC.driver 12.46 public beta (18.03.98)
+   CD_Plextor.driver 12.46 public beta (18.03.98)
+   CD_ROM.driver 12.46 public beta (18.03.98)
+   CD_Sony.driver 12.46 public beta (18.03.98)
+   CD_Toshiba.driver 12.46 public beta (18.03.98)
+
+ - Setting speed with SCSI3/ATAPI is more sophisticated now and also
+   checks the real speed used by the drive. This method solves problems
+   with Plextor PX-426S and 2x with Ricoh MP6200S. Note that the Ricoh
+   seems to be unable to write CD-RW in single speed at all.
+ - Added raw encoding: now cooked data can be written to drives only
+   supporting raw data in DAO, e.g. an ISO image can be written in DAO
+   to a CDD2600.
+   However, this conversion demands very much computing power and is even
+   on a 060 hardly fast enough to keep up with 4x. The GUI definetely has
+   to be changed to warn of that, and as this is not implemented yet the
+   encoding feature is still disabled by default. It has to be enabled
+   by setting the environment variable MAKECD_ALLOW_ENCODING.
+ - The problem with reading the first blocks of a raw DAO copy in some drives
+   should be fixed now.
+ - Added some drive IDs and disabled session fixation in DAO for Ricoh 1420/
+   Plextor PX-24C because these drives don't support that.
+ - According to the Pioneer documentation modern Pioneer drives (like DR-U12X
+   and DR-U24X) don't support speed selection at all, therefore they are now
+   only recognised by the CD_Sony.driver, which doesn't set speed.
+ - DAO was disabled for the HP 7100+ because firmware 1.x didn't implement
+   it. However, we have been told that it was added with firmware 2.x to
+   the HP 7100+ and the similar Philips CDD3610. DAO is now allowed by
+   MakeCD again, but it hasn't been tested with either of these drives yet.
+ - DAO is disabled for some drives that haven't implemented it. This avoids
+   SCSI errors when trying to use it with such drives. However, for tests
+   with newer firmware versions DAO can be enabled again by setting the
+   environment variable MAKECD_ALLOW_DAO.
+ - The priority of read, write and conversion process is increased when doing
+   critical work. The default priority is 6, because the console.device is
+   doing CPU consuming work at priority 5. These defaults can be changed by
+   setting the environment variables MAKECD_INC_PRI_[READ|WRITE|CONV], but
+   usually there should be no need to do that.
+ - Invalid status errors that are reported by the combination A3000 SCSI +
+   Panasonic 7502 are finally ignored properly, so data (= mode 1) works now.
+   Audio never caused this invalid status errors. However, mode 2 is not
+   working because the SCSI bus locks completely.
+ - CD_ATAPI can (and should) be used to read CDs with the Sony 928E.
+ - No CD_ driver tries to read session infos any more - this was not used
+   for the source drive and sometimes seemed to have caused problems.
+ - Automatic "IO Error" handling didn't work properly. Now the real errors
+   are always reported, too. Write errors are no longer ignored automatically.
+   However, for read errors that lead to an automatic abort the text still
+   says "User abort".
+ - Bugfix: potential memory trashing with the READ_MODE2_RAW workaround.
+ - Bugfix: using delete mode "immediately" with DAO caused an internal error.
+ - "Write after test" didn't work properly with drives using the open/close
+   tray method (Panasonic 7502).
+ - Bugfix: under a certain timing the amount of filled bytes in the
+   MakeCD buffer could have been displayed as a large number and 100%.
+ - Bugfix: SCSI errors were ignored after one command (only happened with
+   Plextor PX-624C in one case).
+
+
+MakeCD V3.1b - MakeCD 3.33 (12.02.98)
+               makecdromfs.module V10.2 (20-12-1997)
+               ReadWrite.module 13.33 (08.04.98)
+               SCSISupport.module 12.22 (08.04.98)
+
+               CDR_JVC_Teac.driver 12.47 (08.04.98)
+               CDR_Panasonic.driver 12.47 (08.04.98)
+               CDR_Philips_2000.driver 12.47 (08.04.98)
+               CDR_Philips_2600.driver 12.47 (08.04.98)
+               CDR_Plextor_Ricoh.driver 12.47 (08.04.98)
+               CDR_Ricoh_6200.driver 12.47 (08.04.98)
+               CDR_SCSI3_ATAPI.driver 12.47 (08.04.98)
+               CDR_Sony.driver 12.47 (08.04.98)
+               CDR_Yamaha_10x.driver 12.47 (08.04.98)
+               CD_ATAPI.driver 12.47 (08.04.98)
+               CD_NEC.driver 12.47 (08.04.98)
+               CD_Plextor.driver 12.47 (08.04.98)
+               CD_ROM.driver 12.47 (08.04.98)
+               CD_Sony.driver 12.47 (08.04.98)
+               CD_Toshiba.driver 12.47 (08.04.98)
+
+ all changes from public beta above and:
+ - Bugfix: converting from raw to cooked data could cause memory trashing.
+ - Added fallback in mode 2 recognition to raw block reading => mode 2
+   should be recognized by some more drives.
+ - Allowed CD_Plextor.driver for Pioneer drives again, because at least
+   one user was able to set the speed with his DR-U12X (firmware 1.06
+   1996/10/), although the documentation said that this drive always reads
+   at maximum speed.
+ - Teac 56S is no longer fixed to CD_ATAPI.driver, because audio reading
+   didn't always work.
+
+
+MakeCD V3.2 - MakeCD 3.59 (10.07.98)
+              makecdromfs.module V11.0 (24-05-1998)
+              ReadWrite.module 15.53 (10.07.98)
+              SCSISupport.module 14.26 (10.07.98)
+
+              CDR_JVC_Teac.driver 13.72 (10.07.98)
+              CDR_Panasonic.driver 13.72 (10.07.98)
+              CDR_Philips_2000.driver 13.72 (10.07.98)
+              CDR_Philips_2600.driver 13.72 (10.07.98)
+              CDR_Plextor_Ricoh.driver 13.72 (10.07.98)
+              CDR_Ricoh_6200.driver 13.72 (10.07.98)
+              CDR_SCSI3_ATAPI.driver 13.72 (10.07.98)
+              CDR_Sony.driver 13.72 (10.07.98)
+              CDR_Yamaha_10x.driver 13.72 (10.07.98)
+              CD_ATAPI.driver 13.72 (10.07.98)
+              CD_NEC.driver 13.72 (10.07.98)
+              CD_ROM.driver 13.72 (10.07.98)
+              CD_Sony_Plextor.driver 13.72 (10.07.98)
+              CD_Toshiba.driver 13.72 (10.07.98)
+
+
+ ***************** SCSI and IO changes **********************
+
+ - *** DAO for JVC/Teac ***
+   This is the recommended way of writing CD-Rs with the JVC drives.
+   It's less error prone than the stop-and-go writing in TAO, and
+   therefore TAO has to be regarded as being unsupported. Mode 2
+   writing in TAO has never been tested, but works in DAO. DAO also
+   solves the TAO problem of CD players stopping at the gap between
+   tracks.
+   ISRC/Medium Catalog Number are not supported by at least the JVC
+   XR-W2010 with firmware V1.51 and errors when trying to use them
+   are silently ignored.
+   At least the Philips CDD2600 always only sees the first session
+   of a DAO-CD-R written with JVC XR-W2010 V1.51, even though
+   "Fixate: Session" was used and other drives (JVC itself, Yamaha
+   CDR100) find the next session(s). Could only be fixed by JVC or
+   Philips.
+ - MakeCD now reads mono and stereo audio data in 8 or 16 bit and with
+   any frequency. They can be transformed to stereo, 16 bit, 44.1kHz
+   on-the-fly, but frequency resampling requires a fast CPU.
+   The following audio file formats are supported:
+   * AIFF
+   * AIFC (only uncompressed)
+   * MAUD (uncompressed, u-law, a-law)
+   * WAV (only uncompressed)
+   * MPEG-A (mpega.library from Stephane TAVENARD has to be installed)
+   * Samplitude HDP (only 44.1kHz!)
+ - MPEG-A: recognition of this file type cannot be done with 100% certainty.
+   It takes a long time to find that a normal image file is not MPEG-A,
+   and sometimes some are even recognized as MPEGA-A although they aren't.
+   Therefore MakeCD is no longer testing if a file that has a corresponding
+   ".CDT" (i.e. was originally written by MakeCD itself) or has the suffix
+   ".cdda" or ".raw" is MPEG-A. You cannot compress the image files any
+   more without renaming them or deleting the .CDT file, but otherwise you
+   are strongly encouraged to leave the .CDT file as it is or to use one of
+   the suffices to mark CDDA!
+   If you have problems with MPEG-A recognition, then please contact the
+   author of the mpega.library, as the recognition is completely done
+   by this library.
+ - MakeCD also writes different audio formats. This is selected by
+   using appropriate suffices for the image filenames:
+   AIFF: .aiff, .aif
+   AIFC: .afc, .aifc
+   MAUD: .maud
+   WAVE: .wav, .wave
+   All data is always uncompressed, 16bit, stereo, 44.1kHz.
+ - Some drives allow to write more than the nominal capacity of data in DAO.
+   This is probably possible by bending some rules in CD-ROM/CD-R standards.
+   You may use this "feature" now by ignoring the warning that MakeCD
+   issues if space is not sufficient, but be warned: your drive may report
+   errors.
+   Yamaha CDR10x doesn't support this. CDD2600 allows writing of any amount
+   of data, but does no check itself at all. Instead, writing fails at the end.
+ - Changed generic SCSI handling: MakeCD was using redundant commands
+   that might have avoided certain timing problems with some systems
+   (e.g. Philips CDD2600 + Phase 5 SCSI kit + audio reading).
+   Unfortunately this also seemed to increase the likelihood of SCSI
+   problems on unstable systems (e.g. reported for Fastlane). Now
+   these redundant commands are only used when reading audio from
+   Philips drives. If you think MakeCD is less stable or audio quality
+   decreased in V3.2, then use "setenv MAKECD_COMPLEX_SCSI_IO=1" to
+   go back to the previous behaviour and report if this helps. As
+   before, "setenv MAKECD_SIMPLE_SCSI_IO=1" avoids unnecessary commands
+   completely.
+ - CD_Sony and CD_Plextor were merged, because the only difference
+   was the ability to set speed with CD_Plextor. This ability is now
+   tested automatically, so there's no need anymore to select the
+   correct driver. Should this test fail, then you can fix this ability
+   with MAKECD_SONY_PLEXTOR_SPEED_NO and MAKECD_SONY_PLEXTOR_SPEED_YES.
+ - Raw encoding (calculating error correction codes and checksums) is enabled,
+   but there is a warning about the high CPU demands. One choice in this
+   requester disables the warning permanently. Raw encoding is necessary to
+   write ISO images in DAO to drives like the Philips CDD2600, Ricoh MP6200S
+   and Ricoh 1420 that only support raw data in DAO.
+ - TAO + same source/target + "Write Tracks": you can avoid swapping
+   source and target disc for every track now. If you choose
+   "Delete image: after CD/never" instead of "immediately", then MakeCD
+   will copy these tracks to images first, because you need the space
+   for all images at once anyway. "Delete image: immediately" can still
+   be used to copy a CD one track at a time (in case you don't have enough
+   HD space).
+ - Teac 55S: sometimes the drive reports an empty CD if there are read
+   errors when the drive specific commands are used; MakeCD recognizes this
+   now and uses the standard command in this case.
+ - Plextor PX-412: the BLOCK jumper may be set now. This helped to avoid
+   SCSI problems with a CyberSCSI controller and might help on other
+   systems, too. This helps because this jumper not only changes the default
+   block size but also reduces the peak transfer rate from 10MB/s to 5MB/s.
+ - Mitsumi 2600TE/2800TE: the MAKECD_MODE2_WRITE_MIXED workaround is now 
+   enabled by default, because the normal method of writing with 2336 bytes
+   is not supported by the drive.
+   Workaround for crash during fixation. Many thanks to Eyetech for providing
+   their EZWriter kit (A1200 + Mitsumi CR-2801TE) as test environment!
+ - This workaround will be selected automatically now for all unknown drives.
+ - CD_Atapi: workaround for NEC CD-ROM DRIVE:282 V3.05
+ - Classic Squirrel: Some SCSI devices don't set scsi_Actual correctly.
+   In this case MakeCD is adding warnings to the internal log, which may
+   slow down the reading/writing if they cause every read/write command
+   to be logged.
+   This happened with the Classic Squirrel that seems to return only
+   transfer lengths that are a multiple of 512, even if some other amount
+   of data was transfered. These warnings are now always turned off for
+   squirrelscsi.device. If you have another SCSI device that has this
+   problem, then "setenv MAKECD_NO_LENGTH_WARNING=1".
+   NTB: not all of the warnings are harmful! When reading the buffer is
+   larger than the transferred data.
+ - Philips CDD2000/2600: writing indices in TAO is now optional and
+   disabled by default, because the command used to setup the indices
+   seems to be more prone to a SCSI lock-up. Use
+   "setenv MAKECD_ALLOW_TAO_INDICES=1" if you want to use this feature
+   again, but be warned...
+ - Bugfix CDR_SCSI3_ATAPI: "cooked data" in DAO caused wrong buffer underrun
+   messages if a "negative pause" was used to get pregap data from the source
+   track. Unfortunately "format of the writer" was "cooked data" for all
+   drives but Panasonic 7502.
+ - Bugfix: errors after writing the tracks or the session were not
+   reported - this could have hidden the fact the drive didn't write
+   the CD-R correctly, e.g. due to medium errors.
+ - Bugfix CDR_Panasonic: 1x and 2x speed couldn't be set.
+ - Bugfix: reading didn't proceed in the special case of direct copying of a
+   audio CD in DAO, lead-in data generated for drive (e.g. Philips CDD2600),
+   buffer larger than 20MB and "Fill Buffer completely" enabled.
+ - Bugfix (at least CDR_Philips_2600): a CD-R that had been filled completely
+   (e.g. by ignoring a warning about insufficient space in TAO) was reported
+   as being fixated even if it wasn't. Fixation was still possible, though.
+ - Bugfix (at least CDR_Philips_2600): "Write after Test" in DAO might have
+   failed with a SCSI error after the successful simulated write and before
+   starting the real write.
+ - Bugfix: "Ignore" in the "Incomplete image file" requester didn't work
+   properly when creating several image files at once.
+ - Bugfix: reading/writing project and .CDT files with no indices might
+   have trashed memory.
+ - Bugfix: scanning ISO tracks with a directory with many (>5000) files could
+   have failed
+ - When writing in TAO without any fixation, MakeCD now assumes you are going
+   to fix the CD and not only the session. This avoids an unnecessary warning.
+ - Source drive is reset properly after scanning for indices.
+ - Added fallback in mode 2 recognition to raw block reading => mode 2
+   should be recognized by some more drives.
+ - When aborting writing after a read error caused a write error, the
+   write error was reported and not the read error (happened only with
+   JVC DAO).
+ - Read errors at the very end of an audio CD (the last 1/3 second) are
+   ignored automatically. Many Toshibas had problems reading the last block.
+ - If your writer doesn't update properly after a test write, then
+   "setenv MAKECD_UPDATE_EJECT=1" chooses eject/insert as the method
+   to do the update.
+ - To avoid problems with the maximum filename length of the FS ".CDT"
+   files get shorter filenames now if necessary and another suffices are
+   replaced.
+ - MAKECD_NO_WRITE_LOG disables logging of write process during
+   time critical sections.
+
+
+ ********************* GUI changes **************************
+
+ - ** NEW: AIFF-CD *** - a file format that allows you to store all the
+   data defining an audio CD or a mixed mode CD in a single file. Programs
+   not knowing the extensions will still be able to use the audio data,
+   but this format is especially useful if you have a sound editing
+   software that knows the CD specific extensions, like Samplitude.
+   Then you can setup your audio CD including indices and tracks with
+   the advanced features of the audio editing software and write with
+   MakeCD, or copy a CD into a AIFF-CD file with MakeCD and edit this
+   before writing it back to CD-R.
+ - *** novice mode *** that hides the more advanced gadgets:
+   audio tracks: indices, ISRC, Medium Catalog Number
+   track options: start and length of source, pause
+   project options: start block, audio CD start, DAO data format
+   ISO images: all ISO/Rockridge and boot options
+   copy/append CD: data and file format, ISRC reading and index scanning
+   write window: transfer rates, indices
+ - "ISO level: Amiga" is now the default value as this mode is more
+   flexibel and CD-ROMs created this way work fine with Amiga and
+   other systems, although some ISO 9660 rules are no longer enforced.
+ - added track editing function to split the current track at the selected
+   indices
+ - error requester for invalid audio image length now allows to accept
+   such images and to change the corresponding setting
+ - If using image files is the default (either because the current track
+   uses one or this gadget state was saved), this is not disabled when
+   adding a MPEG-A image because decoding MPEG-A might be so slow that
+   a temporary image file is required.
+ - The MakeCD environment variables can now alternatively also be
+   set in the tooltypes instead. They control some internal behaviour
+   only and are not ment to be used regularly.
+ - MakeCD now supports automatic opening of the tray/disc ejection
+   after writing and when asking for a specific disc. This behaviour
+   is configurable in the commands settings window.
+ - Enhanced "audio CD start" workaround: instead of setting up a project
+   that reads audio tracks from different positions the driver itself
+   reads from the appropriate position to get the right data. This can
+   be selected in the compatibility settings.
+ - Made index scanning more robust to compensate for inexact drives.
+   However, still the same method is used to get subcodes, so it won't
+   solve the problem that some drives fail with a "track following" or
+   "positioning" error.
+   As some copies of games only work with index pause, a default index
+   pause will be set if no scanning was done or failed. This can be
+   selected in the "Append/Copy CD" window.
+ - Automatically created filenames now also contain the length to get
+   different filenames for tracks from different CDs.
+ - The following warnings/messages will now be issued:
+   + raw data encoding, MPEG-A decoding or frequency resampling
+     might be too slow for on-the-fly
+   + buffer cannot be allocated completely
+   + writing in DAO and trying to delete an image file immediately
+   Reactions for each can (optionally) be saved permanently in the
+   requester.
+ - ISO image path is now always cleared when disabling it and set to
+   the path derived from the source when enabling it again.
+ - more detailed explanation why type of image file is not suitable
+ - MakeCD now saves the settings in the icon it was started with.
+   The main program doesn't have to be copied to use different settings for
+   different occasions, it's sufficient to create some project icon that
+   has MakeCD as default project. If the new icon hasn't got any settings,
+   the main program's settings are used as default until they are saved for
+   the first time.
+ - "CD_COPY" as tooltype or shell switch causes MakeCD to go directly
+   to the CD copy window. From there "Exit Window" and "Setup Project"
+   still lead back to the main window. This tooltype is used in
+   CDCopy.info to get a simple "separate" CD copy program...
+ - "USE_MAIN_PREFS" causes MakeCD to change tooltypes in the program's
+   icon when saving settings instead of the icon it was started with. This
+   is used in CDCopy.info already so that settings only have to be done
+   once for the whole program and stay consistent.
+ - All other windows are closed while the write window is open.
+ - Selection of new audio position during playing was improved (now waits
+   until value hasn't been changed for a short while before jumping).
+ - MakeCD doesn't require valid base dir to open settings any more.
+ - "Copy CD" achieved exact track starts in TAO by truncating audio tracks.
+   This was not obvious and not always desired, therefore this behaviour
+   is now configurable in the "Copy CD" window.
+ - The write window and the abort requester now both remind of the current
+   activity (writing for real, in test mode, not to CD-R at all). It is
+   also much more verbose about what MakeCD is doing and even predicts
+   what actions will happen after "Start" and how much time is still
+   required.
+ - Write window displays message while unlocking filesystems and before
+   closing the window - some filesystems sometimes lock up MakeCD at this
+   stage, for unknown reasons.
+ - The maximum buffer size is not updated after writing even though the memory
+   is already freed - this is not quite correct, but less confusing.
+ - Playing a single track now starts immediately because no track
+   selection is necessary and the other parameters can be easily changed
+   while playing.
+ - MakeCD now distinguishes between "user abort" and "automatic abort as
+   requested by IO error setting" in messages.
+ - amigaguide.library is no longer essential to run MakeCD.
+ - Bugfix: file requester for CDTV/CD32 boot file didn't work properly.
+ - Bugfix: menu item "Update writer" didn't work.
+ - Bugfix: menu item "Fix CD-R" only fixated the session
+
+
+
+MakeCD 3.2a:
+   MakeCD 3.62 (12.08.98)
+   makecdromfs.module V11.0 (24-05-1998)
+   ReadWrite.module 15.57 (12.08.98)
+   SCSISupport.module 14.26 (12.08.98)
+   
+   CDR_JVC_Teac.driver 13.75 (12.08.98)
+   CDR_Panasonic.driver 13.75 (12.08.98)
+   CDR_Philips_2000.driver 13.75 (12.08.98)
+   CDR_Philips_2600.driver 13.75 (12.08.98)
+   CDR_Plextor_Ricoh.driver 13.75 (12.08.98)
+   CDR_Ricoh_6200.driver 13.75 (12.08.98)
+   CDR_SCSI3_ATAPI.driver 13.75 (12.08.98)
+   CDR_Sony.driver 13.75 (12.08.98)
+   CDR_Yamaha_10x.driver 13.75 (12.08.98)
+   CD_ATAPI.driver 13.75 (12.08.98)
+   CD_NEC.driver 13.75 (12.08.98)
+   CD_ROM.driver 13.75 (12.08.98)
+   CD_Sony_Plextor.driver 13.75 (12.08.98)
+   CD_Toshiba.driver 13.75 (12.08.98)
+
+ - **8SVX samples*** are now imported in mono and stereo as long as they
+   are pure samples, i.e. without repititions.
+ - bugfix: "Adapt Audio Start" in the hardware compatibilities was not saved
+   correctly.
+ - Filtering .CDT in the image file requester is no longer done with a simple
+   pattern but with a more intelligent function, because for long file names
+   the suffix is truncated and not recognized.
+ - Some drives had problems during scanning of the SCSI bus if the
+   CD_Sony_Plextor.driver was installed.
+ - bugfix: jumping within MPEG-A images during playing was only possible in
+   the first ~40min of each image
+ - bugfix: getting the length of .WAV files without FACT chunk broke in a
+   last minute fix for invalid .WAV headers :-/
+ - CD_ATAPI.driver: reading didn't work with drives any more that didn't
+   support selecting the block size.
+ - ".iso" can also be used to prevent the (false) recognition of images
+   as MPEG-A.
+ - bugfix CDR_Ricoh_6200/CDR_SCSI3_ATAPI.driver: erasing a track on a CD-RW
+   was _clearing_ the track, i.e. overwriting its contents with zero, and
+   not actually _removing_ it as documented in MakeCD.
+   BTW: if erasing a CD-RW doesn't work, turn off the global test mode again
+   as it is by default - the test mode setting in the write window is set
+   and saved independently.
+ - bugfix DAO + session fixation: MakeCD overestimated the required
+   space by 30s and therefore issued a warning in cases where it wasn't 
+   necessary.
+ - bugfix: conversion of strange frequencies left some random bytes at the
+   end of the sample uncleared, which resulted in a short clicking noise.
+ - workaround for MAUD: different interpretations are used for the field
+   defining the length of the sample. Unfortunately, MakeCD had been
+   made compliant with a software that set this field incorrectly and
+   therefore read only one half of correct samples. The real length is
+   now recognized in both cases and correct MAUD images are generated.
+
+MakeCD V3.2a, update (beta):
+ ReadWrite.module 15.58 public beta (12.09.98)
+ CD_Toshiba.driver 13.78 public beta (12.09.98)
+ 
+ - workaround for 8SVX files with invalid number of samples in header
+ - CD_Toshiba: the driver now tries to enable a 4x audio read mode
+   that is supported by some Toshiba drives, e.g. XM5701B, XM6201B, and
+   XM3801B. Reducing the speed for normal data tracks to 1x is also
+   possible.
+ - CD_Toshiba/CD_Plextor: the environment variable for enabling/preventing
+   speed selection have been changed to MAKECD_SPEED_NO and
+   MAKECD_SPEED_YES.
+ - bugfix: byte order of raw data files could have been reversed,
+   completely trashing data tracks in DAO.
+
+
+MakeCD V3.2b - MakeCD 3.68 (11.03.99)
+               makecdromfs.module V11.0 (24-05-1998)
+               ReadWrite.module 15.60 (11.03.99)
+               SCSISupport.module 14.29 (11.03.99)
+
+               CDR_JVC_Teac.driver 13.87 (11.03.99)
+               CDR_Panasonic.driver 13.87 (11.03.99)
+               CDR_Philips_2000.driver 13.87 (11.03.99)
+               CDR_Philips_2600.driver 13.87 (11.03.99)
+               CDR_Plextor_Ricoh.driver 13.87 (11.03.99)
+               CDR_Ricoh_6200.driver 13.87 (11.03.99)
+               CDR_SCSI3_ATAPI.driver 13.88 (19.03.99)
+               CDR_Sony.driver 13.87 (11.03.99)
+               CDR_Yamaha_10x.driver 13.87 (11.03.99)
+               CD_ATAPI.driver 13.87 (11.03.99)
+               CD_NEC.driver 13.87 (11.03.99)
+               CD_ROM.driver 13.87 (11.03.99)
+               CD_Sony_Plextor.driver 13.87 (11.03.99)
+               CD_Toshiba.driver 13.87 (11.03.99)
+
+ ***************** SCSI and IO changes **********************
+
+ - JVC/Teac: avoid zero length pauses, which were not handled correctly
+   by the Teac 55S. This causes MakeCD to lock after filling the buffer
+   and might have been responsible for the invalid mixed mode CD-Rs, too.
+ - Teac 55S: workaround for the drive returning an invalid and random
+   start block. This failure made it impossible to write multisession
+   CD-Rs or to read such a track.
+ - bugfix: changing the code for padding audio samples broke the padding
+   in some other cases, resulting in glitches at the end of tracks.
+ - Philips CDD3600: support for TAO; update after simulated write with
+   ejecting caddy as it doesn't work without; audio scanning.
+ - Yamaha CRW4001: writing in DAO is possible now, too (I think it did
+   before already, but perhaps a more recent firmware broke this?).
+ - Yamaha CRW4416S: workaround for invalid mode 2 recognition
+ - added recognition of Plextor PX40 and PX-R820T and guessed
+   strings for new Yamaha drives
+ - Philips CDD522: writing in TAO reported an after each track, which
+   is now avoided
+ - JVC XR-W2042: added recognition and support for erasing CD-RW
+ - CDR_SCSI3_ATAPI.driver: ISRCs were written for the wrong tracks
+   beyond track 9 in DAO.
+ - Mitsumi CR-4801TE: added recognition and enabled workaround for 
+   fixation crash
+ - The workaround for crashes after fixation with the Mitsumi
+   ATAPI drives can now be enabled by setting the tooltype
+   MAKECD_MITSUMI_FIXATE.
+ - Mitsumi ATAPI/SCSI3 drives: recent firmware revisions finally
+   implement cue-sheet-DAO (at least for the Mitsumi CR-4801TE),
+   so MakeCD allows DAO again. If you get the error
+   "MODE_SELECT6: Illegal Field in Parameter List", see
+   below for an explanation and perhaps update the firmware.
+ - Plextor PX-W4420T: added recognition
+ - Plextor PX-R412C, PX-R820T, PX-W4220T: recent firmware revisions
+   failed to write PSX discs correctly in DAO. MakeCD works around
+   this problem by using a slightly different data mode.
+   MAKECD_WRITE_MODE2_MIXED_DAO enables this mode (which is on by
+   default for the Plextor drives) and MAKECD_WRITE_MODE2_MIXED_DAO_NO
+   overrides this default (for testing purposes).
+ - Yamaha drives: index scanning was off by two second because the
+   firmware reports a position that was shifted by 150 blocks.
+   MAKECD_AUDIO_MSF works around this problem by avoiding the incorrect
+   logical block addresses. It is enabled for Yamaha drives by default.
+ - HP CD-Writer+ 7200i: the drive does not update properly after
+   a test write, so now the "brute force" method of ejecting the disc
+   is used by default (MAKECD_UPDATE_EJECT).
+ - MAKECD_RETRIES can be used to increase the number of automatic
+   retries in case of read errors from a CD. The default is 2, because
+   most drives do retries themselves already.
+ - Memorex CR-622: added recognition
+ - audio scanning: with some drives MakeCD would have to start audio
+   playing beyond the end of the disc in order to get a value from the
+   actually desired position - this only resulted in an error and is
+   avoided now.
+ - Audio scanning now also recognises tracks without pause correctly.
+ - mpega.library for WarpOS: workaround for the library's broken
+   IO functions; MakeCD uses asyncio.lib now (does not improve
+   performance unless the source MPEG-A is on an extremly slow device).
+ - bugfix: downsampling of audio data broke recently
+ - changed module initialisation
+
+ ********************* GUI changes **************************
+
+ - Requesters behave like the other windows now: they are not
+   activated if no MakeCD window is active.
+ - Shortened filenames created by "Copy/Append CD":
+   AudioN = AudioNormal, AudioP = AudioPreamphasize
+ - Enabled #?.cdt as reject pattern again for incomplete ASL replacements
+   that don't use the filter function that was (and is) provided by MakeCD.
+ - reread CD-R contents after fixation/repair/format only if
+   action was not canceled.
+ - bugfix: size of project was not updated after appending another
+   project
+ - bugfix: from the Shell MakeCD had to be started with the current
+   directory being the directory with the program, otherwise saving
+   prefs was impossible.
+ - fixed some underscore clashes in the English gadget texts,
+   enabled more than 99:99min display of total CD length
+ - The buffer display was incorrect after aborting while filling
+   the buffer.
+
+
+Known problems:
+ - makecdromfs.module crashes when filenames are longer than 32 characters,
+   as it is possible now with SFS, PFS II. There is no workaround, you have
+   to avoid long filenames.
+ - Not a real problem: ATAPI doesn't specify DAO, so not all ATAPI writer
+   support it. But as we are not sure, we haven't disabled DAO in the
+   driver for all ATAPI writers unless someone has tested it. If yours fails
+   with the error "MODE_SELECT6: Illegal Field in Parameter List" when trying
+   to write in DAO, then it doesn't and Patrick would appreciate a short
+   notice.
+   Please note: some companies claim to support DAO, although the drive does
+   not support the real cue-sheet-DAO used by MakeCD, but only "raw writing".
+   "raw writing" produces the same result (a continously written disc), but
+   puts the load of preparing the data on the host computer and the
+   application. It is not supported by MakeCD yet, but may be added later.
+ - Teac 50S: discs with data + audio tracks cannot be written in DAO
+   (writing fails with error code $5/$CC).
+ - Panasonic 7502 V4.10: audio subcodes are incorrectly written in
+   one case, but others were not able to reproduce this.
+   Solution: avoid indices and index pauses if you have this problem,
+   this works. To achieve this, set the "default index pause" to 0 in
+   the "Copy CD" window and disable index scanning.
+ - Remaining time during writing is sometimes completely wrong due to
+   the way this estimation is done. That's just the way it works.
+ - JVC XR-W2010 V1.51: ISRC/Medium Catalog Number are not supported,
+   therefore errors when trying to use them are silently ignored.
+   At least the Philips CDD2600 always only sees the first session
+   of a DAO-CD-R written with JVC XR-W2010 V1.51, even though
+   "Fixate: Session" was used and other drives (JVC itself, Yamaha
+   CDR100) find the next session(s). Could only be fixed by JVC or
+   Philips.
+ - Before closing the write window MakeCD hangs on some systems. This
+   is caused by the filesystem that MakeCD locked to get exclusive
+   access to the hardware. Don't mount filesystems on your writer 
+   or unmount them before using MakeCD.
+ - The Sony 928E sometimes returns garbage values when reading the contents
+   of a CD with the CD writer specific commands. This doesn't happen when
+   the standard commands are used, so the CD_ATAPI driver should be used for
+   reading from the Sony 928E.
+ - workaround for mode 2 (2336 bytes) reading problems:
+   Some drives deliver invalid data with this block size (Sony 928E), others
+   report checksum errors although they shouldn't use the checksums (Plextor
+   PX-20TS). In both cases reading raw data still works, so now MakeCD can
+   read mode 2 tracks raw and throws away the unnecessary bytes if necessary.
+
+   This workaround is enabled only for the Sony 928E, but not for any other
+   drive, because some drives might read raw data slower and the additional
+   processing requires more CPU time. On slow computers with fast drives the
+   computer might perhaps even appear to be locked.
+
+   If your drive has similar problems you can enable this workaround by
+   creating the environment variable "MAKECD_READ_MODE2_RAW" (e.g. with
+   "setenv MAKECD_READ_MODE2_RAW=1"). Please tell Patrick if your drive only
+   reads mode 2 properly with this workaround.
+ - Panasonic 7501: writing mode 2 fails with an error. As I haven't found a
+   way around that mode 2 in spite of several different attempts this will
+   stay this way, i.e. writing mode 2 will never be supported by
+   CDR_Panasonic.driver.
+ - Triton has some problems when you keep the cursor keys pressed
+   to move within a listview: it might cause MakeCD to open windows.
+   It also doesn't calculate the width of the data mode gadget correctly.
+ - Ricoh MP6200S (V1.00): doesn't support medium catalog number in DAO,
+                          swallows ISRC of first audio track in DAO
+ - The amount of free blocks is not perfectly correct, because writers
+   report different values depending on what was already written. Sometimes
+   gaps are included and sometimes not. This causes an inaccuracy of upto
+   3 seconds. The end of CD-R check is not affected, though.
+ - The Ricoh MP6200S doesn't simulate formating. Therefore MakeCD doesn't
+   issue the formating command at if test mode is enabled.
+ - Writing audio with preemphasize is not possible with CDR400 (upto V1.0d).
+   Yamaha didn't respond to my bug report, so I implemented a fallback
+   to normal audio.
+ - Yamaha CDR400 sometimes panics after a buffer underrun and doesn't
+   stop writing. Yamaha could not help with this problem yet.
+ - Ricoh 1420 sometimes doesn't read contents properly. Exact reason/solution
+   unknown, but turning disconnect off and SCSI bus reset help.
+ - dracoscsi.device SCSI direct still doesn't work properly. You must have
+   enough free memory in your first memory module or a 32MB module in the
+   first socket, otherwise the dracoscsi.device will fail and probably cause
+   crashes or read errors. The same rules apply to every other software doing
+   SCSI direct.

@@ -1,0 +1,11 @@
+
+Generally, ISO only supports directory structures up to 8 levels deep.
+
+If you think you might have some directories deeper than that, you can
+use the "howdeep" tool to get a list of the directories which are
+deeper than a specified depth (threshold).
+
+Usage: howdeep volume|directory threshold
+
+Example: howdeep Work: 7
+

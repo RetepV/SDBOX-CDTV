@@ -1,0 +1,44 @@
+
+BuildCD, related Tools, and Workbench files
+(c) Copyright 1985-1999 Amiga, Inc. All Rights Reserved
+
+Conversion tool by Jim Hawkins
+
+
+This disk contains many files which have no icons and are only accessible
+via a shell.  Open a shell from Workbench (SYS:System/Shell). then use DIR
+to look at the disk (example DIR DF0:), use More to looks at the docs
+(more DF0:README).  (More and DIR are Amiga Workbench commands)
+
+
+   ************************************************************************
+   *									  *
+   *				COPYRIGHTS				  *
+   *									  *
+   *		   UNLESS OTHERWISE NOTED, ALL FILES ARE		  *
+   *									  *
+   *       Copyright (c) 1985-1999 Amiga, Inc.  All Rights Reserved       *
+   *									  *
+   ************************************************************************
+
+   THIS SOFTWARE AND INFORMATION MAY NOT BE DISTRIBUTED, DISCLOSED,
+   OR DUPLICATED, IN WHOLE OR IN PART, IN ANY MANNER OTHER THAN AS
+   SPECIFIED IN A SIGNED AGREEMENT WITH AMIGA, INC.
+ 
+   THIS SOFTWARE AND INFORMATION MAY NOT BE RETRANSMITTED ELECTRONICALLY,
+   AND MAY NOT BE STORED ON MULTI-USER SYSTEMS.
+
+   
+   ************************************************************************
+   *									  *
+   *				DISCLAIMER				  *
+   *									  *
+   *   THIS SOFTWARE AND INFORMATION IS PROVIDED "AS IS".		  *
+   *   NO REPRESENTATIONS OR WARRANTIES ARE MADE WITH RESPECT TO THE	  *
+   *   ACCURACY, RELIABILITY, PERFORMANCE, CURRENTNESS, OR OPERATION	  *
+   *   OF THIS SOFTWARE AND INFORMATION, AND ALL USE IS AT YOUR OWN RISK. *
+   *   NEITHER AMIGA NOR THE AUTHORS ASSUME ANY RESPONSIBILITY		  *
+   *   OR LIABILITY WHATSOEVER WITH RESPECT TO YOUR USE OF THIS SOFTWARE  *
+   *   AND INFORMATION.							  *
+   *									  *
+   ************************************************************************

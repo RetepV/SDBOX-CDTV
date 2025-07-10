@@ -1,0 +1,104 @@
+
+These CD32 test code examples were provided by the Software Assurance
+test group.  To compile them you may need to remove a couple of
+unnecessary libs from the Makefile (lib:ErrReport.lib, lib:wb2cli.o)
+and perhaps change some "bsprintf"'s to plain sprintf's.
+But the parts that access CD32 device and library functions should
+be useful example material.
+
+     cd (dir)
+          CDTest (dir)
+            args.c                           Audio.cd
+            audio.cd.old                     Audio.doc
+            AudioPause.rexx                  AudioPlay.rexx
+            bsprintf.a                       bugs
+            cd.c                             cd.h
+            CDTest                           CDTest.doc
+            CDTest.doc.info                  cdtest.h
+            cdtest.with                      cdtest_rev.h
+            cdtest_rev.i                     cdtest_rev.rev
+            Data.cd                          Data.doc
+            DataPlay.rexx                    debug.c
+            event.c                          interrupt.c
+            main.c                           Makefile
+            revision.c                       revision.c.info
+            simplerexx.c                     SimpleRexx.h
+            test.cd                          verify.c
+          Play (dir)
+            makefile                         Play
+            Play.c                           Play_rev.asm
+            Play_rev.rev                     
+     lowlevel (dir)
+          TimerInt (dir)
+            gui.c                            main.c
+            Makefile                         revision.c
+            timer.c                          TimerInt
+            TimerInt.doc                     TimerInt.doc.info
+            timerint.h                       TimerInt.info
+            TimerInt.with                    TimerInt.with.info
+            TimerInt_rev.h                   TimerInt_rev.i
+            TimerInt_rev.rev                 
+          VBlankInt (dir)
+            main.c                           Makefile
+            revision.c                       vblank.c
+            VBlankInt                        VBlankInt.doc
+            VBlankInt.doc.info               vblankint.h
+            VBlankInt.with                   VBlankInt_rev.h
+            VBlankInt_rev.i                  VBlankInt_rev.rev
+          KBInt (dir)
+            .info                            gui.c
+            interrupt.c                      KBInt
+            KBInt.doc                        KBInt.doc.info
+            kbint.h                          KBInt.info
+            kbint.with                       KBInt_rev.h
+            KBInt_rev.i                      KBInt_rev.rev
+            main.c                           Makefile
+            revision.c                       
+          ReadJoyPort (dir)
+            gui.c                            joyport.c
+            main.c                           Makefile
+            Makefile.info                    ReadJoyPort
+            ReadJoyPort.doc                  ReadJoyPort.doc.info
+            readjoyport.h                    ReadJoyPort.info
+            readjoyport.with                 ReadJoyPort_rev.h
+            ReadJoyPort_rev.i                ReadJoyPort_rev.rev
+            revision.c                       
+          SetJoyPortAttrs (dir)
+            main.c                           Makefile
+            revision.c                       SetJoyPortAttrs
+            SetJoyPortAttrs.doc              SetJoyPortAttrs.doc.info
+            SetJoyPortAttrs.h                SetJoyPortAttrs.with
+            SetJoyPortAttrs_rev.h            SetJoyPortAttrs_rev.i
+            SetJoyPortAttrs_rev.rev          
+          GameControl (dir)
+            gamecontrol                      GameControl.c
+            GameControl.doc                  GameControl.doc.info
+            GameControl.info                 GameControlWrap
+            GameControlWrap.info             GameControlWrap_rev.asm
+            GameControlWrap_rev.rev          gamecontrol_protos.h
+            GameControl_rev.asm              GameControl_rev.rev
+            makefile                         
+     nonvolatile (dir)
+       Debug_GetNVL                     DeleteNV
+       DeleteNV.c                       DeleteNV_rev.asm
+       GetCopyNV                        GetCopyNV.c
+       GetCopyNV_rev.asm                GetNVInfo
+       GetNVInfo.c                      GetNVInfo_rev.asm
+       GetNVList                        GetNVList.c
+       GetNVList_rev.asm                makefile
+       NV.h                             NVLib.doc
+       overload.rexx                    SetNVProtection
+       SetNVProtection.c                SetNVProtection_rev.asm
+       StoreNV                          StoreNV.c
+       StoreNV_rev.asm                  StuffNV
+       StuffNV.c                        StuffNV_rev.asm
+       WipeNV                           WipeNV.c
+       WipeNV_rev.asm                   XStrToULong.c
+     graphics (dir)
+          wpixel (dir)
+            wpixel                           wpixel.c
+            wpixel.doc                       wpixel.doc.info
+          wchunky (dir)
+            wchunky                          wchunky.c
+            wchunky.doc                      wchunky.doc.info
+  README                           

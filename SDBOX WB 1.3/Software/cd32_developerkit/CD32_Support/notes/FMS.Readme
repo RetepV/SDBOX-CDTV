@@ -1,0 +1,34 @@
+			Mounting an ISO Image
+
+devs/fmsdisk.device
+s/isomount
+
+Devs/fmsdisk.device is a modified version of Matt Dillon's fmsdisk.device.
+This modified version allows you to mount a file as a filesystem device
+without having to name the file "Unit<n>" nor assign FMS: to where the
+file resides.
+
+If you have built an ISO image using the proprietary AmigaCD ISO
+tools (provided on a different disk to licensees), you can mount
+and check the ISO image as if it were a disk by using the V40
+l/CDFilesystem, and the devs/fmsdisk.device, and the s/isomount
+script provided on this disk.  Just copy fmsdisk.device to devs:
+and isomount to s: on your V40 system.  If you have a V39 system,
+also copy l/CDFileSystem to L:.
+
+Then do:  ISOMOUNT isofilename
+Example:  ISOMOUNT Work:MyGameISO
+
+Warning - if your ISO image is larger, there may be a significant
+delay after you do this before the volume is available.
+
+You can then list ISO2: to check directories, copy files off it, etc.
+
+ISOMOUNT defaults to mounting Unit number2 as ISO2:, and will use
+sequentially higher numbers if a unit is already mounted.
+
+
+Note - This is not an emulation system.  We plan to provide a
+different ISO mounting emulation which will provide cd.device
+functionality.  Watch for beta versions in our closed conferences
+for AmigaCD licensees on BIX (amiga.cd32) and CIX (nv.beta).

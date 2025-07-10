@@ -1,0 +1,46 @@
+CTRLscsi
+========
+
+This is a quick hack to display, enable or disable reselection for
+individual or all units in scsi.device V39/V40. It sets values no
+matter what is out there, so be careful. No warranties. Standard
+disclaimer.
+
+Note that disabling reselection via the Rigid Disk Block takes
+precedence over the settings influenced via CTRLscsi.
+
+Note also that due to bugs in scsi.device the following may happen:
+
+    - Any access to a non existing LUN can turn on reselection for
+      the respective ID with scsi.device >= 40.20.
+
+    - Due to the above, e.g. any start of HDToolBox will turn on
+      reselection, even on a single drive system.
+
+Any access to non existing units will be ignored.
+
+
+Legalese
+========
+
+This is not PD. It is freely redistributable, provided no changes
+are made. CTRLscsi is giftware. If you like it and want to keep
+using it, just send me a gift of your choice.
+It shall not be sold for profit and may not be included with any
+type of product without explicit permission by the author.
+
+Permission has been granted to distribute CTRLscsi with MakeCD.
+
+
+Sentiments
+==========
+
+I wouldn't have hacked this up if Angela hadn't spent some time
+getting on my nerves for this. ;^)
+
+
+Heinz Wrobel
+Karlstr. 16
+82131 Gauting
+Germany
+<heinz@hwg.muc.de>
