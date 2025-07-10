@@ -1,0 +1,752 @@
+; $VER: tsgui.catalog 01.02 (11.05.2006)
+;
+MSG_CANCEL (//)
+Cancel
+;
+MSG_READING_TRACK (//)
+Reading track %ld\r
+;
+MSG_WRITING_TRACK (//)
+Writing track %ld\r
+;
+MSG_READ_DISK (//)
+Read disk
+;
+MSG_WRITE_DISK (//)
+Write disk
+;
+MSG_IO_ERROR (//)
+\n*** Error %ld%s\n
+;
+MSG_READ_ERROR (//)
+While reading Cylinder No. %ld\n\
+an error has occured.\n\
+Error No. %ld%s
+;
+MSG_WRITE_ERROR (//)
+While writing Cylinder No. %ld\n\
+an error has occured.\n\
+Error No. %ld%s
+;
+MSG_IGNORE_CANCEL (//)
+Ignore|Cancel
+;
+MSG_OK (//)
+Ok
+;
+MSG_FILE_INCOMPLETE (//)
+Operation canceled\n\
+The file is incomplete.
+;
+MSG_NOT_ENOUGH_MEMORY (//)
+Not enough memory for buffer !
+;
+MSG_PRINT_DEVICE (//)
+Device = %s\n
+;
+MSG_PRINT_UNIT (//)
+Unit   = %ld\n
+;
+MSG_PRINT_FLAGS (//)
+Flags  = %ld\n
+;
+MSG_PRINT_BYTES_PER_CYL (//)
+Bytes per cylinder = %ld\n
+;
+MSG_PRINT_FIRST_CYL (//)
+First cylinder     = %ld\n
+;
+MSG_PRINT_LAST_CYL (//)
+Last cylinder      = %ld\n
+;
+MSG_CANNOT_OPEN_FILE (//)
+Cannot open file %s !
+;
+MSG_TOO_LARGE_DISK (//)
+The disk is larger than 4GB but the\n\
+device does not support 64bit commands !
+;
+MSG_CANNOT_OPEN_DEVICE (//)
+Cannot open %s unit %ld !\n
+;
+MSG_CANNOT_FIND_DRIVE (//)
+Cannot find drive %s !\n
+;
+MSG_NAME (//)
+Name
+;
+MSG_DEVICE (//)
+Device
+;
+MSG_UNIT (//)
+Unit
+;
+MSG_FIRST_CYL (//)
+First cyl.
+;
+MSG_LAST_CYL (//)
+Last cyl.
+;
+MSG_SIZE (//)
+Size
+;
+MSG_REFRESH (//)
+Refresh
+;
+MSG_FORMAT_WHILE_WRITING (//)
+Format while writing
+;
+MSG_FILE (//)
+File
+;
+MSG_DISK_TO_FILE (//)
+Disk -> File
+;
+MSG_FILE_TO_DISK (//)
+File -> Disk
+;
+MSG_PLEASE_CHOOSE_FILE (//)
+Please choose file
+;
+MSG_MUST_CHOOSE_DRIVE_FIRST (//)
+You have to choose a drive first !
+;
+MSG_MUST_CHOOSE_FILE_FIRST (//)
+You have to choose an image file first !
+;
+MSG_INVALID_ACTION (//)
+Invalid action %s !\n\
+Valid actions are READ and WRITE.\n
+;
+MSG_BREAK (//)
+*** Break\n
+;
+MSG_SIZE_DOES_NOT_FIT (//)
+\n\
+The size of the image file does\n\
+not match the size of the disk !\n\
+\n\
+Image: %s\n\
+Disk : %s\n
+;
+MSG_FILE_ALREADY_EXISTS (//)
+The file does already exist !
+;
+MSG_OVERWRITE_CANCEL (//)
+Overwrite|Cancel
+;
+MSG_RETRY_IGNORE_ALL_CANCEL (//)
+Retry|Ignore|Ignore all|Cancel
+;
+MSG_DATA_WILL_BE_DISCARDED (//)
+All data that is already on\n\
+the disk will be discarded !
+;
+MSG_OK_CANCEL (//)
+Ok|Cancel
+;
+;==== Strings for Version 1.2 start here ===============================
+;
+MSG_RAW_READ (+1//)
+Create custom ADFs
+;
+MSG_PREFS (//)
+Preferences
+;
+MSG_CANNOT_RUN_GZIP (//)
+Cannot run GZIP !
+;
+MSG_GZIP_NOT_FOUND (//)
+Unable to locate the GZIP executable.\n
+;
+MSG_GZIP_IS_NOT_AVAILABLE (//)
+GZIP is not available.
+;
+;==== Strings for Version 1.5 start here ===============================
+;
+MSG_CANNOT_COMPRESS_CUSTOM_ADF (//)
+TSgui is not able to compress custom ADFs.
+;
+MSG_READING_TRACK_HEAD (//)
+Reading track %ld head %ld\r
+;
+;==== Strings for Version 1.6 start here ===============================
+;
+MSG_PREFS_WINDOW_TITLE (//)
+TrackSaver Preferences
+;
+MSG_PREFS_OUTPUT_WINDOW (//)
+Output window for DOS commands
+;
+MSG_PREFS_PIPE_PREFIX (//)
+Pipe prefix
+;
+MSG_PREFS_GZIP_PATH (//)
+Path to the GZIP executable
+;
+MSG_SAVE (//)
+Save
+;
+MSG_USE (//)
+Use
+;
+MSG_NO_DISK_PRESENT (//)
+No disk present\n\
+in device %s
+;
+MSG_RETRY_CANCEL (//)
+Retry|Cancel
+;
+;==== Strings for Version 1.8 start here ===============================
+;
+MSG_PROJECT (//)
+Project
+;
+MSG_QUIT (//)
+Quit
+;
+MSG_WRITE_TO_FILE_FAILED (//)
+\nWrite to file failed\n
+;
+;
+;==== Strings for Version 2.0 start here ===============================
+;
+MSG_VOLUME (//)
+Volume
+;
+MSG_DRAWER (//)
+Drawer
+;
+MSG_ASSIGN (//)
+Assign
+;
+MSG_VOLUME_FORMAT (//)
+%3d %% full, %s free, %s in use
+;
+MSG_SELECT_FILE (//)
+Select file
+;
+MSG_VOLUMES (//)
+Volumes
+;
+MSG_PARENT (//)
+Parent
+;
+MSG_PRESS_ESC_OR_CLICK_CANCEL (//)
+Press Esc or click Cancel to abort.
+;
+MSG_FILE_DOES_NOT_EXIST (//)
+The file does not exist !
+;
+MSG_CANNOT_OPEN_PIPE (//)
+Cannot open pipe
+;
+MSG_NOT_INTERNAL_DRIVE (//)
+Custom ADFs can only be created\n\
+from internal floppy drives.
+;
+MSG_ABOUT (//)
+About...
+;
+MSG_ABOUT_TITLE (//)
+About
+;
+MSG_FILE_READ_ERROR (//)
+Error while reading file.\n\
+The error code is %ld
+;
+MSG_DISK_INCOMPLETE (//)
+Operation canceled\n\
+The disk is incomplete.
+;
+MSG_EDIT (//)
+Edit
+;
+MSG_RESET_TO_DEFAULTS (//)
+Reset To Defaults
+;
+MSG_LAST_SAVED (//)
+Last Saved
+;
+MSG_RESTORE (//)
+Restore
+;
+MSG_FULL_HDD_IMAGE (//)
+Full HDD image
+;
+MSG_VERIFY (//)
+Verify
+;
+MSG_COMPRESSION (//)
+Compression
+;
+MSG_OFF (//)
+off
+;
+MSG_GZIP (//)
+GZIP
+;
+MSG_DMS (//)
+DMS
+;
+MSG_PREFS_DMS_PATH (//)
+Path to the DMS executable
+;
+MSG_PREFS_WAIT_CLOSE_WINDOW (//)
+Wait until the window is closed
+;
+MSG_PLEASE_PRESS_RETURN (//)
+Please press Return to close the window.
+;
+MSG_PREFS_SUPPRESSED_OUTPUT (//)
+File name for suppressed output
+;
+MSG_FILE_WRITE_ERROR (//)
+Error while writing file.\n\
+The error code is %ld
+;
+MSG_DMS_IS_NOT_AVAILABLE (//)
+DMS is not available.
+;
+MSG_INVALID_COMPRESSION (//)
+invalid compression
+;
+MSG_CANNOT_GET_GEOMETRY (//)
+cannot get geometry for full volume image
+;
+;
+;==== Strings for Version 2.2 start here ===============================
+;
+MSG_PARTITION_INFO_MENU (//)
+Partition info...
+;
+MSG_PARTITION_INFO_TITLE (//)
+Partition info
+;
+MSG_PARTITION_INFO_BODY (//)
+If you want to mount a HDF from this partition in WinUAE,\n\
+you have to specify the following values:\n\
+\n\
+Surfaces = %ld\n\
+Sectors = %ld\n\
+Reserved = %ld\n\
+Block size = %ld\n
+;
+MSG_ELAPSED_TIME (//)
+Elapsed time :
+;
+MSG_REMAINING_TIME (//)
+Remaining time :
+;
+MSG_PLEASE_CHOOSE_PARTITION (//)
+Please choose a partition first.
+;
+MSG_DELETE_KEEP (//)
+Delete|Keep
+;
+;
+;==== Strings for Version 2.3 start here ===============================
+;
+MSG_COULD_NOT_LOCK_SCREEN (//)
+Could not lock screen
+;
+MSG_COULD_NOT_CREATE_GUI (//)
+Could not create gui
+;
+MSG_COULD_NOT_OPEN_WINDOW (//)
+Could not open window
+;
+MSG_NOT_ENOUGH_MEMORY_FOR_BUFFER (//)
+Not enough memory for buffer !\n\
+Need at least %ld bytes%s.
+;
+MSG_CHIP_RAM (//)
+ chip memory
+;
+MSG_24BIT_RAM (//)
+ 24bit memory
+;
+MSG_KICK_RAM (//)
+ kick memory
+;
+MSG_FAST_RAM (//)
+ fast memory
+;
+MSG_CANNOT_DETERMINE_HDD_SIZE (//)
+Cannot determine HDD size.
+;
+MSG_ADVANCED_OPTIONS (//)
+Advanced Options
+;
+MSG_NO_SAFETY_REQUESTERS (//)
+Don't show safety requesters
+;
+MSG_NO_SIZE_CHECK (//)
+Don't check image size
+;
+MSG_DELETE_INCOMPLETE (//)
+Delete incomplete image files
+;
+MSG_OVERWRITE_EXISTING (//)
+Overwrite existing files
+;
+MSG_IGNORE_ERRORS (//)
+Ignore read/write errors
+;
+MSG_READ_BLOCK_BY_BLOCK (//)
+Read block by block, not cylinders
+;
+MSG_SHOW_BLOCK_MAP (//)
+Show block map
+;
+MSG_USE_RESTART (//)
+Use extended restart
+;
+MSG_SAVE_SETTINGS (//)
+Save settings
+;
+MSG_SCREEN_TITLE_FORMAT (//)
+%s     %s chip RAM  %s other RAM
+;
+MSG_NO_MEMORY_FOR_RESTART (//)
+Not enough memory for restart
+;
+MSG_PREFS_RESTART_FILE (//)
+File for restart data
+;
+MSG_PREFS_IMAGE_PATH (//)
+Default path for image files
+;
+MSG_CLOSE_WINDOW_TO_CONTINUE (//)
+<-- Close this window to continue
+;
+MSG_NO_MEMORY_FOR_BLOCK_MAP (//)
+Not enough memory for block map
+;
+MSG_OVERWRITE_RESUME_CANCEL (//)
+Overwrite|Resume|Cancel
+;
+MSG_RESTART_FAILED_DRIVE_NOT_FOUND (//)
+Restart failed: drive not found
+;
+MSG_RESTART_FAILED_COMPRESSION_CHANGED (//)
+Restart failed: compression type has changed
+;
+MSG_RESTART_FAILED_DRIVE_SIZE_CHANGED (//)
+Restart failed: drive size has changed
+;
+MSG_BACK_ABORT_QUIT (//)
+Back|Abort|Quit
+;
+MSG_BACK_ABORT_CONTINUE_QUIT (//)
+Back|Abort|Continue|Quit
+;
+MSG_NOT_ENOUGH_DISK_SPACE (//)
+The output device has not enough\n\
+space to hold the image file
+;
+MSG_CONTINUING_READ_OPERATION (//)
+\n\
+Continuing read operation\n\
+from drive %s (%s)\n\
+into %s\n\
+size %s.\n
+;
+MSG_NO_VOLUME (//)
+no volume
+;
+MSG_LAST_BLOCK_ON_FILE_IS (//)
+Last block on file is %lu\n
+;
+MSG_NUMBER_OF_BLOCKS_ON_DEVICE_IS (//)
+Number of blocks on device is %lu\n
+;
+MSG_RESTART_WARNING (//)
+\nWarning !!\n\n
+;
+MSG_OUTPUT_FILE_CHANGED_FROM (//)
+Output file changed from %s\n
+;
+MSG_INPUT_DRIVE_CHANGED_FROM (//)
+Input drive changed from %s\n
+;
+MSG_INPUT_DEVICE_CHANGED_FROM_TO (//)
+Input device changed\n\
+  from %s unit %lu\n\
+  to %s unit %lu\n
+;
+MSG_START_CYLINDER_CHANGED_FROM_TO (//)
+Start cylinder changed from %lu to %lu\n
+;
+MSG_OPEN_SCREEN (//)
+Open screen
+;
+MSG_CLOSE_WORKBENCH (//)
+Close Workbench
+;
+MSG_NUMBER_OF_RETRIES (//)
+Set number of retries
+;
+MSG_5_RETRIES (//)
+5
+;
+MSG_10_RETRIES (//)
+10
+;
+MSG_20_RETRIES (//)
+20
+;
+MSG_SHOW_SUMMARY (//)
+Show summary at end of operation
+;
+MSG_ALWAYS (//)
+Always
+;
+MSG_FOR_ERRORS (//)
+For errors
+;
+MSG_SUMMARY_READ_BLOCKS (//)
+%lu blocks have been read successfully.\n\
+%lu blocks could not be read because of errors.\n\
+The last error was %ld%s.
+;
+MSG_SUMMARY_READ_CYLINDERS (//)
+%lu cylinders have been read successfully.\n\
+%lu cylinders could not be read because of errors.\n\
+The last error was %ld%s.
+;
+MSG_SUMMARY_READ_BUFFERS (//)
+%lu buffers have been read successfully.\n\
+%lu buffers could not be read because of errors.\n\
+The last error was %ld%s.
+;
+MSG_SUMMARY_WRITE_BLOCKS (//)
+%lu blocks have been written successfully.\n\
+%lu blocks could not be written because of errors.\n\
+The last error was %ld%s.
+;
+MSG_SUMMARY_WRITE_CYLINDERS (//)
+%lu cylinders have been written successfully.\n\
+%lu cylinders could not be written because of errors.\n\
+The last error was %ld%s.
+;
+MSG_SUMMARY_WRITE_BUFFERS (//)
+%lu buffers have been written successfully.\n\
+%lu buffers could not be written because of errors.\n\
+The last error was %ld%s.
+;
+MSG_SKIP_BLOCKS (//)
+Skip blocks
+;
+MSG_AMOUNT (//)
+Amount:
+;
+MSG_ALWAYS_SKIP (//)
+Always skip
+;
+MSG_EVERY (//)
+every
+;
+MSG_BLOCKS (//)
+blocks
+;
+MSG_PROCESS_MULTIPLE_DISKS (//)
+Process multiple disks
+;
+MSG_ABOUT_TO_READ_MULTIPLE_DISKS (//)
+About to read multiple disks
+;
+MSG_ABOUT_TO_WRITE_MULTIPLE_DISKS (//)
+About to write multiple disks
+;
+MSG_PLEASE_SELECT_DRIVES (//)
+Please select the drives to use
+;
+MSG_ALL (//)
+All
+;
+MSG_NONE (//)
+None
+;
+MSG_FLIP (//)
+Flip
+;
+MSG_FILE_NAMES (//)
+File names
+;
+MSG_START_AT_DISK (//)
+Start at disk
+;
+MSG_NDOS (//)
+NDOS
+;
+MSG_TEMPLATE (//)
+Template
+;
+MSG_NDOS_VOLUME (//)
+NDOS volume
+;
+MSG_EXAMPLE (//)
+Example
+;
+MSG_START_CANCEL (//)
+Start|Cancel
+;
+MSG_FORMAT_D_DISK_NUMBER (//)
+&d - disk number
+;
+MSG_FORMAT_V_VOLUME_NAME (//)
+&v - volume name
+;
+MSG_FORMAT_N_NDOS_NUMBER (//)
+&n - ndos number
+;
+MSG_PLEASE_INSERT_DISK_INTO_ANY_DRIVE (//)
+Please insert disk no. %ld into any drive.
+;
+MSG_NO_DISK_IN_DRIVE (//)
+no disk in drive.
+;
+MSG_SOURCE_DIR (//)
+Source directory
+;
+MSG_DEST_DIR (//)
+Destination dir.
+;
+MSG_REMOVE_FILE (//)
+Remove file
+;
+MSG_REREAD_DIR (//)
+Reread dir.
+;
+MSG_PLEASE_INSERT_EMPTY_DISK (//)
+Please insert an empty disk for\n\
+%s\n\
+into any drive.
+;
+MSG_CREATE_MOUNTLIST_MENU (//)
+Create mountlist...
+;
+MSG_SAVE_MOUNTLIST (//)
+Save mountlist...
+;
+MSG_CANNOT_OPEN_MOUNTLIST_FILE (//)
+Cannot open mountlist file.
+;
+MSG_MOUNTLIST_FILE_ALREADY_EXISTS (//)
+The mountlist file already exists.
+;
+MSG_REPLACE_APPEND_CANCEL (//)
+Replace|Append|Cancel
+;
+MSG_SAVE_ROM_FILE_MENU (//)
+Save ROM file...
+;
+MSG_SAVE_ROM_FILE (//)
+Save ROM file
+;
+MSG_CANNOT_OPEN_ROM_FILE (//)
+Cannot open ROM file.
+;
+MSG_ROM_FILE_ALREADY_EXISTS (//)
+The ROM file already exists.
+;
+MSG_REPLACE_CANCEL (//)
+Replace|Cancel
+;
+MSG_SAVE_RDB_TO_FILE (//)
+Save RDB to file...
+;
+MSG_RESTORE_RDB_FROM_FILE (//)
+Restore RDB from file...
+;
+MSG_PLEASE_CHOOSE_RDB_FILE (//)
+Please Choose RDB File
+;
+MSG_RDB_FILE_ALREADY_EXISTS (//)
+RDB file already exists.
+;
+MSG_CANNOT_OPEN_RDB_FILE (//)
+Cannot open RDB file.
+;
+MSG_FILE_DOES_NOT_CONTAIN_A_VALID_RDB (//)
+This file does not contain a valid RDB.
+;
+MSG_SIZE_IN_RDB_DOES_NOT_MATCH_DISK_SIZE (//)
+The disk size defined in the RDB file (%ld MB)\n\
+does not match the real disk size (%ld MB).
+;
+MSG_OVERWRITING_RDB_WARNING (//)
+!!! Warning !!!\n\
+\n\
+I am about to overwrite the RDB of this disk:\n\
+\n\
+%-8.8s %-16.16s %-4.4s\n\
+\n\
+with this data:\n\
+\n\
+%-8.8s %-16.16s %-4.4s\n\
+\n\
+This will change or delete\n\
+- the disk size as it is known to the system\n\
+- all partitions on this disk\n\
+- the file systems known to the system\n\
+\n\
+Your system might not boot any more after this change !\n\
+\n\
+Do only continue if you are absolutely sure !
+;
+MSG_SELECT_RAW_DEVICE (//)
+Select raw device...
+;
+MSG_SET_MAXTRANSFER (//)
+Set MaxTransfer
+;
+MSG_64KB (//)
+64 kb
+;
+MSG_128KB (//)
+128 kb
+;
+MSG_NO_LIMIT (//)
+no limit
+;
+MSG_WAITING (//)
+Waiting...
+;
+MSG_ERROR_WRITING_RDB (//)
+While writing block no. %ld\n\
+an error has occured.\n\
+Error no. %ld%s
+;
+MSG_SAVE_STATE (//)
+Save state
+;
+MSG_FILE_SEEK_ERROR (//)
+Cannot seek to end of file.\n\
+The error code is %ld
+;
+MSG_LANGUAGE (//)
+Language
+;
+MSG_END_OF_FILE_REACHED (//)
+End of file reached
+;
+MSG_DATE (//)
+Date
+;
+;
+;==== Error messages for wrong command line ============================
+;
+ARGERR_DUPLICATE  (10001//)
+argument given twice
+;
+ARGERR_MISSINGVAL (//)
+value after keyword missing
+;
+ARGERR_MISSINGARG (//)
+required argument missing
+;
+ARGERR_WRONGNUM (//)
+wrong number of arguments
+;

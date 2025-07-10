@@ -1,0 +1,5 @@
+cd devs:
+mount SD0: from SD0
+cd SD0:
+quit
+

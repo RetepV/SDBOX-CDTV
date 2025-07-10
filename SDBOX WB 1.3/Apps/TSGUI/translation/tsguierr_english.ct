@@ -1,0 +1,97 @@
+## version $VER: tsguierr.catalog 01.00 (11.05.2006)
+## codeset 0
+## language english
+;
+MSG_IOERR_OPENFAIL
+ (device/unit failed to open)
+;
+MSG_IOERR_ABORTED
+ (request terminated)
+;
+MSG_IOERR_NOCMD
+ (command not supported by device)
+;
+MSG_IOERR_BADLENGTH
+ (not a valid length)
+;
+MSG_IOERR_BADADDRESS
+ (invalid address (misaligned or bad range))
+;
+MSG_IOERR_UNITBUSY
+ (device opens ok, but requested unit is busy)
+;
+MSG_IOERR_SELFTEST
+ (hardware failed self-test)
+;
+MSG_TSGUI_VERIFY_FAILED
+ (verify failed)
+;
+MSG_TDERR_NotSpecified
+ (general catchall)
+;
+MSG_TDERR_NoSecHdr
+ (no sector header)
+;
+MSG_TDERR_BadSecPreamble
+ (bad sector preamble)
+;
+MSG_TDERR_BadSecID
+ (bad sector ID)
+;
+MSG_TDERR_BadHdrSum
+ (header had incorrect checksum)
+;
+MSG_TDERR_BadSecSum
+ (data had incorrect checksum)
+;
+MSG_TDERR_TooFewSecs
+ (couldn't find enough sectors)
+;
+MSG_TDERR_BadSecHdr
+ (bad sector header)
+;
+MSG_TDERR_WriteProt
+ (disk is write protected)
+;
+MSG_TDERR_DiskChanged
+ (no disk in the drive)
+;
+MSG_TDERR_SeekError
+ (couldn't find track 0)
+;
+MSG_TDERR_NoMem
+ (ran out of memory)
+;
+MSG_TDERR_BadUnitNum
+ (bad unit number)
+;
+MSG_TDERR_BadDriveType
+ (bad drive type)
+;
+MSG_TDERR_DriveInUse
+ (drive in use)
+;
+MSG_TDERR_PostReset
+ (user hit reset; awaiting doom)
+;
+MSG_HFERR_SelfUnit
+ (cannot issue SCSI command to self)
+;
+MSG_HFERR_DMA
+ (DMA error)
+;
+MSG_HFERR_Phase
+ (illegal or unexpected SCSI phase)
+;
+MSG_HFERR_Parity
+ (SCSI parity error)
+;
+MSG_HFERR_SelTimeout
+ (Select timed out)
+;
+MSG_HFERR_BadStatus
+ (status and/or sense error)
+;
+MSG_HFERR_NoBoard
+ (Open failed for non-existant board)
+;

@@ -1,0 +1,1016 @@
+## version $VER: tsgui.catalog 01.00 (23.05.01)
+## codeset 0
+## language deutsch
+;
+MSG_CANCEL
+Abbruch
+; Cancel
+;
+MSG_READING_TRACK
+Lese Spur %ld\r
+; Reading track %ld\r
+;
+MSG_WRITING_TRACK
+Schreibe Spur %ld\r
+; Writing track %ld\r
+;
+MSG_READ_DISK
+Disk lesen
+; Read disk
+;
+MSG_WRITE_DISK
+Image auf Disk schreiben
+; Write disk
+;
+MSG_IO_ERROR
+\n*** Fehler %ld%s\n
+; \n*** Error %ld%s\n
+;
+MSG_READ_ERROR
+Beim Lesen von Cylinder Nr. %ld\nist ein Fehler aufgetreten.\nFehler Nr. %ld%s
+; While reading Cylinder No. %ld\nan error has occured.\nError No. %ld%s
+;
+MSG_WRITE_ERROR
+Beim Schreiben von Cylinder Nr. %ld\nist ein Fehler aufgetreten.\nFehler Nr. %ld%s
+; While writing Cylinder No. %ld\nan error has occured.\nError No. %ld%s
+;
+MSG_IGNORE_CANCEL
+Ignorieren|Abbruch
+; Ignore|Cancel
+;
+MSG_OK
+Ok
+; Ok
+;
+MSG_FILE_INCOMPLETE
+Abgebrochen !\nDie Datei ist unvollständig.
+; Operation canceled\nThe file is incomplete.
+;
+MSG_NOT_ENOUGH_MEMORY
+Nicht genug Speicher für Puffer !
+; Not enough memory for buffer !
+;
+MSG_PRINT_DEVICE
+Device = %s\n
+; Device = %s\n
+;
+MSG_PRINT_UNIT
+Unit   = %ld\n
+; Unit   = %ld\n
+;
+MSG_PRINT_FLAGS
+Flags  = %ld\n
+; Flags  = %ld\n
+;
+MSG_PRINT_BYTES_PER_CYL
+Bytes pro Zylinder = %ld\n
+; Bytes per cylinder = %ld\n
+;
+MSG_PRINT_FIRST_CYL
+Erster Zylinder    = %ld\n
+; First cylinder     = %ld\n
+;
+MSG_PRINT_LAST_CYL
+Letzter Zylinder   = %ld\n
+; Last cylinder      = %ld\n
+;
+MSG_CANNOT_OPEN_FILE
+Kann Datei %s nicht öffnen !
+; Cannot open file %s !
+;
+MSG_TOO_LARGE_DISK
+Die Disk ist größer als 4GB, aber das Device unterstützt keine 64bit-Kommandos !
+; The disk is larger than 4GB but the device does not support 64bit commands !
+;
+MSG_CANNOT_OPEN_DEVICE
+Kann %s Unit %ld nicht öffnen !\n
+; Cannot open %s unit %ld !\n
+;
+MSG_CANNOT_FIND_DRIVE
+Kann Laufwerk %s nicht finden !\n
+; Cannot find drive %s !\n
+;
+MSG_NAME
+Name
+; Name
+;
+MSG_DEVICE
+Treiber
+; Device
+;
+MSG_UNIT
+Einheit
+; Unit
+;
+MSG_FIRST_CYL
+Erster Zyl.
+; First cyl.
+;
+MSG_LAST_CYL
+Letzter Zyl.
+; Last cyl.
+;
+MSG_SIZE
+Größe
+; Size
+;
+MSG_REFRESH
+Aktualisieren
+; Refresh
+;
+MSG_FORMAT_WHILE_WRITING
+Beim Schreiben formatieren
+; Format while writing
+;
+MSG_FILE
+Datei
+; File
+;
+MSG_DISK_TO_FILE
+Disk -> Datei
+; Disk -> File
+;
+MSG_FILE_TO_DISK
+Datei -> Disk
+; File -> Disk
+;
+MSG_PLEASE_CHOOSE_FILE
+Bitte Datei auswählen
+; Please choose file
+;
+MSG_MUST_CHOOSE_DRIVE_FIRST
+Sie müssen zuerst ein Laufwerk auswählen !
+; You must first choose a drive !
+;
+MSG_MUST_CHOOSE_FILE_FIRST
+Sie müssen zuerst eine Datei auswählen !
+; You must first choose an image file !
+;
+MSG_INVALID_ACTION
+Falsche Aktion %s !\nGültige Aktionen sind READ und WRITE.\n
+; Invalid action %s !\nValid actions are READ and WRITE.\n
+;
+MSG_BREAK
+*** Abbruch\n
+; *** Break\n
+;
+MSG_SIZE_DOES_NOT_FIT
+\n\
+Die Größe der Image-Datei stimmt nicht\n\
+mit der Größe der Disk überein !\n\
+\n\
+Image: %s\n\
+Disk : %s\n
+; The size of the image file does not fit the size of the disk !
+;
+MSG_FILE_ALREADY_EXISTS
+Die Datei existiert bereits !
+; The file does already exist !
+;
+MSG_OVERWRITE_CANCEL
+Überschreiben|Abbruch
+; Overwrite|Cancel
+;
+MSG_RETRY_IGNORE_ALL_CANCEL
+Wiederholen|Ignorieren|Alle ignorieren|Abbruch
+; Retry|Ignore|Ignore all|Cancel
+;
+MSG_DATA_WILL_BE_DISCARDED
+Alle Daten auf der Disk werden überschrieben !
+; All data that is already on the disk will be discarded !
+;
+MSG_OK_CANCEL
+Ok|Abbruch
+; Ok|Cancel
+;
+;==== Strings for Version 1.2 start here ===============================
+;
+MSG_RAW_READ
+Angepasste ADFs erzeugen
+; Create custom ADFs
+;
+MSG_PREFS
+Einstellungen
+; Preferences
+;
+MSG_CANNOT_RUN_GZIP
+Kann GZIP nicht ausführen !
+; Cannot run GZIP !
+;
+MSG_GZIP_NOT_FOUND
+Kann das Programm GZIP nicht finden !\n
+; Unable to locate the GZIP executable.\n
+;
+MSG_GZIP_IS_NOT_AVAILABLE
+GZIP ist nicht verfügbar.
+; GZIP is not available.
+;
+;==== Strings for Version 1.5 start here ===============================
+;
+MSG_CANNOT_COMPRESS_CUSTOM_ADF
+TSgui ist  nicht  in  der Lage,\n\
+angepasste ADFs zu komprimieren.
+; TSgui is not yet able to compress custom ADFs.
+;
+MSG_READING_TRACK_HEAD
+Lese Spur %ld Seite %ld\r
+; Reading track %ld head %ld\r
+;
+;==== Strings for Version 1.6 start here ===============================
+;
+MSG_PREFS_WINDOW_TITLE
+TrackSaver Einstellungen
+; TrackSaver Preferences
+;
+MSG_PREFS_OUTPUT_WINDOW
+Ausgabefenster für DOS-Kommandos
+; Output window for DOS commands
+;
+MSG_PREFS_PIPE_PREFIX
+Pipe Prefix
+; Pipe prefix
+;
+MSG_PREFS_GZIP_PATH
+Pfad zum Programm GZIP
+; Path to the GZIP executable
+;
+MSG_SAVE
+Speichern
+; Save
+;
+MSG_USE
+Benutzen
+; Use
+;
+MSG_NO_DISK_PRESENT
+Keine Diskette vorhanden\nin Laufwerk %s
+; No disk present\nin device %s
+;
+MSG_RETRY_CANCEL
+Nochmal versuchen|Abbrechen
+; Retry|Cancel
+;
+;==== Strings for Version 1.8 start here ===============================
+;
+MSG_PROJECT
+Projekt
+; Project
+;
+MSG_QUIT
+Beenden
+; Quit
+;
+MSG_WRITE_TO_FILE_FAILED
+\nSchreiben in Datei fehlgeschlagen\n
+;
+;
+;==== Strings for Version 2.0 start here ===============================
+;
+MSG_VOLUME
+Datenträger
+; Volume
+;
+MSG_DRAWER
+Schublade
+; Drawer
+;
+MSG_ASSIGN
+Assign
+; Assign
+;
+MSG_VOLUME_FORMAT
+%3d %% voll, %s frei, %s belegt
+; %3d %% full, %s free, %s in use
+;
+MSG_SELECT_FILE
+Datei auswählen
+; Select file
+;
+MSG_VOLUMES
+Laufw.
+; Volumes
+;
+MSG_PARENT
+Mutterv.
+; Parent
+;
+MSG_PRESS_ESC_OR_CLICK_CANCEL
+Esc drücken um abzubrechen.
+; Press Esc or click Cancel to abort.
+;
+MSG_FILE_DOES_NOT_EXIST
+Die Datei existiert nicht !
+; File does not exist !
+;
+MSG_CANNOT_OPEN_PIPE
+Kann Pipe nicht öffnen
+; Cannot open pipe
+;
+MSG_NOT_INTERNAL_DRIVE
+Angepasste ADFs können nur von internen\n\
+Laufwerken erzeugt werden.
+; Custom ADFs can only be created\n\
+; from internal floppy drives.
+;
+MSG_ABOUT
+Über...
+; About...
+;
+MSG_ABOUT_TITLE
+Über
+; About
+;
+MSG_FILE_READ_ERROR
+Beim Lesen der Datei ist ein Fehler aufgetreten.\n\
+Die Fehlernummer ist %ld
+; Error while reading file.\n\
+; The error code is %ld
+;
+MSG_DISK_INCOMPLETE
+Abgebrochen !\nDie Disk ist unvollständig.
+; Operation canceled\nThe disk is incomplete.
+;
+MSG_EDIT
+Bearbeiten
+; Edit
+;
+MSG_RESET_TO_DEFAULTS
+auf Vorgaben zurücksetzen
+; Reset To Defaults
+;
+MSG_LAST_SAVED
+auf zuletzt gespeichertes
+; Last Saved
+;
+MSG_RESTORE
+auf vorherigen Stand
+; Restore
+;
+MSG_FULL_HDD_IMAGE
+Komplette Festplatte
+;
+MSG_VERIFY
+Überprüfen
+;
+MSG_COMPRESSION
+Komprimierung
+; Compression
+;
+MSG_OFF
+aus
+; off
+;
+MSG_GZIP
+GZIP
+; GZIP
+;
+MSG_DMS
+DMS
+; DMS
+;
+MSG_PREFS_DMS_PATH
+Pfad zum Programm DMS
+; Path to the DMS executable
+;
+MSG_PREFS_WAIT_CLOSE_WINDOW
+Warten bis Fenster geschlossen wird
+; Wait until the window is closed
+;
+MSG_PLEASE_PRESS_RETURN
+Bitte drücken Sie Return um das Fenster zu schließen.
+; Please press Return to close the window.
+;
+MSG_PREFS_SUPPRESSED_OUTPUT
+Dateiname für unterdrückte Ausgaben
+; File name for suppressed output
+;
+MSG_FILE_WRITE_ERROR
+Beim Schreiben der Datei ist ein Fehler aufgetreten.\n\
+Die Fehlernummer ist %ld
+; Error while writing file.\n\
+; The error code is %ld
+;
+MSG_DMS_IS_NOT_AVAILABLE
+DMS  ist nicht verfügbar.
+; DMS is not available.
+;
+MSG_INVALID_COMPRESSION
+Falsche Kompression !
+; invalid compression
+;
+MSG_CANNOT_GET_GEOMETRY
+Kann Geometrie für vollständige Kopie nicht ermitteln.
+; cannot get geometry for full volume image
+;
+;
+;==== Strings for Version 2.2 start here ===============================
+;
+MSG_PARTITION_INFO_MENU
+Partitionsinformationen...
+; Partition info...
+;
+MSG_PARTITION_INFO_TITLE
+Partitionsinformationen
+; Partition info
+;
+MSG_PARTITION_INFO_BODY
+Wenn Sie ein HDF dieser Partition in WinUAE anmelden möchten,\n\
+müssen Sie die folgenden Werte angeben:\n\
+\n\
+Surfaces = %ld\n\
+Sectors = %ld\n\
+Reserved = %ld\n\
+Block size = %ld\n
+; If you want to mount a HDF from this partition in WinUAE,\n\
+; you have to specify the following values:\n\
+; \n\
+; Surfaces = %ld\n\
+; Sectors = %ld\n\
+; Reserved = %ld\n\
+; Block size = %ld\n
+;
+MSG_ELAPSED_TIME
+Bisherige Zeit :
+; Elapsed time :
+;
+MSG_REMAINING_TIME
+Verbleibende Zeit :
+; Remaining time :
+;
+MSG_PLEASE_CHOOSE_PARTITION
+Bitte wählen Sie zuerst eine Partition.
+; Please choose a partition first.
+;
+MSG_DELETE_KEEP
+Löschen|Behalten
+; Delete|Keep
+;
+;
+;
+;==== Strings for Version 2.3 start here ===============================
+;
+MSG_COULD_NOT_LOCK_SCREEN
+Kann Bildschirm nicht sperren.
+; Could not lock screen
+;
+MSG_COULD_NOT_CREATE_GUI
+Kann Anzeige nicht erzeugen.
+; Could not create gui
+;
+MSG_COULD_NOT_OPEN_WINDOW
+Kann Fenster nicht öffnen.
+; Could not open window
+;
+MSG_NOT_ENOUGH_MEMORY_FOR_BUFFER
+Nicht genug Speicher für Puffer !\n\
+Es werden mindestens %ld Bytes%s benötigt.
+; Not enough memory for buffer !\n\
+; Need at least %ld bytes%s.
+;
+MSG_CHIP_RAM
+ Chip-RAM
+;  chip memory
+;
+MSG_24BIT_RAM
+ 24Bit-RAM
+;  24bit memory
+;
+MSG_KICK_RAM
+ Kick-RAM
+;  kick memory
+;
+MSG_FAST_RAM
+ Fast-RAM
+;  fast memory
+;
+MSG_CANNOT_DETERMINE_HDD_SIZE
+Kann Festplattengröße nicht bestimmen.
+; Cannot determine HDD size.
+;
+MSG_ADVANCED_OPTIONS
+Erweiterte Optionen
+; Advanced Options
+;
+MSG_NO_SAFETY_REQUESTERS
+Keine Sicherheitsabfragen
+; Don't show safety requesters
+;
+MSG_NO_SIZE_CHECK
+Dateigrößen nicht überprüfen
+; Don't check image size
+;
+MSG_DELETE_INCOMPLETE
+Unvollständige Dateien löschen
+; Delete incomplete image files
+;
+MSG_OVERWRITE_EXISTING
+Existierende Dateien überschreiben
+; Overwrite existing files
+;
+MSG_IGNORE_ERRORS
+Schreib-/Lesefehler ignorieren
+; Ignore read/write errors
+;
+MSG_READ_BLOCK_BY_BLOCK
+Block für Block lesen, keine ganzen Zylinder
+; Read block by block, not cylinders
+;
+MSG_SHOW_BLOCK_MAP
+Block-Karte anzeigen
+; Show block map
+;
+MSG_USE_RESTART
+Erweiterten Neustart aktivieren
+; Use extended restart
+;
+MSG_SAVE_SETTINGS
+Einstellungen speichern
+; Save settings
+;
+MSG_SCREEN_TITLE_FORMAT
+%s     %s Chip-RAM  %s sonstiges RAM
+; %s     %s chip RAM  %s other RAM
+;
+MSG_NO_MEMORY_FOR_RESTART
+Nicht genug Speicher für Neustart
+; Not enough memory for restart
+;
+MSG_PREFS_RESTART_FILE
+Datei für Neustart-Daten
+; File for restart data
+;
+MSG_PREFS_IMAGE_PATH
+Standardpfad für Image-Dateien
+; Default path for image files
+;
+MSG_CLOSE_WINDOW_TO_CONTINUE
+<-- Dieses Fenster schließen um fortzufahren
+; <-- Close this window to continue
+;
+MSG_NO_MEMORY_FOR_BLOCK_MAP
+Nicht genug Speicher für Block-Karte
+; Not enough memory for block map
+;
+MSG_OVERWRITE_RESUME_CANCEL
+Überschreiben|Fortsetzen|Abbruch
+; Overwrite|Resume|Cancel
+;
+MSG_RESTART_FAILED_DRIVE_NOT_FOUND
+Neustart fehlgeschlagen: Laufwerk nicht gefunden
+; Restart failed: drive not found
+;
+MSG_RESTART_FAILED_COMPRESSION_CHANGED
+Neustart fehlgeschlagen: Komprimierungstyp ist anders
+; Restart failed: compression type has changed
+;
+MSG_RESTART_FAILED_DRIVE_SIZE_CHANGED
+Neustart fehlgeschlagen: Größe des Laufwerks ist anders
+; Restart failed: drive size has changed
+;
+MSG_BACK_ABORT_QUIT
+Zurück|Abbrechen|Beenden
+; Back|Abort|Quit
+;
+MSG_BACK_ABORT_CONTINUE_QUIT
+Zurück|Abbrechen|Fortsetzen|Beenden
+; Back|Abort|Continue|Quit
+;
+MSG_NOT_ENOUGH_DISK_SPACE
+Das Ausgabelaufwerk hat nicht genug Speicher,\n\
+um die Image-Datei aufzunehmen.
+; The output device has not enough\n\
+; space to hold the image file
+;
+MSG_CONTINUING_READ_OPERATION
+\n\
+Fortsetzen der Leseoperation\n\
+von Laufwerk %s (%s)\n\
+nach %s\n\
+Größe %s.\n
+; \n\
+; Continuing read operation\n\
+; from drive %s (%s)\n\
+; into %s\n\
+; size %s.\n
+;
+MSG_NO_VOLUME
+kein Datenträger
+; no volume
+;
+MSG_LAST_BLOCK_ON_FILE_IS
+Letzter Block auf der Datei ist %lu\n
+; Last block on file is %lu\n
+;
+MSG_NUMBER_OF_BLOCKS_ON_DEVICE_IS
+Anzahl Blöcke auf dem Laufwerk ist %lu\n
+; Number of blocks on device is %lu\n
+;
+MSG_RESTART_WARNING
+\nWarnung !!\n\n
+; \nWarning !!\n\n
+;
+MSG_OUTPUT_FILE_CHANGED_FROM
+Ausgabedatei wurde geändert von %s\n
+; Output file changed from %s\n
+;
+MSG_INPUT_DRIVE_CHANGED_FROM
+Eingabelaufwerk wurde geändert von %s\n
+; Input drive changed from %s\n
+;
+MSG_INPUT_DEVICE_CHANGED_FROM_TO
+Eingabe Gerät wurde geändert\n\
+  von %s Einheit %lu\n\
+  nach %s Einheit %lu\n
+; Input device changed\n\
+;   from %s unit %lu\n\
+;   to %s unit %lu\n
+;
+MSG_START_CYLINDER_CHANGED_FROM_TO
+Der Startzylinder wurde geändert von %lu nach %lu\n
+; Start cylinder changed from %lu to %lu\n
+;
+MSG_OPEN_SCREEN
+Eigenen Bildschirm öffnen
+; Open screen
+;
+MSG_CLOSE_WORKBENCH
+Workbench schließen
+; Close Workbench
+;
+MSG_NUMBER_OF_RETRIES
+Anzahl Versuche
+; Set number of retries
+;
+MSG_5_RETRIES
+5
+; 5
+;
+MSG_10_RETRIES
+10
+; 10
+;
+MSG_20_RETRIES
+20
+; 20
+;
+MSG_SHOW_SUMMARY
+Nur Zusammenfassung anzeigen
+; Show summary at end of operation
+;
+MSG_ALWAYS
+immer
+; Always
+;
+MSG_FOR_ERRORS
+bei Fehlern
+; For errors
+;
+MSG_SUMMARY_READ_BLOCKS
+%lu Blöcke wurden erfolgreich gelesen.\n\
+%lu Blöcke konnten wegen Fehlern nicht gelesen werden.\n\
+Der letzte Fehler war %ld%s.
+; %lu blocks have been read successfully.\n\
+; %lu blocks could not be read because of errors.\n\
+; The last error was %ld%s.
+;
+MSG_SUMMARY_READ_CYLINDERS
+%lu Zylinder wurden erfolgreich gelesen.\n\
+%lu Zylinder konnten wegen Fehlern nicht gelesen werden.\n\
+Der letzte Fehler war %ld%s.
+; %lu cylinders have been read successfully.\n\
+; %lu cylinders could not be read because of errors.\n\
+; The last error was %ld%s.
+;
+MSG_SUMMARY_READ_BUFFERS
+%lu Puffer wurden erfolgreich gelesen.\n\
+%lu Puffer konnten wegen Fehlern nicht gelesen werden.\n\
+Der letzte Fehler war %ld%s.
+; %lu buffers have been read successfully.\n\
+; %lu buffers could not be read because of errors.\n\
+; The last error was %ld%s.
+;
+MSG_SUMMARY_WRITE_BLOCKS
+%lu Blöcke wurden erfolgreich geschrieben.\n\
+%lu Blöcke konnten wegen Fehlern nicht geschrieben werden.\n\
+Der letzte Fehler war %ld%s.
+; %lu blocks have been written successfully.\n\
+; %lu blocks could not be written because of errors.\n\
+; The last error was %ld%s.
+;
+MSG_SUMMARY_WRITE_CYLINDERS
+%lu Zylinder wurden erfolgreich geschrieben.\n\
+%lu Zylinder konnten wegen Fehlern nicht geschrieben werden.\n\
+Der letzte Fehler war %ld%s.
+; %lu cylinders have been written successfully.\n\
+; %lu cylinders could not be written because of errors.\n\
+; The last error was %ld%s.
+;
+MSG_SUMMARY_WRITE_BUFFERS
+%lu Puffer wurden erfolgreich geschrieben.\n\
+%lu Puffer konnten wegen Fehlern nicht geschrieben werden.\n\
+Der letzte Fehler war %ld%s.
+; %lu buffers have been written successfully.\n\
+; %lu buffers could not be written because of errors.\n\
+; The last error was %ld%s.
+;
+MSG_SKIP_BLOCKS
+Blöcke überspringen
+; Skip blocks
+;
+MSG_AMOUNT
+Anzahl:
+; Amount:
+;
+MSG_ALWAYS_SKIP
+Immer überspringen
+; Always skip
+;
+MSG_EVERY
+nach
+; every
+;
+MSG_BLOCKS
+Blöcken
+; blocks
+;
+MSG_PROCESS_MULTIPLE_DISKS
+Mehrere Disketten verarbeiten
+; Process multiple disks
+;
+MSG_ABOUT_TO_READ_MULTIPLE_DISKS
+Lesen von mehreren Disketten
+; About to read multiple disks
+;
+MSG_ABOUT_TO_WRITE_MULTIPLE_DISKS
+Schreiben von mehreren Disketten
+; About to write multiple disks
+;
+MSG_PLEASE_SELECT_DRIVES
+Bitte wählen Sie die Laufwerke
+; Please select the drives to use
+;
+MSG_ALL
+Alle
+; All
+;
+MSG_NONE
+Keine
+; None
+;
+MSG_FLIP
+Tauschen
+; Flip
+;
+MSG_FILE_NAMES
+Dateinamen
+; File names
+;
+MSG_START_AT_DISK
+Starte bei Disk
+; Start at disk
+;
+MSG_NDOS
+NDOS
+; NDOS
+;
+MSG_TEMPLATE
+Vorlage
+; Template
+;
+MSG_NDOS_VOLUME
+NDOS Datentr.
+; NDOS volume
+;
+MSG_EXAMPLE
+Beispiel
+; Example
+;
+MSG_START_CANCEL
+Start|Abbruch
+; Start|Cancel
+;
+MSG_FORMAT_D_DISK_NUMBER
+&d - Disknummer
+; &d - disk number
+;
+MSG_FORMAT_V_VOLUME_NAME
+&v - Datenträgername
+; &v - volume name
+;
+MSG_FORMAT_N_NDOS_NUMBER
+&n - NDOS-Nummer
+; &n - ndos number
+;
+MSG_PLEASE_INSERT_DISK_INTO_ANY_DRIVE
+Bitte legen Sie Diskette %ld in ein Laufwerk
+; Please insert disk no. %ld into any drive.
+;
+MSG_NO_DISK_IN_DRIVE
+Keine Disk im Laufwerk
+; no disk in drive.
+;
+MSG_SOURCE_DIR
+Quellverzeichnis
+; Source directory
+;
+MSG_DEST_DIR
+Zielverzeichnis
+; Destination dir.
+;
+MSG_REMOVE_FILE
+Datei entfernen
+; Remove file
+;
+MSG_REREAD_DIR
+Verz. neu lesen
+; Reread dir.
+;
+MSG_PLEASE_INSERT_EMPTY_DISK
+Bitte legen Sie eine leere Diskette für\n\
+%s\n\
+in ein Laufwerk.
+; Please insert an empty disk for\n\
+; %s\n\
+; into any drive.
+;
+MSG_CREATE_MOUNTLIST_MENU
+Mountlist erstellen...
+; Create mountlist...
+;
+MSG_SAVE_MOUNTLIST
+Mountlist speichern
+; Save mountlist...
+;
+MSG_CANNOT_OPEN_MOUNTLIST_FILE
+Kann Mountlist-Datei nicht öffnen.
+; Cannot open mountlist file.
+;
+MSG_MOUNTLIST_FILE_ALREADY_EXISTS
+Die Mountlist-Datei existiert bereits.
+; The mountlist file already exists.
+;
+MSG_REPLACE_APPEND_CANCEL
+Ersetzen|Anhängen|Abbruch
+; Replace|Append|Cancel
+;
+MSG_SAVE_ROM_FILE_MENU
+ROM-Datei speichern...
+; Save ROM file...
+;
+MSG_SAVE_ROM_FILE
+ROM-Datei speichern
+; Save ROM file
+;
+MSG_CANNOT_OPEN_ROM_FILE
+Kann ROM-Datei nicht öffnen.
+; Cannot open ROM file.
+;
+MSG_ROM_FILE_ALREADY_EXISTS
+Die ROM-Datei existiert bereits.
+; The ROM file already exists.
+;
+MSG_REPLACE_CANCEL
+Ersetzen|Abbruch
+; Replace|Cancel
+;
+MSG_SAVE_RDB_TO_FILE
+RDB in Datei sichern...
+; Save RDB to file...
+;
+MSG_RESTORE_RDB_FROM_FILE
+RDB aus Datei wiederherstellen...
+; Restore RDB from file...
+;
+MSG_PLEASE_CHOOSE_RDB_FILE
+Bitte wählen Sie die RDB-Datei
+; Please Choose RDB File
+;
+MSG_RDB_FILE_ALREADY_EXISTS
+Die RDB-Datei existiert bereits.
+; RDB file already exists.
+;
+MSG_CANNOT_OPEN_RDB_FILE
+Kann die RDB-Datei nicht öffnen.
+; Cannot open RDB file.
+;
+MSG_FILE_DOES_NOT_CONTAIN_A_VALID_RDB
+Die Datei enthält keinen gültigen RDB.
+; This file does not contain a valid RDB.
+;
+MSG_SIZE_IN_RDB_DOES_NOT_MATCH_DISK_SIZE
+Die Diskgröße in der RDB-Datei (%ld MB)\n\
+entspricht nicht der echten Größe (%ld MB).
+; The disk size defined in the RDB file (%ld MB)\n\
+; does not match the real disk size (%ld MB).
+;
+MSG_OVERWRITING_RDB_WARNING
+!!! Warnung !!!\n\
+\n\
+Der existierende RDB dieser Disk:\n\
+\n\
+%-8.8s %-16.16s %-4.4s\n\
+\n\
+wird mit diesen Daten überschrieben:\n\
+\n\
+%-8.8s %-16.16s %-4.4s\n\
+\n\
+Dies wird die folgenden Informationen\n\
+ändern oder löschen:\n\
+- die Diskgröße, wie sie dem System bekannt ist\n\
+- alle Partitionen auf der Disk\n\
+- die Dateisysteme, die dem System bekannt sind\n\
+\n\
+Das System wird danach vielleicht nicht mehr starten !\n\
+\n\
+Sie sollten das nur tun, wenn Sie absolut sicher sind !
+; !!! Warning !!!\n\
+; \n\
+; I am about to overwrite the RDB of this disk:\n\
+; \n\
+; %-8.8s %-16.16s %-4.4s\n\
+; \n\
+; with this data:\n\
+; \n\
+; %-8.8s %-16.16s %-4.4s\n\
+; \n\
+; This will change or delete\n\
+; - the disk size as it is known to the system\n\
+; - all partitions on this disk\n\
+; - the file systems known to the system\n\
+; \n\
+; Your system might not boot any more after this change !\n\
+; \n\
+; Do only continue if you are absolutely sure !
+;
+MSG_SELECT_RAW_DEVICE
+Gerät anhand des Treibers auswählen...
+; Select raw device...
+;
+MSG_SET_MAXTRANSFER
+MaxTransfer setzen
+; Set MaxTransfer
+;
+MSG_64KB
+64 kb
+; 64 kb
+;
+MSG_128KB
+128 kb
+; 128 kb
+;
+MSG_NO_LIMIT
+kein Limit
+; no limit
+;
+MSG_WAITING
+Warte...
+; Waiting...
+;
+MSG_ERROR_WRITING_RDB
+Beim Schreiben von Block Nr. %ld\n\
+ist ein Fehler aufgetreten.\n\
+Fehler Nr. %ld%s
+; While writing block no. %ld\n\
+; an error has occured.\n\
+; Error no. %ld%s
+;
+MSG_SAVE_STATE
+Stand speichern
+; Save state
+;
+MSG_FILE_SEEK_ERROR
+Kann nicht zum Ende der Datei springen.\n\
+Die Fehlernummer ist %ld
+; Cannot seek to end of file.\n\
+; The error code is %ld
+;
+MSG_LANGUAGE
+Sprache
+; Language
+;
+MSG_END_OF_FILE_REACHED
+Dateiende erreicht
+; End of file reached
+;
+MSG_DATE
+Datum
+; End of file reached
+;
+;==== Error messages for wrong command line ============================
+;
+ARGERR_DUPLICATE
+Argument wurde doppelt angegeben
+; argument given twice
+;
+ARGERR_MISSINGVAL
+Argument nach Schlüsselwort fehlt
+; value after keyword missing
+;
+ARGERR_MISSINGARG
+Gefordertes Argument fehlt
+; required argument missing
+;
+ARGERR_WRONGNUM
+Falsche Anzahl an Argumenten
+; wrong number of arguments
+;

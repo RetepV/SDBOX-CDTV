@@ -1,0 +1,129 @@
+; $VER: tsguierr.catalog 01.00 (11.05.2006)
+;
+;
+;==== Explanation of I/O errors (ID = io_Error + 40000) =================
+;
+MSG_IOERR_OPENFAIL
+ (Gerät/Einheit konnte nicht geöffnet werden)
+;  (device/unit failed to open)
+;
+MSG_IOERR_ABORTED
+ (Anfrage abgebrochen)
+;  (request terminated)
+;
+MSG_IOERR_NOCMD
+ (Befehl wird vom Gerät nicht unterstützt)
+;  (command not supported by device)
+;
+MSG_IOERR_BADLENGTH
+ (keine gültige Länge)
+;  (not a valid length)
+;
+MSG_IOERR_BADADDRESS
+ (ungültige Adresse (falsch ausgerichtet oder falscher Bereich))
+;  (invalid address (misaligned or bad range))
+;
+MSG_IOERR_UNITBUSY
+ (Geräte konnte geöffnet werden, aber die Einheit ist beschäftigt)
+;  (device opens ok, but requested unit is busy)
+;
+MSG_IOERR_SELFTEST
+ (Selbsttest der Hardware schlug fehl)
+;  (hardware failed self-test)
+;
+MSG_TSGUI_VERIFY_FAILED
+ (Überprüfung ist fehlgeschlagen)
+;  (verify failed)
+;
+MSG_TDERR_NotSpecified
+ (allgemeiner Fehler)
+;  (general catchall)
+;
+MSG_TDERR_NoSecHdr
+ (kein Sektorkopf)
+;  (no sector header)
+;
+MSG_TDERR_BadSecPreamble
+ (ungültige Sektoreinleitung)
+;  (bad sector preamble)
+;
+MSG_TDERR_BadSecID
+ (ungültige Sectoridentifikation)
+;  (bad sector ID)
+;
+MSG_TDERR_BadHdrSum
+ (inkorrekte Headerchecksumme)
+;  (header had incorrect checksum)
+;
+MSG_TDERR_BadSecSum
+ (inkorrekte Datenchecksumme)
+;  (data had incorrect checksum)
+;
+MSG_TDERR_TooFewSecs
+ (nicht genügend Sektoren)
+;  (couldn't find enough sectors)
+;
+MSG_TDERR_BadSecHdr
+ (ungültiger Sektorkopf)
+;  (bad sector header)
+;
+MSG_TDERR_WriteProt
+ (Diskette ist schreibgeschützt)
+;  (disk is write protected)
+;
+MSG_TDERR_DiskChanged
+ (keine Diskette im Laufwerk)
+;  (no disk in the drive)
+;
+MSG_TDERR_SeekError
+ (konnte Spur 0 nicht finden)
+;  (couldn't find track 0)
+;
+MSG_TDERR_NoMem
+ (zu wenig Speicher)
+;  (ran out of memory)
+;
+MSG_TDERR_BadUnitNum
+ (ungültige Einheitennummer)
+;  (bad unit number)
+;
+MSG_TDERR_BadDriveType
+ (ungültiger Gerätetyp)
+;  (bad drive type)
+;
+MSG_TDERR_DriveInUse
+ (Gerät ist in Benutzung)
+;  (drive in use)
+;
+MSG_TDERR_PostReset
+ (Benutzer hat Reset gedrückt; erwarte Ende)
+;  (user hit reset; awaiting doom)
+;
+MSG_HFERR_SelfUnit
+ (kann SCSI-Kommando nicht an sich selbst schicken)
+; (cannot issue SCSI command to self)
+;
+MSG_HFERR_DMA
+ (DMA-Fehler)
+; (DMA error)
+;
+MSG_HFERR_Phase
+ (ungültige oder unerwartete SCSI-Phase)
+; (illegal or unexpected SCSI phase)
+;
+MSG_HFERR_Parity
+ (SCSI Parity-Fehler)
+; (SCSI parity error)
+;
+MSG_HFERR_SelTimeout
+ (Select dauert zu lange)
+; (Select timed out)
+;
+MSG_HFERR_BadStatus
+ (Status- und/oder Sense-Fehler)
+; (status and/or sense error)
+;
+MSG_HFERR_NoBoard
+ (nicht verfügbares Board)
+; (Open failed for non-existant board)
+;

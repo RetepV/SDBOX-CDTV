@@ -1,0 +1,247 @@
+; This Catalog Translation ".ct" file has been written using
+; ReCatIt Pro V1.00 (07.11.98) - By Fabio Rotondo
+;
+## version $VER: tsgui.catalog 1.7 (29.01.02)
+## codeset 0
+## language polski
+;
+MSG_CANCEL
+Poniechaj
+;Cancel
+;
+MSG_READING_TRACK
+Czytam ôcieûkë %ld\r
+;Reading track %ld\r
+;
+MSG_WRITING_TRACK
+Zapisujë ôcieûkë %ld\r
+;Writing track %ld\r
+;
+MSG_READ_DISK
+Odczyt dysku...
+;Read disk
+;
+MSG_WRITE_DISK
+Zapis dysku...
+;Write disk
+;
+MSG_IO_ERROR
+\n*** Bîâd %ld%s\n
+;\n*** Error %ld%s\n
+;
+MSG_READ_ERROR
+Podczas odczytu cylindra %ld\nwystâpiî bîâd o numerze %ld%s
+;While reading Cylinder No. %ld\nan error has occured.\nError No. %ld%s
+;
+MSG_WRITE_ERROR
+Podczas zapisu cylindra %ld\nwystâpiî bîâd o numerze %ld%s.
+;While writing Cylinder No. %ld\nan error has occured.\nError No. %ld%s
+;
+MSG_IGNORE_CANCEL
+Zignoruj|Poniechaj
+;Ignore|Cancel
+;
+MSG_OK
+Ok
+;Ok
+;
+MSG_FILE_INCOMPLETE
+Operacja zaniechana.\nPlik jest niekompletny.
+;Operation canceled\nThe file is incomplete.
+;
+MSG_NOT_ENOUGH_MEMORY
+Zbyt maîo pamiëci na bufor!
+;Not enough memory for buffer !
+;
+MSG_PRINT_DEVICE
+Urzâdzenie = %s\n
+;Device = %s\n
+;
+MSG_PRINT_UNIT
+Jednostka  = %ld\n
+;Unit   = %ld\n
+;
+MSG_PRINT_FLAGS
+Flagi      = %ld\n
+;Flags  = %ld\n
+;
+MSG_PRINT_BYTES_PER_CYL
+Bajtów na cylinder    = %ld\n
+;Bytes per cylinder = %ld\n
+;
+MSG_PRINT_FIRST_CYL
+Pierwszy cylinder     = %ld\n
+;First cylinder     = %ld\n
+;
+MSG_PRINT_LAST_CYL
+Ostatni cylinder      = %ld\n
+;Last cylinder      = %ld\n
+;
+MSG_CANNOT_OPEN_FILE
+Nie mogë otworzyê pliku %s!
+;Cannot open file %s !
+;
+MSG_TOO_LARGE_DISK
+Dysk jest wiëkszy niû 4GB, lecz urzâdzenie nie obsîuguje 64-bitowych poleceï!
+;The disk is larger than 4GB but the device does not support 64bit commands !
+;
+MSG_CANNOT_OPEN_DEVICE
+Nie mogë otworzyê jednostki %2$ld %1$s!\n
+;Cannot open %s unit %ld !\n
+;
+MSG_CANNOT_FIND_DRIVE
+Nie mogë znaleúê napëdu %s!\n
+;Cannot find drive %s !\n
+;
+MSG_NAME
+Nazwa
+;Name
+;
+MSG_DEVICE
+Urzâdzenie
+;Device
+;
+MSG_UNIT
+Jednostka
+;Unit
+;
+MSG_FIRST_CYL
+Pierwszy cylinder
+;First cyl.
+;
+MSG_LAST_CYL
+Ostatni cylinder
+;Last cyl.
+;
+MSG_SIZE
+Wielkoôê
+;Size
+;
+MSG_REFRESH
+Odôwieû
+;Refresh
+;
+MSG_FORMAT_WHILE_WRITING
+Formatuj podczas zapisu
+;Format while writing
+;
+MSG_FILE
+Plik
+;File
+;
+MSG_DISK_TO_FILE
+Dysk -> Plik
+;Disk -> File
+;
+MSG_FILE_TO_DISK
+Plik -> Dysk
+;File -> Disk
+;
+MSG_PLEASE_CHOOSE_FILE
+Wybierz plik...
+;Please choose file
+;
+MSG_MUST_CHOOSE_DRIVE_FIRST
+Najpierw musisz wybraê napëd!
+;You must first choose a drive !
+;
+MSG_MUST_CHOOSE_FILE_FIRST
+Najpierw musisz wybraê plik obrazu!
+;You must first choose an image file !
+;
+MSG_INVALID_ACTION
+Niewîaôciwa operacja %s!\nWîaôciwe operacje to READ i WRITE.\n
+;Invalid action %s !\nValid actions are READ and WRITE.\n
+;
+MSG_BREAK
+*** Przerwano\n
+;*** Break\n
+;
+MSG_SIZE_DOES_NOT_FIT
+Wielkoôê pliku obrazu nie pokrywa sië z wielkoôciâ dysku!
+;The size of the image file does not fit the size of the disk !
+;
+MSG_FILE_ALREADY_EXISTS
+Plik juû istnieje!
+;The file does already exist !
+;
+MSG_OVERWRITE_CANCEL
+Nadpisz|Poniechaj
+;Overwrite|Cancel
+;
+MSG_IGNORE_ALL_CANCEL
+Zignoruj|Zignoruj wszystko|Poniechaj
+;Ignore|Ignore all|Cancel
+;
+MSG_DATA_WILL_BE_DISCARDED
+Wszystkie dane bëdâce dotâd na dysku zostanâ utracone!
+;All data that is already on the disk will be discarded !
+;
+MSG_OK_CANCEL
+Ok|Poniechaj
+;Ok|Cancel
+;
+MSG_USE_GZIP
+Kompresuj GZIP-em
+;Compress with GZIP
+;
+MSG_RAW_READ
+Twórz specjalne ADF-y
+;Create custom ADFs
+;
+MSG_PREFS
+Ustawienia
+;Preferences
+;
+MSG_CANNOT_RUN_GZIP
+Nie mogë uruchomiê GZIP-a!
+;Cannot run GZIP !
+;
+MSG_GZIP_NOT_FOUND
+Nie mogë znaleúê wykonywalnego GZIP-a.\n
+;Unable to locate the GZIP executable.\n
+;
+MSG_GZIP_IS_NOT_AVAILABLE
+GZIP nie jest dostëpny.
+;GZIP is not available.
+;
+MSG_CANNOT_GZIP_CUSTOM_ADF
+TSgui nie jest jeszcze zdolny kompresowaê specjalnych ADF-ów.
+;TSgui is not yet able to compress custom ADFs.
+;
+MSG_READING_TRACK_HEAD
+Czytam ôcieûkë %ld, gîowica %ld\r
+;Reading track %ld head %ld\r
+;
+MSG_PREFS_WINDOW_TITLE
+Ustawienia TrackSavera
+;TrackSaver Preferences
+;
+MSG_PREFS_OUTPUT_WINDOW
+Okno wyjôciowe dla poleceï DOS-u
+;Output window for DOS commands
+;
+MSG_PREFS_PIPE_PREFIX
+Przedrostek dla Pipe
+;Pipe prefix
+;
+MSG_PREFS_GZIP_PATH
+Ôcieûka dostëpu do wykonywalnego GZIP-a
+;Path to the GZIP executable
+;
+MSG_SAVE
+Zapisz
+;Save
+;
+MSG_USE
+Uûyj
+;Use
+;
+MSG_NO_DISK_PRESENT
+Brak dysku\nw urzâdzeniu %s
+;No disk present\nin device %s
+;
+MSG_RETRY_CANCEL
+Ponów|Poniechaj
+;Retry|Cancel
+;
