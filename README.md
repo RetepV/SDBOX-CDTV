@@ -10,8 +10,8 @@ Here you will find:
   * Apps/SysInfo - Get information about your system.
   * Software/SDBOX - The drivers and scripts for using an SDBOX.
   * Software/ADF - Some ADF files, mainly boot disks.
-* **SDBOX 1.3 Boot.adf** An image for a minimal bootdisk that mounts the SDBOX, assigns all paths to it, and continues to boot from the SDBOX.
-* **SDBOX Drivers** A folder with all the necessary software to mount an SDBOX.
+* **SDBOX 1.3 Boot.adf** An image for a minimal bootdisk that mounts the SDBOX, assigns all paths to it, and continues to boot from the SDBOX. It's based on WB 1.3.
+* **SDBOX Drivers** A folder with all the necessary software to be able to mount an SDBOX.
 
 This is what I use to boot my Amiga CDTV into Workbench 1.3 and work directly from the SDBOX.
 
