@@ -27,5 +27,5 @@ A few options:
 
 * A GreaseWeazle. I can highly recommend it. And they are not expensive. https://github.com/keirf/greaseweazle/wiki
 * A Gotek. Why not? A little bit more expensive, but also useful. https://www.gotekemulator.com/
-* Using a nullmodem cable and Amiga Explorer. https://www.amigalove.com/viewtopic.php?t=15
-* In case of a CDTV, you can boot from CD. In order to do that, you need to make an ISO image first and burn it to a CD. This can be done through an emulator like UAE, using the CD32 mastering tools. It's probably a blog post in itself on how to set up UAE and create the image files, and maybe I will write that one day.
+* Using a nullmodem cable and Amiga Explorer. https://www.amigalove.com/viewtopic.php?t=15. This is what I used initially, as the CDTV does not come with Workbench disks.
+* In case of a CDTV, you can also boot from CD. In order to do that, you need to make an ISO image first and burn it to a CD. This can be done through an emulator like UAE, using the CD32 mastering tools. It's probably a blog post in itself on how to set up UAE and create the image files, and maybe I will write that one day.
